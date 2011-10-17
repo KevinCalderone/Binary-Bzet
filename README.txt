@@ -8,5 +8,7 @@ Michael Koyama
 
 News:
 
+Test
+
 Kevin Calderone (10/15/11)
 - Created the starting template for the project
