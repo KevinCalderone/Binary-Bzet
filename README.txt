@@ -9,6 +9,7 @@ Michael Koyama
 News:
 
 Test
+Test 2
 
 Luis Aguiniga (10/18/11)
 - Test commit
