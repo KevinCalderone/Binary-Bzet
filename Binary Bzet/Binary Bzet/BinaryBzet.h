@@ -8,5 +8,5 @@ public:
 	BinaryBzet();
 	~BinaryBzet();
 private:
-	u8 GetNumEndingZero(u64 i);
+	u8 GetNumEndingZero(u64 index);
 };

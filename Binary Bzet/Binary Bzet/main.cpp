@@ -10,7 +10,6 @@ int main()
 
 	// Test code
 	printf("I do nothing right now :(\n");
-
 	system("pause");
     return 0;
 }
