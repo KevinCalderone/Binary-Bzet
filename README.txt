@@ -11,6 +11,10 @@ News:
 Test
 Test 2
 
+
+Mary:
+I am practicing how to to commit files.
+
 Luis Aguiniga (10/18/11)
 - Test commit
 Kevin Calderone (10/15/11)
