@@ -5,8 +5,10 @@
 
 int main()
 {
-	BinaryBzet a;
-	BinaryBzet b;
+	BinaryBzet a(1<<15);
+	BinaryBzet b();
+
+	cout << endl << a.getBzetString() << endl << a.getBzetString().size() << endl;
 
 	// Test code
 	printf("I do nothing right now :(\n");
