@@ -5,10 +5,45 @@ BinaryBzet::BinaryBzet() {
 	m_depth = 0;
 }
 
+/* index is the index of the bit in the
+   BINARY BITSTRING you would like turned ON.*/
 BinaryBzet::BinaryBzet(int index){
+	if(index < 0)
+		return;
 	string temp;
 	temp.append(index,'0');
 	temp+='1';
+	bitstringToBzet(temp);
+}
+
+/* indexe is the index of the bit in the
+   BINARY BITSTRING you would like turned OFF.*/
+BinaryBzet::BinaryBzet(int indexi, int indexe){
+	if(indexe <= indexi || indexi < 0)
+		return;
+	string temp;
+	temp.append(indexi,'0');
+	string temp2;
+	temp2.append(indexe-indexi,'1');
+	bitstringToBzet(temp+temp2);
+}
+
+/* step is the number of 0s to place between
+   each 1 in the BINARY BITSTRING. If a step
+   lands the index on indexe, that bit will
+   be turned OFF */
+BinaryBzet::BinaryBzet(int indexi, int indexe, int step){
+	if(indexe <= indexi || indexi < 0 || step < 0)
+		return;
+	string temp;
+	temp.append(indexi, '0');
+	int a = step;
+	for(indexi;indexi<indexe;indexi++){
+		if(a==step){
+			temp+="1"; a=0;}
+		else{
+			temp+="0"; a++;}
+	}
 	bitstringToBzet(temp);
 }
 

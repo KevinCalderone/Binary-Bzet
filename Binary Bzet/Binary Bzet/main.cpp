@@ -5,13 +5,11 @@
 
 int main()
 {
-	BinaryBzet a(1<<15);
-	BinaryBzet b();
 
-	cout << endl << a.getBzetString() << endl << a.getBzetString().size() << endl;
+	// TEST CODE
+	BinaryBzet a(5,19,3);
+	cout << a.getBzetString() << endl;
 
-	// Test code
-	printf("I do nothing right now :(\n");
 	system("pause");
     return 0;
 }

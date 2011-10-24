@@ -12,6 +12,8 @@ class BinaryBzet {
 public:
 	BinaryBzet();
 	BinaryBzet(int index);
+	BinaryBzet(int indexi, int indexe);
+	BinaryBzet(int indexi, int indexe, int step);
 	~BinaryBzet();
 	int getDepth();
 	string getBzetString();
