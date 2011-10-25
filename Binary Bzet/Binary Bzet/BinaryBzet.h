@@ -8,6 +8,7 @@ using namespace std;
 
 typedef uint8_t u8; // unsigned 8 bit int
 typedef unsigned int u32;
+typedef unsigned char bitpair;
 
 class BinaryBzet {
 public:
@@ -19,7 +20,10 @@ public:
 	int getDepth();
 	string getBzetString();
 	void shift(int distance);
-	bool isTAWatching() { return true; }
+	bool isTAWatching() { return true; } // lol
+	void set(int index);
+	void unset(int index);
+	void testSET(); // temporary
 private:
 	vector<bool> m_bzet;
 	string m_bzet_string; // just for now, later we'll call getBzetString() to calculate this from m_bzet
@@ -33,4 +37,16 @@ private:
 
 	u8 GetNumEndingZero(int index, int bits);
 	void bitstringToBzet(string bitstring);
+
+	// set/unset helper functions:
+	void bitSet(int index, bool value);
+	/* get and set two bits at a time indices go by one, example:
+	   say you have: string bitstring = "TT10T10";.. then you can say
+
+	       size_t size = bitstring.size();
+	       for(int i = 0; i < size; i++) {
+	           setBitPairAtBzetIndex(i, bitstring[i]);
+	       } */
+	bitpair getBitPairAtBzetIndex(int index);
+	void setBitPairAtBzetIndex(int index, bitpair value);
 };

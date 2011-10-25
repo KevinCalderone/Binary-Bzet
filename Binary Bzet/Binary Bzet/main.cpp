@@ -16,6 +16,9 @@ int main()
 	a.shift(1);
 	cout << b.getBzetString() << endl << b.getBzetString().size() << endl;
 
+	BinaryBzet L;
+	L.testSET();
+
 	system("pause");
     return 0;
 }
