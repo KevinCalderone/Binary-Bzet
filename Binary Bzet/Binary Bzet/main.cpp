@@ -7,7 +7,7 @@ int main()
 {
 
 	// TEST CODE
-	BinaryBzet a(5,19,3);
+	BinaryBzet a((1<<13),(1<<20),516);
 	cout << a.getBzetString() << endl;
 
 	system("pause");
