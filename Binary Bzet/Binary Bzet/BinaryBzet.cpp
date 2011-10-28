@@ -1,5 +1,7 @@
 #include "BinaryBzet.h"
 #include <stack>
+#include <iomanip>
+#include <sstream>
 
 //Used for determining 6 cases in binary operations
 static int g_caseType[] = {0,0,0,0,1,6,3,6,2,4,6,6,5,6,6,6};
@@ -92,9 +94,76 @@ string BinaryBzet::getBzetString()
 	return m_bzet_string;
 }
 
-u8 BinaryBzet::getBzetIndex(u32 index)
-{
+string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
+	//test:TTT1TTTTT0tT10 TTTt000
+	/*bool myints[] = {1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,};
+    vector<bool> m_bzet_new (myints, myints + sizeof(myints) / sizeof(bool) );
+	m_bzet=m_bzet_new;
+    m_depth = 5;*/
+
+	ostringstream oss;
+	oss << m_depth<<": ";
+	string output = oss.str();
+	uint64_t indexB=1;
+	if(m_depth > 0){
+		output[2] = getCharFromBzet(0);
+		output += getBzetPrettyRecursive(m_depth-1,indexB);
+	}
+	return output;
+
+}// end getBzetPRetty()
+
+string BinaryBzet::getBzetPrettyRecursive(int level, uint64_t& indexB){
+	string output = "[ - ]";
+
+	if(level == 1){	
+		output[1] = getCharFromBzet(indexB);
+		output[3] = getCharFromBzet(++indexB);
+		output += "\n";
+		return output;
+	}else{
+		
+		char leftChar = getCharFromBzet(indexB);
+		int  rightInd = 0;
+		int  num_of_space = 3+5*(m_depth-level);
+		ostringstream space;
+		space <<setw(num_of_space)<<"";
+		
+		if(leftChar != 'T'){
+			output[1] = leftChar;
+			output[3] = getCharFromBzet(++indexB);
+			output += "\n";
+			output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);		
+		}else{
+			output[1] = leftChar;
+			output += getBzetPrettyRecursive(level-1, ++indexB);			
+			char rightChar = getCharFromBzet(++indexB);
+			output[3] = rightChar;
+			if(rightChar == 'T') output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);
+		}
+
+		return output;
+
+	}//end if-else level
+}//end getBzetPrettyResucrive()
+
+u8 BinaryBzet::getBzetIndex(u32 index){
 	return (m_bzet[index * 2] ? 1 : 0) << 1 | (m_bzet[index * 2 + 1] ? 1 : 0);
+}
+
+
+/*return character in Bzet at indexB, return 'E' if indexB is out of bound.*/
+char BinaryBzet::getCharFromBzet(uint64_t  indexB){
+	
+	if((indexB*2+1) >= m_bzet.size()) return 'E';
+	
+	bool firstBit = m_bzet.at(indexB*2);
+	bool secondBit = m_bzet.at(indexB*2+1);
+
+	if(!firstBit && !secondBit) return '0';
+    else if(!firstBit && secondBit) return 't';
+    else if(firstBit && !secondBit) return 'T';
+    else if(firstBit && secondBit) return '1';
 }
 
 void BinaryBzet::writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode) {
@@ -736,6 +805,8 @@ vector<bool> BinaryBzet::doTreeOp(string operation, int level, vector<bool> bzet
 	{
 		//posB = bsNeg(bzetB,posB,level,end);
 	}
+
+	return m_bzet;
 }
 
 //not sure if we need this function

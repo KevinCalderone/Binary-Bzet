@@ -17,8 +17,14 @@ public:
 	BinaryBzet(int indexi, int indexe);
 	BinaryBzet(int indexi, int indexe, int step);
 	~BinaryBzet();
+	
 	int getDepth();
-	string getBzetString();
+	string getBzetString();		//return "TTT11..." thingy
+	vector<bool> getBzetBinaryString();	// return binary Bzet string
+	string getBzetPretty();	//get pretty formatted Bzet
+	//char getDepth();		//get the depth of the Bzet tree
+	char getCharFromBzet(uint64_t indexB);	//return a char from Bzet
+
 	void shift(int distance);
 	bool isTAWatching() { return true; } // lol
 	void set(int index);
@@ -56,6 +62,10 @@ private:
 
 	u8 GetNumEndingZero(int index, int bits);
 	void bitstringToBzet(string bitstring);
+
+
+	//helper function for printPretty
+	string getBzetPrettyRecursive(int level, uint64_t& indexB);
 
 	// set/unset helper functions:
 	void bitSet(int index, bool value);
