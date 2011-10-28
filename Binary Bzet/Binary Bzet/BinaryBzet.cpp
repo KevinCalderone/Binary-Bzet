@@ -89,9 +89,22 @@ int BinaryBzet::getDepth()
 	return m_depth;
 }
 
-string BinaryBzet::getBzetString()
-{
-	return m_bzet_string;
+string BinaryBzet::getBzetString(){
+	//return m_bzet_string;
+
+	//test:TTT1TTTTT0tT10 TTTt000
+	/*bool myints[] = {1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,};
+    vector<bool> m_bzet_new (myints, myints + sizeof(myints) / sizeof(bool) );
+	m_bzet=m_bzet_new;
+    m_depth = 5;*/
+
+	ostringstream output;
+	output<< m_depth<<":";
+	uint64_t indexB;
+	for(indexB = 0 ; indexB < m_bzet.size()/2; indexB++){
+		output<<getCharFromBzet(indexB);
+	}
+	return output.str();
 }
 
 string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet

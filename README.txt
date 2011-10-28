@@ -8,6 +8,12 @@ Michael Koyama
 
 News:
 
+Mary Chau (10/28/2011 12:28PM)
+Completed the Following:
+-Pretty Print
+-getCharFromBzet(indexB)
+-getBzetString
+
 Kevin Calderone (10/28/11)
 - Shifting now works
 Luis Aguiniga (10/18/11)
