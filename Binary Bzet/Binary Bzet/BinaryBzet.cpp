@@ -30,7 +30,7 @@ BinaryBzet::BinaryBzet() {
 
 /* index is the index of the bit in the
    BINARY BITSTRING you would like turned ON.*/
-BinaryBzet::BinaryBzet(int index){
+BinaryBzet::BinaryBzet(u32 index){
 	if(index < 0)
 		return;
 	string temp;
@@ -41,7 +41,7 @@ BinaryBzet::BinaryBzet(int index){
 
 /* indexe is the index of the bit in the
    BINARY BITSTRING you would like turned OFF.*/
-BinaryBzet::BinaryBzet(int indexi, int indexe){
+BinaryBzet::BinaryBzet(u32 indexi, u32 indexe){
 	if(indexe <= indexi || indexi < 0)
 		return;
 	string temp;
@@ -55,7 +55,7 @@ BinaryBzet::BinaryBzet(int indexi, int indexe){
    each 1 in the BINARY BITSTRING. If a step
    lands the index on indexe, that bit will
    be turned OFF */
-BinaryBzet::BinaryBzet(int indexi, int indexe, int step){
+BinaryBzet::BinaryBzet(u32 indexi, u32 indexe, u32 step){
 	if(indexe <= indexi || indexi < 0 || step < 0)
 		return;
 	string temp;
@@ -74,7 +74,7 @@ BinaryBzet::~BinaryBzet() {
 
 }
 
-u8 BinaryBzet::GetNumEndingZero(int index, int bits)
+u8 BinaryBzet::GetNumEndingZero(u32 index, u32 bits)
 {
 	if(index==0)
 		return bits;
@@ -84,7 +84,7 @@ u8 BinaryBzet::GetNumEndingZero(int index, int bits)
 	return c;
 }
 
-int BinaryBzet::getDepth()
+u32 BinaryBzet::getDepth()
 {
 	return m_depth;
 }
@@ -100,7 +100,7 @@ string BinaryBzet::getBzetString(){
 
 	ostringstream output;
 	output<< m_depth<<":";
-	uint64_t indexB;
+	u32 indexB;
 	for(indexB = 0 ; indexB < m_bzet.size()/2; indexB++){
 		output<<getCharFromBzet(indexB);
 	}
@@ -118,7 +118,7 @@ string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	ostringstream oss;
 	oss << m_depth<<": ";
 	string output = oss.str();
-	uint64_t indexB=1;
+	u32 indexB=1;
 	if(m_depth > 0){
 		output[2] = getCharFromBzet(0);
 		output += getBzetPrettyRecursive(m_depth-1,indexB);
@@ -127,7 +127,7 @@ string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 
 }// end getBzetPRetty()
 
-string BinaryBzet::getBzetPrettyRecursive(int level, uint64_t& indexB){
+string BinaryBzet::getBzetPrettyRecursive(u32 level, u32& indexB){
 	string output = "[ - ]";
 
 	if(level == 1){	
@@ -169,7 +169,7 @@ u8 BinaryBzet::getBzetIndex(u32 index) {
 
 
 /*return character in Bzet at indexB, return 'E' if indexB is out of bound.*/
-char BinaryBzet::getCharFromBzet(uint64_t  indexB){
+char BinaryBzet::getCharFromBzet(u32 indexB){
 	
 	if((indexB*2+1) >= m_bzet.size()) return 'E';
 	
@@ -179,7 +179,7 @@ char BinaryBzet::getCharFromBzet(uint64_t  indexB){
 	if(!firstBit && !secondBit) return '0';
     else if(!firstBit && secondBit) return 't';
     else if(firstBit && !secondBit) return 'T';
-    else if(firstBit && secondBit) return '1';
+    else /*if(firstBit && secondBit)*/ return '1';
 }
 
 void BinaryBzet::writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode) {
@@ -211,7 +211,7 @@ void BinaryBzet::writeValue(vector<bool>& result, u32& resultIndex, u8 resultDep
 	}
 }
 
-void BinaryBzet::writeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth) {
+void BinaryBzet::writeBits(bool value, u32 count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth) {
 	// If there is an odd number of bits counted, you need ot make sure the boundry is encoded 
 	// correctly since everything is encoded in pairs of bits
 	if (bitsCounted % 2) {
@@ -230,7 +230,7 @@ void BinaryBzet::writeBits(bool value, int count, vector<bool>& result, bool& va
 	}
 }
 
-void BinaryBzet::encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced) {
+void BinaryBzet::encodeBits(bool value, u32 count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced) {
 	// If it is not currently counting up any data, start counting up this data and encode it later
 	if (bitsCounted == 0) {
 		valueCounting = value;
@@ -279,13 +279,13 @@ void BinaryBzet::shift(int distance) {
 	// and finding the minimum size depth bzet that will fit it.
 	// For now, just assume the worst case that all bits are one.
 	u32 neededSize = (1 << m_depth);
-	if (distance < 0 && distance * -1 > neededSize)
+	if (distance < 0 && (u32)(distance * -1) > neededSize)
 		neededSize = 0;
 	else 
 		neededSize -= u32(-1 * distance);
 
 	u8 resultDepth = m_depth;
-	while (1 << resultDepth < neededSize)
+	while ((u32)(1 << resultDepth) < neededSize)
 		resultDepth++;
 
 	// Memory hint for bzet size to reduce reallocations of result buffer
@@ -394,9 +394,9 @@ void BinaryBzet::shift(int distance) {
 void BinaryBzet::bitstringToBzet(string bitstring)
 {
 	string input = "";
-	int i = 1;
+	u32 i = 1;
 	for(i;i<31;i++)
-		if(bitstring.length()<=(1<<i))
+		if(bitstring.length()<=(u32)(1<<i))
 			break;
 	input.append((1<<i)-bitstring.length(),'0');
 	bitstring += input;
@@ -413,7 +413,7 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 			else
 				input.push_back('1');
 	}
-	m_depth = log((float)input.length())/log(2.0) + 1;
+	m_depth = (u32)(log((float)input.length())/log(2.0) + 1);
 	i = 0;
 	int num_end_zero;
 	do{
@@ -424,7 +424,7 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 			while (number_of_times_to_expand  > 0) {
 				bool same = true;
 				//cout << number_of_times_to_expand << " " << num_to_encode <<  "   " << input.length()-1 << endl;////////////////
-				for(int j = i; (j < i + (1 << num_to_encode) - 1) && (j < input.length()-1); j++){////////////////////
+				for(u32 j = i; (j < i + (1 << num_to_encode) - 1) && (j < input.length()-1); j++){////////////////////
 					same = same && (input[j]==input[j+1]);}
 				//cout << endl;/////////////////
 				if (!same)
@@ -441,7 +441,7 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 				i++;
 			}
 	} while ( GetNumEndingZero(i, m_depth-1) != m_depth-1);
-	for(int i=0;i<m_bzet_string.length();i++){
+	for(u32 i=0;i<m_bzet_string.length();i++){
 		switch(m_bzet_string.at(i)){
 		case '0':
 			m_bzet.push_back(0); m_bzet.push_back(0); break;
@@ -455,16 +455,16 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 		}
 }
 
-void BinaryBzet::set(int index) {
+void BinaryBzet::set(u32 index) {
 	bitSet(index, true);
 }
 
-void BinaryBzet::unset(int index) {
+void BinaryBzet::unset(u32 index) {
 	bitSet(index, false);	
 }
 
 // currently only traverses bzet
-void BinaryBzet::bitSet(int index, bool value) {
+void BinaryBzet::bitSet(u32 index, bool value) {
 	//    s: a stack to keep track of the level the current index in the array is for
 	// seen: an array to keep track of the number of times a level has been seen.
 
@@ -480,7 +480,7 @@ void BinaryBzet::bitSet(int index, bool value) {
 	seen[top] = 1;
 
 	bitpair curBP;
-	while (!s.empty() && bzetIndex < m_bzet.size()) {
+	while (!s.empty() && (u32)(bzetIndex) < (u32)(m_bzet.size())) {
 		top = s.top();
 		seen[top]++;
 		if (seen[top] == 2)
@@ -504,8 +504,8 @@ void BinaryBzet::bitSet(int index, bool value) {
 	delete [] seen;
 }
 
-bitpair BinaryBzet::getBitPairAtBzetIndex(int index) {
-	int indexA = index*2 + 8; // skip first 8 bits since thats where the tree depth is set.
+bitpair BinaryBzet::getBitPairAtBzetIndex(u32 index) {
+	u32 indexA = index*2 + 8; // skip first 8 bits since thats where the tree depth is set.
 	if (indexA + 1 < m_bzet.size()) {
 		bool lBit = m_bzet[indexA];
 		bool rBit = m_bzet[indexA+1];
@@ -514,7 +514,7 @@ bitpair BinaryBzet::getBitPairAtBzetIndex(int index) {
 	return 'x';
 }
 
-void BinaryBzet::setBitPairAtBzetIndex(int index, bitpair value) {
+void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
 	if (index >= m_bzet.size())
 		m_bzet.reserve(index);
 
@@ -761,7 +761,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, int posA,
 //TODO test
 vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, int currentPos, int level, int& endPos)
 {
-	if(currentPos >= bzet.size())
+	if(currentPos >= (u32)bzet.size())
 	{
 		endPos = bzet.size();
 	}
@@ -806,7 +806,7 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, int currentPos, int level, int
 //implements DA and DB
 //returns position of next subtree
 int BinaryBzet::bsDrop(vector<bool> bzet, int currentPos, int level)
-{
+{ 
 	//TODO finish
 	int endPos = bzetWalk(bzet,currentPos,level);
 	if(endPos >= bzet.size())
@@ -899,7 +899,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back(~((*itA)&(*itB)));
+			bzetRet.push_back((bool)(~((*itA)&(*itB))));
 			itB++;
 		}
 	}
@@ -907,7 +907,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back(~((*itA)|(*itB)));
+			bzetRet.push_back((bool)(~((*itA)|(*itB))));
 			itB++;
 		}
 	}
@@ -915,7 +915,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back(~((*itA)^(*itB)));
+			bzetRet.push_back((bool)(~((*itA)^(*itB))));
 			itB++;
 		}
 	}

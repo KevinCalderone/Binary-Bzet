@@ -13,22 +13,22 @@ typedef unsigned char bitpair;
 class BinaryBzet {
 public:
 	BinaryBzet();
-	BinaryBzet(int index);
-	BinaryBzet(int indexi, int indexe);
-	BinaryBzet(int indexi, int indexe, int step);
+	BinaryBzet(u32 index);
+	BinaryBzet(u32 indexi, u32 indexe);
+	BinaryBzet(u32 indexi, u32 indexe, u32 step);
 	~BinaryBzet();
 	
-	int getDepth();
+	u32 getDepth();
 	string getBzetString();		//return "TTT11..." thingy
 	vector<bool> getBzetBinaryString();	// return binary Bzet string
 	string getBzetPretty();	//get pretty formatted Bzet
 	//char getDepth();		//get the depth of the Bzet tree
-	char getCharFromBzet(uint64_t indexB);	//return a char from Bzet
+	char getCharFromBzet(u32 indexB);	//return a char from Bzet
 
 	void shift(int distance);
 	bool isTAWatching() { return true; } // lol
-	void set(int index);
-	void unset(int index);
+	void set(u32 index);
+	void unset(u32 index);
 	void testSET(); // temporary
 	static void testShift();
 	BinaryBzet operator& (const BinaryBzet& rhs);
@@ -54,23 +54,23 @@ private:
 	int bzetWalk(vector<bool> bzet, int currentPos, int currentLev); //implements walk when ret_n = false
 	vector<bool> doTreeOp(string operation, int level, vector<bool> bzetA, int& posA, vector<bool> bzetB, int& posB);
 	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
-
+	
 	// Helper functions for shift
 	u8 getBzetIndex(u32 index);
 	void writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode);
 	void writeValue(vector<bool>& result, u32& resultIndex, u8 resultDepth, u8 value, u32 valuesToEncode);
-	void writeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth);
-	void encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced = false);
+	void writeBits(bool value, u32 count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth);
+	void encodeBits(bool value, u32 count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced = false);
 
-	u8 GetNumEndingZero(int index, int bits);
+	u8 GetNumEndingZero(u32 index, u32 bits);
 	void bitstringToBzet(string bitstring);
 
 
 	//helper function for printPretty
-	string getBzetPrettyRecursive(int level, uint64_t& indexB);
+	string getBzetPrettyRecursive(u32 level, u32& indexB);
 
 	// set/unset helper functions:
-	void bitSet(int index, bool value);
+	void bitSet(u32 index, bool value);
 	/* get and set two bits at a time indices go by one, example:
 	   say you have: string bitstring = "TT10T10";.. then you can say
 
@@ -78,6 +78,6 @@ private:
 	       for(int i = 0; i < size; i++) {
 	           setBitPairAtBzetIndex(i, bitstring[i]);
 	       } */
-	bitpair getBitPairAtBzetIndex(int index);
-	void setBitPairAtBzetIndex(int index, bitpair value);
+	bitpair getBitPairAtBzetIndex(u32 index);
+	void setBitPairAtBzetIndex(u32 index, bitpair value);
 };
