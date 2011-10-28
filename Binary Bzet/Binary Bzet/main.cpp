@@ -5,18 +5,17 @@
 int main()
 {
 	// TEST CODE
-	BinaryBzet a((1<<13),(1<<20),516);
-	cout << a.getBzetString() << endl;
+	//BinaryBzet a((1<<13),(1<<20),516);
+	//cout << a.getBzetString() << endl;
 
-	// Shift test
-	BinaryBzet b(1<<2);
-	b.shift(5);
+	BinaryBzet::testShift();
+
 	// Need to have way of outputting m_bzet to see change
 
 	BinaryBzet L;
 	L.testSET();
 
-
+	/*
 	BinaryBzet a;
 	vector<bool> bzetA;
 //	bool val1[] = {1,0, 1,0, 1,1, 1,0, 1,0, 0,1, 0,1};
@@ -51,7 +50,7 @@ int main()
 	{
 		cout<<*it<<" ";
 	}
-
+	*/
 	system("pause");
     return 0;
 }

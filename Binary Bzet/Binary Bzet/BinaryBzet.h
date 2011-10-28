@@ -24,8 +24,10 @@ public:
 	void set(int index);
 	void unset(int index);
 	void testSET(); // temporary
+	static void testShift();
 	BinaryBzet operator& (const BinaryBzet& rhs);
 	bool operator== (const BinaryBzet& rhs);
+	bool AlignCompare (const BinaryBzet& other);
 
 	//TODO - move method to private - temporary for testing
 	void align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u32& depthB);

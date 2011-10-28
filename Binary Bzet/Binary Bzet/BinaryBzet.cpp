@@ -92,12 +92,13 @@ string BinaryBzet::getBzetString()
 	return m_bzet_string;
 }
 
-u8 BinaryBzet::getBzetIndex(u32 index)
-{
+u8 BinaryBzet::getBzetIndex(u32 index) {
+	// Get the value of 2-bit number in the bzet representing '0', 't', 'T', or '1'
 	return (m_bzet[index * 2] ? 1 : 0) << 1 | (m_bzet[index * 2 + 1] ? 1 : 0);
 }
 
 void BinaryBzet::writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode) {
+	// Write a letter into the result bzet
 	for (u32 i = 0; i < lettersToEncode; ++i) {
 		result.push_back((letter >> 1) & 0x1);
 		result.push_back(letter & 0x1);
@@ -105,11 +106,13 @@ void BinaryBzet::writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, 
 }
 
 void BinaryBzet::writeValue(vector<bool>& result, u32& resultIndex, u8 resultDepth, u8 value, u32 valuesToEncode) {
+	// Write the buffered data into the result bzet in the most compact form
 	int valuesLeftToEncode = valuesToEncode;
 	while (valuesLeftToEncode > 0) {
 		int numLeadingT = GetNumEndingZero(resultIndex, resultDepth - 1);
 		int numToEncode = 1;
 
+		// Collapse levels of the tree if possible for an optimal representation
 		while (numLeadingT > 0 && 2 * numToEncode <= valuesLeftToEncode) {
 			numToEncode *= 2;
 			numLeadingT--;
@@ -124,6 +127,8 @@ void BinaryBzet::writeValue(vector<bool>& result, u32& resultIndex, u8 resultDep
 }
 
 void BinaryBzet::writeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth) {
+	// If there is an odd number of bits counted, you need ot make sure the boundry is encoded 
+	// correctly since everything is encoded in pairs of bits
 	if (bitsCounted % 2) {
 		writeValue(result, resultIndex, resultDepth, valueCounting ? 3 : 0, (bitsCounted - 1) / 2);
 		writeValue(result, resultIndex, resultDepth, (valueCounting ? 1 : 0) << 1 | (value ? 1 : 0), 1);
@@ -131,6 +136,7 @@ void BinaryBzet::writeBits(bool value, int count, vector<bool>& result, bool& va
 		valueCounting = value;
 		bitsCounted = count - 1;
 	}
+	// If there are an even number of bits counted up, simply encode them all
 	else {
 		writeValue(result, resultIndex, resultDepth, valueCounting ? 3 : 0, bitsCounted / 2);
 
@@ -140,33 +146,52 @@ void BinaryBzet::writeBits(bool value, int count, vector<bool>& result, bool& va
 }
 
 void BinaryBzet::encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced) {
+	// If it is not currently counting up any data, start counting up this data and encode it later
 	if (bitsCounted == 0) {
 		valueCounting = value;
 		bitsCounted = count;
 	}
+	// If you found more of the same value you are currently counting, just increase the number found
 	else if (value == valueCounting) {
 		bitsCounted += count;
 	}
+	// If you found data that is different than what you are counting, write the buffered data out and start
+	// counting up the new data
 	else {
 		writeBits(value, count, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 	}
-
+	
+	// Force it to output the remaining data instead of saving it
 	if (forced)
 		writeBits(0, 0, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 }
 
 void BinaryBzet::shift(int distance) {
-	vector<bool> result;
-	u32 resultIndex = 0;
-	u32 bitsToSkip = 0;
-	bool valueCounting = 0;
-	u32 bitsCounted = 0;
+	// This algoritm parses through the bzet string extracting the data that it is storing,
+	// and reencodes the data back into a result bzet starting from some offset into the 
+	// original bzet.
 
-	u32 bitstringIndex = 0;
-	u32 bzetIndex = 0;
+	// TODO: -This should probably be encapsulated into a seperate struct so that it will be a lot
+	//	     cleaner passing the algorithm state through the control flow of the algorithm.
+	//		 -This produces a bzet that is fully collapsed, but it may not output a correctly
+	//       normalized bzet(eg. it may use a depth that is too large).  It picks the output
+	//		 depth based on the worst case, and this can easily be improved to use the optimal 
+	//       depth by adding a method that will find the index of the last one in the bzet.
+	//		 -This only updates m_bzet, so m_bzet_string will be incorrect after execution.
+	//	     -The copy of the result into the current bzet should be done in a copy constructor.
 
-	// Can avoid need for possible normalization by implementing getIndexOfLastOne
-	// and normalizing to the minimum size that will fit it.
+	// ALGORITHM STATE
+	vector<bool> result;		// The result bzet
+	u32 resultIndex = 0;		// The index across the data level of the result bzet to encode next
+	u32 bitsToSkip = 0;			// Number of bits left to ignore when parsing through the original bzet
+	bool valueCounting = 0;		// Whether it is currently parsing through '0' or '1' in the bzet
+	u32 bitsCounted = 0;		// Number of bits it has found in a row that have the value "valueCounting"
+	u32 bitstringIndex = 0;		// The index across the data level of the current bzet to decode next
+	u32 bzetIndex = 0;			// The index of the current letter in the compressed bzet form that it is currently parsing
+
+	// DEPTH OF RESULT BZET
+	// Can avoid need for normalization by implementing getIndexOfLastOne
+	// and finding the minimum size depth bzet that will fit it.
 	// For now, just assume the worst case that all bits are one.
 	u32 neededSize = (1 << m_depth);
 	if (distance < 0 && distance * -1 > neededSize)
@@ -174,13 +199,15 @@ void BinaryBzet::shift(int distance) {
 	else 
 		neededSize -= u32(-1 * distance);
 
-	// Memory hint for bzet size to reduce reallocations
-	result.reserve(m_bzet.size());
-
 	u8 resultDepth = m_depth;
 	while (1 << resultDepth < neededSize)
 		resultDepth++;
 
+	// Memory hint for bzet size to reduce reallocations of result buffer
+	result.reserve(m_bzet.size());
+
+	// STATE INITIALIZATION
+	// Determine where to start encoding into the result bzet
 	if (distance > 0) {
 		bitsCounted = distance;
 		valueCounting = 0;
@@ -190,8 +217,12 @@ void BinaryBzet::shift(int distance) {
 		bitsToSkip = u32(-1 * distance);
 	}
 
-	// Decode the bitstring, and reencode at a starting index
+	// MAIN ALGORITHM
+	// Parse through the bzet, and reencode the values into the result bzet
 	do {
+		// Parse a piece of the bzet, and determine what it is encoding
+		// and how many bits that piece is encoding by looking at how many
+		// leading 'T's there are
 		int numLeadingT = GetNumEndingZero(bitstringIndex, m_depth - 1);
 		u32 bitsToEncode = 2 << numLeadingT;
 		int value = getBzetIndex(bzetIndex);
@@ -206,6 +237,7 @@ void BinaryBzet::shift(int distance) {
 
 		bitstringIndex += bitsToEncode / 2;
 
+		// Throw away data if you have not reached the part you want to access yet
 		if (bitsToSkip > 0) {
 			if (bitsToSkip > bitsToEncode) {
 				bitsToSkip -= bitsToEncode;
@@ -220,6 +252,7 @@ void BinaryBzet::shift(int distance) {
 		if (bitsToEncode == 0)
 			continue;
 
+		// Encode the extracted data into the result bzet
 		switch (value) {
 		case 1:
 			if (bitsToEncode == 1) {
@@ -252,7 +285,9 @@ void BinaryBzet::shift(int distance) {
 
 	} while (bitstringIndex < u32(1) << (m_depth - 1));
 
-	// encode enough 0's at the end to fill in rest of bzet
+	// FINISHING TOUCHES
+	// Fill in the rest of the result bzet with the left over data found, and add
+	// enough '0' bits to fill in the rest of the bzet if there is extra space
 	u32 bitsEncoded = (resultIndex << 1);
 	u32 bitsFound = bitsEncoded + bitsCounted;
 	u32 bitsExpected = (1 << resultDepth);
@@ -268,6 +303,7 @@ void BinaryBzet::shift(int distance) {
 
 	// copy result bzet into this bzet
 	m_bzet = result;
+	m_depth = resultDepth;
 }
 
 void BinaryBzet::bitstringToBzet(string bitstring)
@@ -736,6 +772,8 @@ vector<bool> BinaryBzet::doTreeOp(string operation, int level, vector<bool> bzet
 	{
 		//posB = bsNeg(bzetB,posB,level,end);
 	}
+
+	return bzetA;  // I just put this so it would compile for me, delete this when you fix it
 }
 
 //not sure if we need this function
@@ -898,6 +936,50 @@ void BinaryBzet::setDepth(u32 newDepth)
 bool BinaryBzet::operator ==(const BinaryBzet& rhs)
 {
 	vector<bool> bzetB = rhs.m_bzet;
-	return (equal( bzetB.begin(), bzetB.end(), this->m_bzet.begin()) && (rhs.m_depth == this->m_depth));	
+
+	return (equal( bzetB.begin(), bzetB.end(), this->m_bzet.begin()) && rhs.m_depth == this->m_depth);	
 }
 
+bool BinaryBzet::AlignCompare (const BinaryBzet& other) {
+	vector<bool> bzetA = m_bzet;
+	u32 depthA = m_depth;
+	vector<bool> bzetB = other.m_bzet;
+	u32 depthB = other.m_depth;
+	align(bzetA, depthA, bzetB, depthB);
+		
+	return (equal( bzetB.begin(), bzetB.end(), bzetA.begin()) && depthB == depthA);	
+}
+
+void BinaryBzet::testShift () {
+	bool passed = 1;
+	cout << "Testing shifting..." << endl;
+
+	for (int i=2; i<20; ++i)
+		for (int j=2; j<20; ++j) {
+			BinaryBzet a(i);
+			a.shift(0);			// The constructor isn't creating an optimized bzet
+			BinaryBzet b(j);
+			b.shift(i - j);
+	
+			if (!a.AlignCompare(b)) {	// The shifting operation may not create an correctly normalized bzet
+				cout << "Shifting Test (" << i << ", " << j << "): Failed!" << endl;
+				passed = 0;
+			}
+		}
+
+	{
+		BinaryBzet a(0, 4, 2);
+		a.shift(0);			// The constructor isn't creating an optimized bzet
+		BinaryBzet b(1, 5, 2);
+		b.shift(-1);
+	
+		if (!a.AlignCompare(b)) { // The shifting operation may not create an correctly normalized bzet
+			cout << "Shifting Test: Failed!" << endl;
+			passed = 0;
+		}
+
+	}
+
+	if (passed)
+		cout << "All shifting tests passed :D" << endl;
+}
