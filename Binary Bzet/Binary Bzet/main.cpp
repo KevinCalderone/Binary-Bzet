@@ -53,7 +53,7 @@ int main()
 	}
 	cout <<endl;
 	cout<<a.getBzetPretty()<<endl;
-
+	cout<<a.getBzetString()<<endl;
 	system("pause");
     return 0;
 }
