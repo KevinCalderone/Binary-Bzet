@@ -1,6 +1,26 @@
 #include "BinaryBzet.h"
 #include <stack>
 
+//Used for determining 6 cases in binary operations
+static int g_caseType[] = {0,0,0,0,1,6,3,6,2,4,6,6,5,6,6,6};
+static string g_binOp[][6]  = {           
+	{ "FALSE", "0",  "DB0", "DA0", "DB0", "DA0" }, //00 0000 Result
+	{ "AND",   "&",  "DB0", "DA0", "CB",  "CA"  }, //01 0001    |
+    { "A<-B",  "<-", "CB",  "CA",  "NB",  "DA0" }, //02 0010    |
+    { "A",     "a",  "DB0", "CA",  "DB0", "CA"  }, //03 0011    V
+    { "????",  "x",  "DB0", "DA0", "DB0", "CA"  }, //04 0100
+    { "B",     "b",  "CB",  "DA0", "CB",  "DA0" }, //05 0101
+    { "XOR",   "^",  "CB",  "CA",  "NB",  "NA"  }, //06 0110
+    { "OR",    "|",  "CB",  "CA",  "DB1", "DA1" }, //07 0111
+    { "NOR",   "~|", "NB",  "NA",  "DB0", "DA0" }, //08 1000
+    { "EQ",    "~^", "NB",  "NA",  "CB",  "CA"  }, //09 1001
+    { "~B",    "~b", "NB",  "DA0", "NB",  "DA0" }, //10 1010
+    { "????",  "x",  "CB",  "CA",  "CB",  "CA"  }, //11 1011
+    { "~A",    "~a", "DB0", "NA",  "DB0", "NA"  }, //12 1100
+    { "A->B",  "->", "DB0", "NA",  "CB",  "CA"  }, //13 1101
+    { "NAND",  "~&", "CB",  "DA1", "NB",  "NA"  }, //14 1110
+    { "TRUE",  "1",  "DB1", "DA1", "DB1", "DA1" }}; //15 1111
+
 BinaryBzet::BinaryBzet() {
 	m_bzet_string = "";
 	m_depth = 0;
@@ -428,3 +448,457 @@ void BinaryBzet::testSET() {
 	bitSet(0, 0); // should display Tt1
 	cout << "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n";
 }
+
+
+/*    # The case type breaks each trees c & d bits
+    # from the left side of the operator and the c & d
+    # bits from the right side (total of 4 bits
+    # and 16 possibilities) into 6 fundamental cases
+    # Trees never have associated data bits thus in
+    # the comments an x or error is placed before
+    # a 1 data bit that corresponds to a tree bit.
+    # These are type 6 data errors and should never
+    # occur. This case table maps each of the 16
+    # possibilities into the 6 operational cases 0-5
+    # and case 6 representing a data error.
+
+    # Inputs  DD      0T     T0     1T     T1    TT
+    #        Case0   Case1  Case2  Case3  Case4 Case5
+    #
+    #                       c1,c2, d1,d2
+    case_type = [0,  #  0     0,0,  0, 0  DD
+                 0,  #  1     0,0,  0, 1  DD
+                 0,  #  2     0,0,  1, 0  DD
+                 0,  #  3     0,0,  1, 1  DD
+                 1,  #  4     0,1,  0, 0  0T
+                 6,  #  5     0,1,  0,x1  0T
+                 3,  #  6     0,1,  1, 0  1T
+                 6,  #  7     0,1,  1,x1  1T
+                 2,  #  8     1,0,  0, 0  T0
+                 4,  #  9     1,0,  0, 1  T1
+                 6,  # 10     1,0, x1, 0  T0
+                 6,  # 11     1,0, x1, 1  T1
+                 5,  # 12     1,1,  0, 0  TT
+                 6,  # 13     1,1,  0,x1  TT
+                 6,  # 14     1,1, x1, 0  TT
+                 6,  # 15     1,1, x1,x1  TT
+                 ]
+
+
+    # Definitions of all 16 binary Boolean operations.
+    # This table drives the computation both of data and tree nodes.
+    # Each operation is a 6 tuple with the name of the operation,
+    # a machine operation code to do on byte to byte operations,
+    # and the action to take for each possible case. Case 0 is
+    # the binop row index reindexed by the right and left hand data
+    # bits as a number 0-3.
+
+    binop  = (
+    # 0        1     2      3      4      5        Tuple Index
+    #                                               a= 0011
+    #                                        operation ....
+    #                                               b= 0101  Case                                 
+    #                       index = a<<1 | b  ===>     0123    0               
+    ( 'FALSE', '0',  'DB0', 'DA0', 'DB0', 'DA0' ), #00 0000 Result
+    ( 'AND',   '&',  'DB0', 'DA0', 'CB',  'CA'  ), #01 0001    |
+    ( 'A<-B',  '<-', 'CB',  'CA',  'NB',  'DA0' ), #02 0010    |
+    ( 'A',     'a',  'DB0', 'CA',  'DB0', 'CA'  ), #03 0011    V
+    ( '????',  'x',  'DB0', 'DA0', 'DB0', 'CA'  ), #04 0100
+    ( 'B',     'b',  'CB',  'DA0', 'CB',  'DA0' ), #05 0101
+    ( 'XOR',   '^',  'CB',  'CA',  'NB',  'NA'  ), #06 0110
+    ( 'OR',    '|',  'CB',  'CA',  'DB1', 'DA1' ), #07 0111
+    ( 'NOR',   '~|', 'NB',  'NA',  'DB0', 'DA0' ), #08 1000
+    ( 'EQ',    '~^', 'NB',  'NA',  'CB',  'CA'  ), #09 1001
+    ( '~B',    '~b', 'NB',  'DA0', 'NB',  'DA0' ), #10 1010
+    ( '????',  'x',  'CB',  'CA',  'CB',  'CA'  ), #11 1011
+    ( '~A',    '~a', 'DB0', 'NA',  'DB0', 'NA'  ), #12 1100
+    ( 'A->B',  '->', 'DB0', 'NA',  'CB',  'CA'  ), #13 1101
+    ( 'NAND',  '~&', 'CB',  'DA1', 'NB',  'NA'  ), #14 1110
+    ( 'TRUE',  '1',  'DB1', 'DA1', 'DB1', 'DA1' )) #15 1111
+    #       Shortcut  <-- C1 to C4 Actions -->  Recur  Result
+    # Name     raw   Case1  Case2  Case3  Case4 Case5  Case 0   
+    # Inputs         0T     T0     1T     T1    TT
+    # 0        1     2      3      4      5      
+
+*/
+
+//
+BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	vector<bool> emptyBzet;
+	
+	//Create emptyBzet
+	//TODO confirm emptyBzet representation
+	emptyBzet.push_back(0);
+	emptyBzet.push_back(0);
+	
+	//empty set against anything
+	if(equal( bzetA.begin(), bzetA.end(), emptyBzet.begin()))
+	{
+		//return empty bzet
+		//TODO confirm emptyBzet representation
+		return BinaryBzet();
+	}
+	if(equal( bzetB.begin(), bzetB.end(), emptyBzet.begin()))
+	{
+		// return empty bzet
+		//TODO confirm emptyBzet representation
+		return BinaryBzet();
+	}
+
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	
+	//Full set vs anything
+	//TODO move to above align after testing
+	vector<bool> fullBzet;
+	//TODO confirm full representation
+	fullBzet.push_back(1);
+	fullBzet.push_back(1);
+	if(equal( bzetA.begin(), bzetA.end(), fullBzet.begin()))
+	{
+		return rhs;
+	}
+	if(equal( bzetB.begin(), bzetB.end(), fullBzet.begin()))
+	{
+		return *this;
+	}
+	
+	//Level 0 bzet
+	//TODO finish once constructor implemented
+	if(depthA == 0)
+	{
+		vector<bool>::iterator itA;
+		vector<bool>::iterator itB;
+		vector<bool> bzetRet;
+
+		itA = bzetA.begin();
+		itB = bzetB.begin();
+
+		for(itA; itA != bzetA.end(); itA++)
+		{
+			bzetRet.push_back((*itA) & (*itB));
+			itB++;
+		}
+		//TODO change this - need new consturctor
+		// return BinaryBzet(bzetRet,0);
+		return rhs;
+	}
+
+	//Non-0 Level bzet
+	int flag = 0;
+	int curPos = 0;
+	vector<bool> bzetRet = binaryOp(1,bzetA,1,bzetB,1,depthA,flag,curPos);
+	if(flag == 0)
+	{
+		//TODO change this - need new consturctor
+		//TODO finish normlaize function
+		// BinaryBzet(bzetRet,0);
+		// return normalize(bzetRet,depthA);
+		return rhs;
+	}
+	else if(flag == 1)
+	{
+		//TODO change this - need new consturctor
+		//return the full bitset
+		//return BinaryBzet(fullBzet,depthA);
+		return rhs;
+	}
+	else if(flag == 2)
+	{
+		//TODO change this - need new consturctor
+		//return the empty set
+		//return BinaryBzet(emptyBzet,1);
+		return rhs;
+	}
+	return rhs;
+}
+
+//flag is 0 - return NONE python
+//flag is 1 - return true python
+//flag is 2 - return false python
+//branchData == cdr python
+//treeData == ddr python
+vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, int posA, vector<bool> bzetB, int posB, int level, int& f, int& currentPos)
+{
+	string* operation = g_binOp[operationNo];
+	vector<bool> bzet1 = bzetA;
+	int currentPos1 = posA; 
+	vector<bool> bzet2 = bzetB; 
+	int currentPos2 = posB;
+	
+	int branchData = 0;
+	int treeData = 0;
+
+	return bzetA;
+}
+
+//implements CA and CB
+//TODO test
+vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, int currentPos, int level, int& endPos)
+{
+	if(currentPos >= bzet.size())
+	{
+		endPos = bzet.size();
+	}
+	else
+	{
+		endPos = bzetWalk(bzet,currentPos,level);
+	}
+	vector<bool> returnBzet;
+	//gets copy of subtree at positions currentPos-endPos
+	for(int i = currentPos; i<endPos; i++)
+	{
+		returnBzet.push_back(bzet.at(i));
+	}
+	return returnBzet;
+}
+
+//implements NA and NB
+//TODO finish/test
+vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, int currentPos, int level, int& endPos)
+{
+	vector<bool> returnBzet;
+	if(currentPos >= bzet.size())
+	{
+		endPos = bzet.size();
+		//TODO - return empty vector<bool> bytes([]) - check correctness
+		return returnBzet;
+	}
+	else
+	{
+		endPos = bzetWalk(bzet,currentPos,level);
+	}
+	//gets copy of subtree at positions currentPos-endPos
+	for(int i = currentPos; i<endPos; i++)
+	{
+		returnBzet.push_back(bzet.at(i));
+	}
+	//not the subtree in place
+	subtreeNot(returnBzet, 1, level);
+	return returnBzet;
+}
+
+//implements DA and DB
+//returns position of next subtree
+int BinaryBzet::bsDrop(vector<bool> bzet, int currentPos, int level)
+{
+	//TODO finish
+	int endPos = bzetWalk(bzet,currentPos,level);
+	if(endPos >= bzet.size())
+	{
+		endPos = bzet.size();
+	}
+	return endPos;
+}
+
+//TODO finish typing problems with this function
+vector<bool> BinaryBzet::doTreeOp(string operation, int level, vector<bool> bzetA, int& posA, vector<bool> bzetB, int& posB)
+{
+	bool dr;
+	int end = 0;
+	if(operation.compare("DA0") == 0)
+	{
+		posA = bsDrop(bzetA,posA,level);
+		dr = false;
+	}
+	else if(operation.compare("DA1") == 0)
+	{
+		posA = bsDrop(bzetA,posA,level);
+		dr = true;
+	}
+	else if(operation.compare("DB0") == 0)
+	{
+		posB = bsDrop(bzetB,posB,level);
+		dr = false;
+	}
+	else if(operation.compare("DB1") == 0)
+	{
+		posB = bsDrop(bzetB,posB,level);
+		dr = true;
+	}
+	else if(operation.compare("CA") == 0)
+	{
+		//posA = bsCopy(bzetA,posA,level,end);
+	}
+	else if(operation.compare("CB") == 0)
+	{
+		//posB = bsCopy(bzetB,posB,level,end);
+	}
+	else if(operation.compare("NA") == 0)
+	{
+		//posA = bsNeg(bzetA,posA,level,end);
+	}
+	else if(operation.compare("NB") == 0)
+	{
+		//posB = bsNeg(bzetB,posB,level,end);
+	}
+}
+
+//not sure if we need this function
+vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<bool> data2)
+{
+	vector<bool>::iterator itA;
+	vector<bool>::iterator itB;
+	vector<bool> bzetRet;
+	
+	itA = data1.begin();
+	itB = data2.begin();
+
+	if(operation.compare("&") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back((*itA) & (*itB));
+			itB++;
+		}
+	}
+	else if(operation.compare("|") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back((*itA) | (*itB));
+			itB++;
+		}
+	}
+	else if(operation.compare("^") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back((*itA) ^ (*itB));
+			itB++;
+		}
+	}
+	else if(operation.compare("~&") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back(~((*itA)&(*itB)));
+			itB++;
+		}
+	}
+	else if(operation.compare("~|") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back(~((*itA)|(*itB)));
+			itB++;
+		}
+	}
+	else if(operation.compare("~^") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back(~((*itA)^(*itB)));
+			itB++;
+		}
+	}
+	else if(operation.compare("0") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back(1);
+			itB++;
+		}
+	}
+	else if(operation.compare("1") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back(0);
+			itB++;
+		}
+	}
+	return bzetRet;
+}
+
+//NOT's current subtree in place
+//implements _not_ in python code
+void BinaryBzet::subtreeNot(vector<bool>& bzet, int currentPos, int level)
+{
+	//TODO finish
+	return;
+}
+
+//returns end position of subtree starting at currentPos - ends exclusive
+int BinaryBzet::bzetWalk(vector<bool> bzet, int currentPos, int currentLev)
+{
+	//TODO finish
+	return 0;
+}
+
+//remove unneccessary upper levels that have zeros at the end of the bitset
+vector<bool> BinaryBzet::normalize(vector<bool> bzet, int level)
+{
+	//TODO Finish
+	return bzet;
+}
+
+//Aligns two bzets of different sizes
+//if the depths are the same this function does nothing
+void BinaryBzet::align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u32& depthB)
+{
+	u32 changeLevel;
+	vector<bool>::iterator it;
+
+	//BzetA is bigger - need to make BzetB larger
+	if(depthA > depthB)
+	{
+		changeLevel = depthA - depthB;
+
+		//change bzetB's depth
+		depthB = depthA;
+
+		for(int i = 0; i < (int) changeLevel; i++)
+		{
+			// add changeLevel # of T(10)'s to the beginning of the Bzet
+			it = bzetB.begin();
+			bzetB.insert(it, 0);
+			it = bzetB.begin();
+			bzetB.insert(it,1);
+			// add changeLevel # of 0(00)s to the end of the Bzet
+			bzetB.push_back(0);
+			bzetB.push_back(0);
+		}
+	}
+	//BzetB is bigger - need to make BzetA smaller
+	else if(depthB > depthA)
+	{
+		changeLevel = depthB - depthA;
+		
+		//change bzetA's depth
+		depthA = depthB;
+		
+		for(int i = 0; i < (int) changeLevel; i++)
+		{
+			// add changeLevel # of T(10)'s to the beginning of the Bzet
+			it = bzetA.begin();
+			bzetA.insert(it, 0);
+			it = bzetA.begin();
+			bzetA.insert(it,1);
+			// add changeLevel # of 0(00)s to the end of the Bzet
+			bzetA.push_back(0);
+			bzetA.push_back(0);
+		}
+	}
+	//Bzet length already equal
+	return;
+}
+
+//sets depth of a BinaryBzet
+void BinaryBzet::setDepth(u32 newDepth)
+{
+	m_depth = newDepth;
+}
+
+// == operator for BinaryBzet
+bool BinaryBzet::operator ==(const BinaryBzet& rhs)
+{
+	vector<bool> bzetB = rhs.m_bzet;
+	return (equal( bzetB.begin(), bzetB.end(), this->m_bzet.begin()) && (rhs.m_depth == this->m_depth));	
+}
+

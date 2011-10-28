@@ -24,10 +24,28 @@ public:
 	void set(int index);
 	void unset(int index);
 	void testSET(); // temporary
+	BinaryBzet operator& (const BinaryBzet& rhs);
+	bool operator== (const BinaryBzet& rhs);
+
+	//TODO - move method to private - temporary for testing
+	void align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u32& depthB);
+
 private:
 	vector<bool> m_bzet;
 	string m_bzet_string; // just for now, later we'll call getBzetString() to calculate this from m_bzet
 	u32 m_depth;
+
+	//Helper functions for binary operations
+	void setDepth(u32 newDepth);  // Might not need this
+	vector<bool> normalize(vector<bool> bzet, int level);
+	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, int posA, vector<bool> bzetB, int posB, int level, int& f, int& currentPos);
+	vector<bool> bsCopy(vector<bool> bzet, int currentPos, int level, int& endPos); //implements CA and CB
+	vector<bool> bsNeg(vector<bool> bzet, int currentPos, int level, int& endPos); //implements NA and NB
+	int bsDrop(vector<bool> bzet, int currentPos, int level); //implements DA and DB
+	void subtreeNot(vector<bool>& bzet, int currentPos, int level); // implements _not_
+	int bzetWalk(vector<bool> bzet, int currentPos, int currentLev); //implements walk when ret_n = false
+	vector<bool> doTreeOp(string operation, int level, vector<bool> bzetA, int& posA, vector<bool> bzetB, int& posB);
+	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
 
 	// Helper functions for shift
 	u8 getBzetIndex(u32 index);
