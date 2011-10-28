@@ -8,13 +8,8 @@ Michael Koyama
 
 News:
 
-Test
-Test 2
-
-
-Mary:
-I am practicing how to to commit files.
-
+Kevin Calderone (10/28/11)
+- Shifting now works
 Luis Aguiniga (10/18/11)
 - Test commit
 Kevin Calderone (10/15/11)
