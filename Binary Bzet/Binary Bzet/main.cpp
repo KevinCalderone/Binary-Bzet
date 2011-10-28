@@ -6,13 +6,13 @@
 int main()
 {
 	// TEST CODE
-	BinaryBzet a(5,19,3);
+	BinaryBzet a((1<<13),(1<<20),516);
 	cout << a.getBzetString() << endl;
 
 	// Shift test
 	BinaryBzet b(1<<2);
 	b.shift(5);
-	// Need to have way of outputting m_bzet to see difference
+	// Need to have way of outputting m_bzet to see change
 
 	BinaryBzet L;
 	L.testSET();
