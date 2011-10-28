@@ -9,12 +9,10 @@ int main()
 	BinaryBzet a(5,19,3);
 	cout << a.getBzetString() << endl;
 
-
 	// Shift test
 	BinaryBzet b(1<<2);
-	cout << endl << b.getBzetString() << endl << b.getBzetString().size() << endl;
-	a.shift(1);
-	cout << b.getBzetString() << endl << b.getBzetString().size() << endl;
+	b.shift(5);
+	// Need to have way of outputting m_bzet to see difference
 
 	BinaryBzet L;
 	L.testSET();

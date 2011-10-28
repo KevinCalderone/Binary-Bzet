@@ -31,9 +31,10 @@ private:
 
 	// Helper functions for shift
 	u8 getBzetIndex(u32 index);
-	void encodeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode);
-	void encodeValue(vector<bool>& result, u32& resultIndex, u8 value, u32 valuesToEncode);
-	void encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex);
+	void writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode);
+	void writeValue(vector<bool>& result, u32& resultIndex, u8 resultDepth, u8 value, u32 valuesToEncode);
+	void writeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth);
+	void encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced = false);
 
 	u8 GetNumEndingZero(int index, int bits);
 	void bitstringToBzet(string bitstring);

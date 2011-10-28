@@ -77,83 +77,66 @@ u8 BinaryBzet::getBzetIndex(u32 index)
 	return (m_bzet[index * 2] ? 1 : 0) << 1 | (m_bzet[index * 2 + 1] ? 1 : 0);
 }
 
-void BinaryBzet::encodeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode)
-{
-	for (u32 i = 0; i < lettersToEncode; ++i)
-	{
+void BinaryBzet::writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode) {
+	for (u32 i = 0; i < lettersToEncode; ++i) {
 		result.push_back((letter >> 1) & 0x1);
 		result.push_back(letter & 0x1);
 	}
 }
 
-void BinaryBzet::encodeValue(vector<bool>& result, u32& resultIndex, u8 value, u32 valuesToEncode)
-{
+void BinaryBzet::writeValue(vector<bool>& result, u32& resultIndex, u8 resultDepth, u8 value, u32 valuesToEncode) {
 	int valuesLeftToEncode = valuesToEncode;
-	while (valuesLeftToEncode > 0)
-	{
-		int numLeadingT = GetNumEndingZero(resultIndex, m_depth - 1);
+	while (valuesLeftToEncode > 0) {
+		int numLeadingT = GetNumEndingZero(resultIndex, resultDepth - 1);
 		int numToEncode = 1;
 
-		while (numLeadingT > 0 && 2 * numToEncode <= valuesLeftToEncode) 
-		{
+		while (numLeadingT > 0 && 2 * numToEncode <= valuesLeftToEncode) {
 			numToEncode *= 2;
 			numLeadingT--;
 		}
 
-		resultIndex += numToEncode / 2;
+		resultIndex += numToEncode;
 
-		encodeLetter(result, resultIndex, 2, numLeadingT);
-		encodeLetter(result, resultIndex, value, 1);
+		writeLetter(result, resultIndex, 2, numLeadingT);
+		writeLetter(result, resultIndex, value, 1);
+		valuesLeftToEncode -= numToEncode;
 	}
 }
 
-void BinaryBzet::encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex) 
-{
-	if (bitsCounted == 0)
-	{
+void BinaryBzet::writeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth) {
+	if (bitsCounted % 2) {
+		writeValue(result, resultIndex, resultDepth, valueCounting ? 3 : 0, (bitsCounted - 1) / 2);
+		writeValue(result, resultIndex, resultDepth, (valueCounting ? 1 : 0) << 1 | (value ? 1 : 0), 1);
+
+		valueCounting = value;
+		bitsCounted = count - 1;
+	}
+	else {
+		writeValue(result, resultIndex, resultDepth, valueCounting ? 3 : 0, bitsCounted / 2);
+
 		valueCounting = value;
 		bitsCounted = count;
 	}
-	else if (value == valueCounting)
-	{
-		bitsCounted += count;
-		return;
-	}
-	else
-	{
-		if (bitsCounted % 2)
-		{
-			encodeValue(result, resultIndex, valueCounting ? 3 : 0, (bitsCounted - 1) / 2);
-
-			if (valueCounting)
-			{
-				encodeValue(result, resultIndex, 2, 1);
-			}
-			else
-			{
-				encodeValue(result, resultIndex, 1, 1);
-			}
-
-			valueCounting = value;
-			bitsCounted = count - 1;
-		}
-		else
-		{
-			encodeValue(result, resultIndex, valueCounting ? 3 : 0, bitsCounted / 2);
-
-			valueCounting = value;
-			bitsCounted = count;
-		}
-	}
 }
 
-void BinaryBzet::shift(int distance)
-{
-	return; // Does not work yet
-	
-	vector<bool> result;
-	result.reserve(m_bzet.size());
+void BinaryBzet::encodeBits(bool value, int count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced) {
+	if (bitsCounted == 0) {
+		valueCounting = value;
+		bitsCounted = count;
+	}
+	else if (value == valueCounting) {
+		bitsCounted += count;
+	}
+	else {
+		writeBits(value, count, result, valueCounting, bitsCounted, resultIndex, resultDepth);
+	}
 
+	if (forced)
+		writeBits(0, 0, result, valueCounting, bitsCounted, resultIndex, resultDepth);
+}
+
+void BinaryBzet::shift(int distance) {
+	vector<bool> result;
 	u32 resultIndex = 0;
 	u32 bitsToSkip = 0;
 	bool valueCounting = 0;
@@ -162,17 +145,29 @@ void BinaryBzet::shift(int distance)
 	u32 bitstringIndex = 0;
 	u32 bzetIndex = 0;
 
-	// Need to calculate optimal depth for result bzet
-	// using the wrong m_depth everywhere
+	// Can avoid need for possible normalization by implementing getIndexOfLastOne
+	// and normalizing to the minimum size that will fit it.
+	// For now, just assume the worst case that all bits are one.
+	u32 neededSize = (1 << m_depth);
+	if (distance < 0 && distance * -1 > neededSize)
+		neededSize = 0;
+	else 
+		neededSize -= u32(-1 * distance);
 
-	if (distance > 0) 
-	{
+	// Memory hint for bzet size to reduce reallocations
+	result.reserve(m_bzet.size());
+
+	u8 resultDepth = m_depth;
+	while (1 << resultDepth < neededSize)
+		resultDepth++;
+
+	if (distance > 0) {
 		bitsCounted = distance;
+		valueCounting = 0;
 		bitsToSkip = 0;
 	}
-	else
-	{
-		bitsToSkip = u32(distance);
+	else {
+		bitsToSkip = u32(-1 * distance);
 	}
 
 	// Decode the bitstring, and reencode at a starting index
@@ -182,8 +177,7 @@ void BinaryBzet::shift(int distance)
 		int value = getBzetIndex(bzetIndex);
 		bzetIndex++;
 
-		while (value == 0x2 && numLeadingT > 0)
-		{
+		while (value == 0x2 && numLeadingT > 0) {
 			value = getBzetIndex(bzetIndex);
 			bzetIndex++;
 			bitsToEncode /= 2;
@@ -192,15 +186,12 @@ void BinaryBzet::shift(int distance)
 
 		bitstringIndex += bitsToEncode / 2;
 
-		if (bitsToSkip > 0) 
-		{
-			if (bitsToSkip > bitsToEncode)
-			{
+		if (bitsToSkip > 0) {
+			if (bitsToSkip > bitsToEncode) {
 				bitsToSkip -= bitsToEncode;
 				continue;
 			}
-			else
-			{
+			else {
 				bitsToEncode -= bitsToSkip;
 				bitsToSkip = 0;
 			}
@@ -209,46 +200,54 @@ void BinaryBzet::shift(int distance)
 		if (bitsToEncode == 0)
 			continue;
 
-		switch (value) 
-		{
+		switch (value) {
 		case 1:
-			if (bitsToEncode == 1)
-			{
-				encodeBits(0, 1, result, valueCounting, bitsCounted, resultIndex);
+			if (bitsToEncode == 1) {
+				encodeBits(1, 1, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 			}
-			else
-			{
-				encodeBits(0, 1, result, valueCounting, bitsCounted, resultIndex);
-				encodeBits(1, 1, result, valueCounting, bitsCounted, resultIndex);
+			else {
+				encodeBits(0, 1, result, valueCounting, bitsCounted, resultIndex, resultDepth);
+				encodeBits(1, 1, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 			}
-			break;
+		break;
 
 		case 2:
-			if (bitsToEncode == 1)
-			{
-				encodeBits(1, 1, result, valueCounting, bitsCounted, resultIndex);
+			if (bitsToEncode == 1) {
+				encodeBits(0, 1, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 			}
-			else
-			{
-				encodeBits(1, 1, result, valueCounting, bitsCounted, resultIndex);
-				encodeBits(0, 1, result, valueCounting, bitsCounted, resultIndex);
+			else {
+				encodeBits(1, 1, result, valueCounting, bitsCounted, resultIndex, resultDepth);
+				encodeBits(0, 1, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 			}
-			break;
+		break;
 
 		case 0:
-			encodeBits(0, bitsToEncode, result, valueCounting, bitsCounted, resultIndex);
-			break;
+			encodeBits(0, bitsToEncode, result, valueCounting, bitsCounted, resultIndex, resultDepth);
+		break;
 
 		case 3:
-			encodeBits(1, bitsToEncode, result, valueCounting, bitsCounted, resultIndex);
-			break;
+			encodeBits(1, bitsToEncode, result, valueCounting, bitsCounted, resultIndex, resultDepth);
+		break;
 		};
 
-	} while (bitstringIndex < u32(1) << m_depth);
+	} while (bitstringIndex < u32(1) << (m_depth - 1));
 
 	// encode enough 0's at the end to fill in rest of bzet
-	
+	u32 bitsEncoded = (resultIndex << 1);
+	u32 bitsFound = bitsEncoded + bitsCounted;
+	u32 bitsExpected = (1 << resultDepth);
+
+	if (bitsFound > bitsExpected) {
+		bitsCounted = bitsExpected - bitsEncoded;
+		encodeBits(0, 0, result, valueCounting, bitsCounted, resultIndex, resultDepth, true);
+	}
+	else {
+		u32 bitsNeeded = bitsExpected - bitsFound;
+		encodeBits(0, bitsNeeded, result, valueCounting, bitsCounted, resultIndex, resultDepth, true);
+	}
+
 	// copy result bzet into this bzet
+	m_bzet = result;
 }
 
 void BinaryBzet::bitstringToBzet(string bitstring)
