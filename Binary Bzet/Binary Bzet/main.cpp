@@ -5,15 +5,14 @@
 int main()
 {
 	// TEST CODE
-<<<<<<< HEAD
+
 	/*BinaryBzet a((1<<13),(1<<20),516);
 	cout << a.getBzetString() << endl;*/
-=======
+
 	//BinaryBzet a((1<<13),(1<<20),516);
 	//cout << a.getBzetString() << endl;
 
 	BinaryBzet::testShift();
->>>>>>> 2b05a9abd9d704d2f7414001e0834a6ac3f6a155
 
 	// Need to have way of outputting m_bzet to see change
 
@@ -55,13 +54,11 @@ int main()
 	{
 		cout<<*it<<" ";
 	}
-<<<<<<< HEAD
+
 	cout <<endl;
 	cout<<a.getBzetPretty()<<endl;
 	cout<<a.getBzetString()<<endl;
-=======
 	*/
->>>>>>> 2b05a9abd9d704d2f7414001e0834a6ac3f6a155
 	system("pause");
     return 0;
 }

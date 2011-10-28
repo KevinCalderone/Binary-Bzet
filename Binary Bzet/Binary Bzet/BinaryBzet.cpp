@@ -107,7 +107,7 @@ string BinaryBzet::getBzetString(){
 	return output.str();
 }
 
-<<<<<<< HEAD
+
 string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	//test:TTT1TTTTT0tT10 TTTt000
 	/*bool myints[] = {1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,0,0,1,0,0,0,0,0,0,};
@@ -161,11 +161,9 @@ string BinaryBzet::getBzetPrettyRecursive(int level, uint64_t& indexB){
 	}//end if-else level
 }//end getBzetPrettyResucrive()
 
-u8 BinaryBzet::getBzetIndex(u32 index){
-=======
 u8 BinaryBzet::getBzetIndex(u32 index) {
 	// Get the value of 2-bit number in the bzet representing '0', 't', 'T', or '1'
->>>>>>> 2b05a9abd9d704d2f7414001e0834a6ac3f6a155
+
 	return (m_bzet[index * 2] ? 1 : 0) << 1 | (m_bzet[index * 2 + 1] ? 1 : 0);
 }
 
@@ -860,11 +858,7 @@ vector<bool> BinaryBzet::doTreeOp(string operation, int level, vector<bool> bzet
 		//posB = bsNeg(bzetB,posB,level,end);
 	}
 
-<<<<<<< HEAD
-	return m_bzet;
-=======
 	return bzetA;  // I just put this so it would compile for me, delete this when you fix it
->>>>>>> 2b05a9abd9d704d2f7414001e0834a6ac3f6a155
 }
 
 //not sure if we need this function
