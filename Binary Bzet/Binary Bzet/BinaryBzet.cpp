@@ -1082,10 +1082,40 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 
 //NOT's current subtree in place
 //implements _not_ in python code
-void BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
+u32 BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 {
-	//TODO finish
-	return;
+	u32 nextPos = currentPos + 2;
+	switch(bzet[(currentPos - 1)] << 1 | bzet[currentPos]) {
+		case 0:	// '0'
+			bzet[(currentPos - 1)] = 1;
+			bzet[currentPos] = 1;
+		break;
+	
+		case 1: // 't'
+			bzet[(currentPos - 1)] = 1;
+			bzet[currentPos] = 0;	
+		break;
+	
+		case 2: // 'T'
+			if (level > 1) {
+				// not left subtree
+				nextPos = subtreeNot(bzet, nextPos, level - 1);
+				// not right subtree
+				nextPos = subtreeNot(bzet, nextPos, level - 1);
+			}
+			else {
+				bzet[(currentPos - 1)] = 0;
+				bzet[currentPos] = 1;	
+			}
+		break;
+	
+		case 3: // '1'
+			bzet[(currentPos - 1)] = 0;
+			bzet[currentPos] = 0;
+		break;
+	}
+
+	return nextPos;
 }
 
 //returns end position of subtree starting at currentPos - ends exclusive
