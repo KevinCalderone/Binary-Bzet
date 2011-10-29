@@ -818,7 +818,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 }
 
 //implements CA and CB
-//TODO test
+//TODO test when Walk Finished - copying currently seems to work
 vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos)
 {
 	if(currentPos >= (u32)bzet.size())
@@ -827,7 +827,7 @@ vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u3
 	}
 	else
 	{
-		endPos = bzetWalk(bzet,currentPos,level);
+	//	endPos = bzetWalk(bzet,currentPos,level);
 	}
 	vector<bool> returnBzet;
 	//gets copy of subtree at positions currentPos-endPos
@@ -839,7 +839,7 @@ vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u3
 }
 
 //implements NA and NB
-//TODO finish/test
+//TODO test when Walk Finished - copying currently seems to work
 vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos)
 {
 	vector<bool> returnBzet;
@@ -851,7 +851,7 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32
 	}
 	else
 	{
-		endPos = bzetWalk(bzet,currentPos,level);
+//		endPos = bzetWalk(bzet,currentPos,level);
 	}
 	//gets copy of subtree at positions currentPos-endPos
 	for(u32 i = currentPos; i<endPos; i++)
@@ -859,7 +859,7 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32
 		returnBzet.push_back(bzet.at(i));
 	}
 	//not the subtree in place
-	subtreeNot(returnBzet, 1, level);
+	//subtreeNot(returnBzet, 1, level);
 	return returnBzet;
 }
 
@@ -867,7 +867,6 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32
 //returns position of next subtree
 int BinaryBzet::bsDrop(vector<bool> bzet, u32 currentPos, u32 level)
 { 
-	//TODO finish
 	u32 endPos = bzetWalk(bzet,currentPos,level);
 	if(endPos >= bzet.size())
 	{

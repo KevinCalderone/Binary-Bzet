@@ -18,8 +18,7 @@ int main()
 
 	BinaryBzet L;
 	L.testSET();
-
-	/*
+/*
 	BinaryBzet a;
 	vector<bool> bzetA;
 //	bool val1[] = {1,0, 1,0, 1,1, 1,0, 1,0, 0,1, 0,1};
@@ -32,7 +31,17 @@ int main()
 	bzetA.push_back(0); bzetA.push_back(1);
 
 	u32 depthA = 3;
-
+	u32 test = 8;
+	vector<bool> result = a.bsNeg(bzetA,2,depthA,test);
+	
+	vector<bool>::iterator it;
+	cout<<"Bzet A\n Depth A: " << depthA << "\n";
+	for(it = result.begin(); it != result.end(); it++)
+	{
+		cout<<*it<<" ";
+	};
+	cout << "\n";
+	
 	vector<bool> bzetB;
 //	bool val2[] = {1,0, 1,1, 1,0};
 	bzetB.push_back(1); bzetB.push_back(0);
@@ -59,6 +68,7 @@ int main()
 	cout<<a.getBzetPretty()<<endl;
 	cout<<a.getBzetString()<<endl;
 	*/
+
 	system("pause");
     return 0;
 }

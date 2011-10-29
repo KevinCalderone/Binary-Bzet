@@ -37,6 +37,8 @@ public:
 
 	//TODO - move method to private - temporary for testing
 	void align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u32& depthB);
+	vector<bool> bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements CA and CB
+	vector<bool> bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements NA and NB
 
 private:
 	vector<bool> m_bzet;
@@ -47,8 +49,6 @@ private:
 	void setDepth(u32 newDepth);  // Might not need this
 	vector<bool> normalize(vector<bool> bzet, u32 level);
 	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int & f, u32& currentPos);
-	vector<bool> bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements CA and CB
-	vector<bool> bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements NA and NB
 	int bsDrop(vector<bool> bzet, u32 currentPos, u32 level); //implements DA and DB
 	void subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level); // implements _not_
 	u32 bzetWalk(vector<bool> bzet, u32 currentPos, u32 currentLev); //implements walk when ret_n = false
