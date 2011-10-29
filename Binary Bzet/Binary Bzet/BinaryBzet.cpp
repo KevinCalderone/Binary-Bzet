@@ -118,9 +118,9 @@ string BinaryBzet::getBzetString(){
 	return output.str();
 }
 
-vector<bool> BinaryBzet::getBzetBinaryString(){
-	return m_bzet;
-}
+//vector<bool> BinaryBzet::getBzetBinaryString(){
+//	return m_bzet;
+//}
 
 string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	//test:TTT1TTTTT0tT10 TTTt000
@@ -785,7 +785,7 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 
 	//Non-0 Level bzet
 	int flag = 0;
-	int curPos = 0;
+	u32 curPos = 0;
 	vector<bool> bzetRet = binaryOp(1,bzetA,1,bzetB,1,depthA,flag,curPos);
 	if(flag == 0)
 	{
@@ -817,7 +817,7 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 //flag is 2 - return false python
 //branchData == cdr python
 //treeData == ddr python
-vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, int posA, vector<bool> bzetB, int posB, int level, int& f, int& currentPos)
+vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int& f, u32& currentPos)
 {
 	string* operation = g_binOp[operationNo];
 	vector<bool> bzet1 = bzetA;
@@ -833,7 +833,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, int posA,
 
 //implements CA and CB
 //TODO test
-vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, int currentPos, int level, int& endPos)
+vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos)
 {
 	if(currentPos >= (u32)bzet.size())
 	{
@@ -845,7 +845,7 @@ vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, int currentPos, int level, in
 	}
 	vector<bool> returnBzet;
 	//gets copy of subtree at positions currentPos-endPos
-	for(int i = currentPos; i<endPos; i++)
+	for(u32 i = currentPos; i<endPos; i++)
 	{
 		returnBzet.push_back(bzet.at(i));
 	}
@@ -854,7 +854,7 @@ vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, int currentPos, int level, in
 
 //implements NA and NB
 //TODO finish/test
-vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, int currentPos, int level, int& endPos)
+vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos)
 {
 	vector<bool> returnBzet;
 	if(currentPos >= bzet.size())
@@ -868,7 +868,7 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, int currentPos, int level, int
 		endPos = bzetWalk(bzet,currentPos,level);
 	}
 	//gets copy of subtree at positions currentPos-endPos
-	for(int i = currentPos; i<endPos; i++)
+	for(u32 i = currentPos; i<endPos; i++)
 	{
 		returnBzet.push_back(bzet.at(i));
 	}
@@ -879,10 +879,10 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, int currentPos, int level, int
 
 //implements DA and DB
 //returns position of next subtree
-int BinaryBzet::bsDrop(vector<bool> bzet, int currentPos, int level)
+int BinaryBzet::bsDrop(vector<bool> bzet, u32 currentPos, u32 level)
 { 
 	//TODO finish
-	int endPos = bzetWalk(bzet,currentPos,level);
+	u32 endPos = bzetWalk(bzet,currentPos,level);
 	if(endPos >= bzet.size())
 	{
 		endPos = bzet.size();
@@ -891,7 +891,7 @@ int BinaryBzet::bsDrop(vector<bool> bzet, int currentPos, int level)
 }
 
 //TODO finish typing problems with this function
-vector<bool> BinaryBzet::doTreeOp(string operation, int level, vector<bool> bzetA, int& posA, vector<bool> bzetB, int& posB)
+vector<bool> BinaryBzet::doTreeOp(string operation, u32 level, vector<bool> bzetA, u32& posA, vector<bool> bzetB, u32& posB)
 {
 	bool dr;
 	int end = 0;
@@ -973,7 +973,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back((bool)(~((*itA)&(*itB))));
+			bzetRet.push_back((~((*itA)&(*itB))));
 			itB++;
 		}
 	}
@@ -981,7 +981,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back((bool)(~((*itA)|(*itB))));
+			bzetRet.push_back((~((*itA)|(*itB))));
 			itB++;
 		}
 	}
@@ -989,7 +989,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back((bool)(~((*itA)^(*itB))));
+			bzetRet.push_back((~((*itA)^(*itB))));
 			itB++;
 		}
 	}
@@ -1014,21 +1014,21 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 
 //NOT's current subtree in place
 //implements _not_ in python code
-void BinaryBzet::subtreeNot(vector<bool>& bzet, int currentPos, int level)
+void BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 {
 	//TODO finish
 	return;
 }
 
 //returns end position of subtree starting at currentPos - ends exclusive
-int BinaryBzet::bzetWalk(vector<bool> bzet, int currentPos, int currentLev)
+u32 BinaryBzet::bzetWalk(vector<bool> bzet, u32 currentPos, u32 currentLev)
 {
 	//TODO finish
 	return 0;
 }
 
 //remove unneccessary upper levels that have zeros at the end of the bitset
-vector<bool> BinaryBzet::normalize(vector<bool> bzet, int level)
+vector<bool> BinaryBzet::normalize(vector<bool> bzet, u32 level)
 {
 	//TODO Finish
 	return bzet;
@@ -1111,7 +1111,6 @@ bool BinaryBzet::AlignCompare (const BinaryBzet& other) {
 
 void BinaryBzet::testShift () {
 	bool passed = 1;
-	cout << "Testing shifting..." << endl;
 
 	for (int i=2; i<20; ++i)
 		for (int j=2; j<20; ++j) {

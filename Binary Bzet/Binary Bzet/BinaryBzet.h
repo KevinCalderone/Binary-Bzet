@@ -22,7 +22,7 @@ public:
 	
 	u32 getDepth();
 	string getBzetString();		//return "TTT11..." thingy
-	vector<bool> getBzetBinaryString();	// return binary Bzet string
+	vector<bool> getBzetBinaryString() { return m_bzet; }	// return binary Bzet string
 	string getBzetPretty();	//get pretty formatted Bzet
 	//char getDepth();		//get the depth of the Bzet tree
 	char getCharFromBzet(u32 indexB);	//return a char from Bzet
@@ -47,14 +47,14 @@ private:
 
 	//Helper functions for binary operations
 	void setDepth(u32 newDepth);  // Might not need this
-	vector<bool> normalize(vector<bool> bzet, int level);
-	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, int posA, vector<bool> bzetB, int posB, int level, int& f, int& currentPos);
-	vector<bool> bsCopy(vector<bool> bzet, int currentPos, int level, int& endPos); //implements CA and CB
-	vector<bool> bsNeg(vector<bool> bzet, int currentPos, int level, int& endPos); //implements NA and NB
-	int bsDrop(vector<bool> bzet, int currentPos, int level); //implements DA and DB
-	void subtreeNot(vector<bool>& bzet, int currentPos, int level); // implements _not_
-	int bzetWalk(vector<bool> bzet, int currentPos, int currentLev); //implements walk when ret_n = false
-	vector<bool> doTreeOp(string operation, int level, vector<bool> bzetA, int& posA, vector<bool> bzetB, int& posB);
+	vector<bool> normalize(vector<bool> bzet, u32 level);
+	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int & f, u32& currentPos);
+	vector<bool> bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements CA and CB
+	vector<bool> bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements NA and NB
+	int bsDrop(vector<bool> bzet, u32 currentPos, u32 level); //implements DA and DB
+	void subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level); // implements _not_
+	u32 bzetWalk(vector<bool> bzet, u32 currentPos, u32 currentLev); //implements walk when ret_n = false
+	vector<bool> doTreeOp(string operation, u32 level, vector<bool> bzetA, u32& posA, vector<bool> bzetB, u32& posB);
 	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
 	
 	// Helper functions for shift
