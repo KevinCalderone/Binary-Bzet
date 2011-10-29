@@ -559,16 +559,85 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 			bitIndex += 2;
 		} else if (curBP == '0' || curBP == '1') {
 			// there is 2^top 1's or 0's
-			cout << curBP;
-		} else if (bzetIndex == 0 || !s.empty()) { 
+			u32 size = (u32)pow(2.0, (double)top);
+			if (index >= bitIndex && index < bitIndex + size) {
+				// the bit is in this range
+				vector<bool> expandTo;
+				// push 'T' onto vector;
+				//expandTo.push_back(1);
+				//expandTo.push_back(0);
+				expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
+				cout << "\nexpandTo:\n";
+				for (size_t i = 0; i < expandTo.size(); i++)
+					cout << expandTo[i] ? "1" : "0";
+				// erase current index then insert expansion
+				m_bzet.erase(m_bzet.begin() + bzetIndex*2-1, m_bzet.begin() + bzetIndex*2 + 1);
+				cout << "\nbzet is now:\n";
+				for (size_t i = 0; i < m_bzet.size(); i++)
+					cout << m_bzet[i] ? "1" : "0";
+				m_bzet.insert(m_bzet.begin() + bitIndex*2, expandTo.begin(), expandTo.end());
+				// done
+			} else {
+				// bit to set is not in this range..
+				bitIndex += size; // skip bits
+			}
+		} else if (bzetIndex == 0 || !s.empty()) {
+			// set up next index level
 			next = top - 1;
 			s.push(next);
 			seen[next] = 0;
 		}
 		bzetIndex++;
 	}
-
 	delete [] seen;
+}
+
+void BinaryBzet::expand(vector<bool> &newbzet, u32 start, u32 end, u32 bitLocation, bool value) {
+	int midPoint = (start + end) / 2;
+	if (bitLocation >= start && bitLocation <= midPoint) {
+		if (end - start == 1) {
+			// size is two
+			if (bitLocation == start) {
+				// left bit is change
+				newbzet.push_back(value);
+				newbzet.push_back(!value);
+			} else {
+				// right bit is change
+				newbzet.push_back(!value);
+				newbzet.push_back(value);
+			}
+		} else {
+			// left node: push 'T' and go into recursive call
+			newbzet.push_back(1);
+			newbzet.push_back(0);
+			expand(newbzet, start, (start + end)/2, bitLocation, value);
+
+			// right node stays the same
+			newbzet.push_back(!value);
+			newbzet.push_back(!value);
+		}
+	} else {
+		if (end - start == 1) { // size is two
+			if (bitLocation == start) {
+				// left bit is changed
+				newbzet.push_back(value);
+				newbzet.push_back(!value);
+			} else {
+				// right bit is changed
+				newbzet.push_back(!value);
+				newbzet.push_back(value);
+			}
+		} else {
+			// left node: stays the same
+			newbzet.push_back(!value);
+			newbzet.push_back(!value);
+
+			// right node: push 'T' and go into recursive call
+			newbzet.push_back(1);
+			newbzet.push_back(0);
+			expand(newbzet, (start + end)/2, end, bitLocation, value);
+		}
+	}
 }
 
 bitpair BinaryBzet::getBitPairAtBzetIndex(u32 index) {
@@ -630,7 +699,7 @@ void BinaryBzet::testSET() {
 	m_depth = 4;
 
 	cout << "\n\nrunning set function....\n\n";
-	bitSet(0, 0); // should display 0t1
+	bitSet(5, 0); // should display 0t1
 
 	cout << "\nVerify m_bzet is changed correctly (size = " << m_bzet.size() << ")\n";
 	for (size_t i = 0; i < m_bzet.size(); i++) {

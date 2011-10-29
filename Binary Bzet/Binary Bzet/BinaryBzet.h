@@ -72,6 +72,7 @@ private:
 	string getBzetPrettyRecursive(u32 level, u32& indexB);
 
 	// set/unset helper functions:
+	void expand(vector<bool> &newbzet, u32 start, u32 end, u32 bitLocation, bool value);
 	void bitSet(u32 index, bool value);
 	/* get and set two bits at a time indices go by one, example:
 	   say you have: string bitstring = "TT10T10";.. then you can say
