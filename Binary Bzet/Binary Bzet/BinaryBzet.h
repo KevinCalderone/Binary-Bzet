@@ -14,8 +14,10 @@ class BinaryBzet {
 public:
 	BinaryBzet();
 	BinaryBzet(u32 index);
-	BinaryBzet(u32 indexi, u32 indexe);
-	BinaryBzet(u32 indexi, u32 indexe, u32 step);
+	//BinaryBzet(u32 indexi, u32 indexe);
+	BinaryBzet(u32 indexi, u32 indexe, u32 step=0);
+	BinaryBzet(string bitstring);
+	BinaryBzet(vector<bool>* bzetvector, u32 depth);
 	~BinaryBzet();
 	
 	u32 getDepth();

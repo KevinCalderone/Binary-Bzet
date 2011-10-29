@@ -24,7 +24,6 @@ static string g_binOp[][6]  = {
     { "TRUE",  "1",  "DB1", "DA1", "DB1", "DA1" }}; //15 1111
 
 BinaryBzet::BinaryBzet() {
-	m_bzet_string = "";
 	m_depth = 0;
 }
 
@@ -39,17 +38,18 @@ BinaryBzet::BinaryBzet(u32 index){
 	bitstringToBzet(temp);
 }
 
-/* indexe is the index of the bit in the
-   BINARY BITSTRING you would like turned OFF.*/
-BinaryBzet::BinaryBzet(u32 indexi, u32 indexe){
-	if(indexe <= indexi || indexi < 0)
-		return;
-	string temp;
-	temp.append(indexi,'0');
-	string temp2;
-	temp2.append(indexe-indexi,'1');
-	bitstringToBzet(temp+temp2);
-}
+///* indexe is the index of the bit in the
+//   BINARY BITSTRING you would like turned OFF.*/
+////BinaryBzet::BinaryBzet(u32 indexi, u32 indexe){
+////	BinaryBzet(indexi,indexe,0);
+//	/*if(indexe <= indexi || indexi < 0)
+//		return;
+//	string temp;
+//	temp.append(indexi,'0');
+//	string temp2;
+//	temp2.append(indexe-indexi,'1');
+//	bitstringToBzet(temp+temp2);*/
+////}
 
 /* step is the number of 0s to place between
    each 1 in the BINARY BITSTRING. If a step
@@ -67,7 +67,18 @@ BinaryBzet::BinaryBzet(u32 indexi, u32 indexe, u32 step){
 		else{
 			temp+="0"; a++;}
 	}
+	while(temp.length()<=indexe)
+		temp+="0";
 	bitstringToBzet(temp);
+}
+
+BinaryBzet::BinaryBzet(string bitstring){
+	bitstringToBzet(bitstring);
+}
+
+BinaryBzet::BinaryBzet(vector<bool>* bzetvector, u32 depth){
+	m_bzet = *bzetvector;
+	m_depth = depth;
 }
 
 BinaryBzet::~BinaryBzet() {
@@ -107,6 +118,9 @@ string BinaryBzet::getBzetString(){
 	return output.str();
 }
 
+vector<bool> BinaryBzet::getBzetBinaryString(){
+	return m_bzet;
+}
 
 string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	//test:TTT1TTTTT0tT10 TTTt000
@@ -436,7 +450,7 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 			m_bzet_string += temp.append(number_of_times_to_expand,'T');
 			m_bzet_string += input.at(i);
 			i +=num_to_encode;
-			if (num_to_encode == 1) {
+			if (num_to_encode == 1 && m_depth!=1 /*input.length() > i*/) {
 				m_bzet_string += input.at(i);
 				i++;
 			}
