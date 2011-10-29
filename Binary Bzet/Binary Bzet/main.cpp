@@ -5,21 +5,32 @@
 int main()
 {
 	// TEST CODE
+	cout << "=========================================" << endl;
+	cout << "========== Binary Bzet - CS130 ==========" << endl;
+	cout << "===== Milestone 1: Core Algorithms ======" << endl;
+	cout << "=========================================" << endl;
 
-	/*BinaryBzet a((1<<13),(1<<20),516);
-	cout << a.getBzetString() << endl;*/
+	cout << endl;
+	cout << "========== Testing Constructors =========" << endl;
 
-	//BinaryBzet a((1<<13),(1<<20),516);
-	//cout << a.getBzetString() << endl;
+	BinaryBzet a((1<<2),(1<<5),516);
+	cout << a.getBzetString() << endl;
+
+	cout << endl;
+	cout << "============ Testing Shifting ===========" << endl;
 
 	BinaryBzet::testShift();
 
-	// Need to have way of outputting m_bzet to see change
+	cout << endl;
+	cout << "========== Testing Setting Bit ==========" << endl;
 
 	BinaryBzet L;
 	L.testSET();
 
-	/*
+	cout << endl;
+	cout << "========== Testing Pretty Print =========" << endl;
+
+	{
 	BinaryBzet a;
 	vector<bool> bzetA;
 //	bool val1[] = {1,0, 1,0, 1,1, 1,0, 1,0, 0,1, 0,1};
@@ -58,7 +69,11 @@ int main()
 	cout <<endl;
 	cout<<a.getBzetPretty()<<endl;
 	cout<<a.getBzetString()<<endl;
-	*/
+	}
+
+	cout << endl;
+	cout << "=========================================" << endl;
+
 	system("pause");
     return 0;
 }

@@ -20,7 +20,7 @@ public:
 	
 	u32 getDepth();
 	string getBzetString();		//return "TTT11..." thingy
-	vector<bool> getBzetBinaryString();	// return binary Bzet string
+	vector<bool> getBzetBinaryString() { return m_bzet; }	// return binary Bzet string
 	string getBzetPretty();	//get pretty formatted Bzet
 	//char getDepth();		//get the depth of the Bzet tree
 	char getCharFromBzet(u32 indexB);	//return a char from Bzet

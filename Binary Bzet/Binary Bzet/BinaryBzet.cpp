@@ -1037,7 +1037,6 @@ bool BinaryBzet::AlignCompare (const BinaryBzet& other) {
 
 void BinaryBzet::testShift () {
 	bool passed = 1;
-	cout << "Testing shifting..." << endl;
 
 	for (int i=2; i<20; ++i)
 		for (int j=2; j<20; ++j) {
