@@ -14,13 +14,15 @@ class BinaryBzet {
 public:
 	BinaryBzet();
 	BinaryBzet(u32 index);
-	BinaryBzet(u32 indexi, u32 indexe);
-	BinaryBzet(u32 indexi, u32 indexe, u32 step);
+	//BinaryBzet(u32 indexi, u32 indexe);
+	BinaryBzet(u32 indexi, u32 indexe, u32 step=0);
+	BinaryBzet(string bitstring);
+	BinaryBzet(vector<bool>* bzetvector, u32 depth);
 	~BinaryBzet();
 	
 	u32 getDepth();
 	string getBzetString();		//return "TTT11..." thingy
-	vector<bool> getBzetBinaryString();	// return binary Bzet string
+	vector<bool> getBzetBinaryString() { return m_bzet; }	// return binary Bzet string
 	string getBzetPretty();	//get pretty formatted Bzet
 	//char getDepth();		//get the depth of the Bzet tree
 	char getCharFromBzet(u32 indexB);	//return a char from Bzet
@@ -70,6 +72,7 @@ private:
 	string getBzetPrettyRecursive(u32 level, u32& indexB);
 
 	// set/unset helper functions:
+	void expand(vector<bool> &newbzet, u32 start, u32 end, u32 bitLocation, bool value);
 	void bitSet(u32 index, bool value);
 	/* get and set two bits at a time indices go by one, example:
 	   say you have: string bitstring = "TT10T10";.. then you can say
