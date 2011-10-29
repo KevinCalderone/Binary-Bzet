@@ -464,23 +464,24 @@ void BinaryBzet::unset(u32 index) {
 }
 
 // currently only traverses bzet
+// TODO: Collapsing
 void BinaryBzet::bitSet(u32 index, bool value) {
 	//    s: a stack to keep track of the level the current index in the array is for
 	// seen: an array to keep track of the number of times a level has been seen.
 
-	int bzetIndex = 0; // bits 0-7 containg tree depth.. first node starts at bit 8;
-	int bitstringIndex = 0; // index bitstring if it had no been compressed to a bzet.
+	u32 bzetIndex = 0;
+	u32 bitIndex = 0; // index bitstring if it had not been compressed to a bzet.
 
-	stack<int> s;
-	int *seen = new int[m_depth];
+	stack<u32> s;
+	u32 *seen = new u32[m_depth];
 
-	int top = m_depth -1;;
-	int next;
+	u32 top = m_depth - 1;
+	u32 next;
 	s.push(top);
 	seen[top] = 1;
 
 	bitpair curBP;
-	while (!s.empty() && (u32)(bzetIndex) < (u32)(m_bzet.size())) {
+	while (!s.empty() && bzetIndex < (u32)(m_bzet.size())) {
 		top = s.top();
 		seen[top]++;
 		if (seen[top] == 2)
@@ -489,7 +490,59 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 		curBP = getBitPairAtBzetIndex(bzetIndex);
 		if (top == 1) {
 			// curBP: T has special meaning now
+			bitpair newBP;
+			// change first bit?
+			if (index == bitIndex) {
+				if (value) {
+					// change 1st bit to 1
+					switch (curBP) {
+						case '0': newBP = 'T'; break;
+						case 't': newBP = '1'; break;
+						case 'T': case '1': newBP = curBP; break;
+						default:
+							cout << "Unrecognized bitpair value!\n";
+							break;
+					}
+				} else {
+					// change 1st bit to 0
+					switch (curBP) {
+						case '0': case 't': newBP = curBP; break;
+						case 'T': newBP = '0'; break;
+						case '1': newBP = 't'; break;
+						default:
+							cout << "Unrecognized bitpair value!\n";
+							break;
+					}
+				}
+				setBitPairAtBzetIndex(bzetIndex, newBP);
+				curBP = newBP;
+			} else if (index == bitIndex + 1) { // change 2nd bit?
+				if (value) {
+					// change 2nd bit to 1
+					switch (curBP) {
+						case '0': newBP = 't'; break;
+						case 'T': newBP = '1'; break;
+						case 't': case '1': newBP = curBP; break;
+						default:
+							cout << "Unrecognized bitpair value!\n";
+							break;
+					}
+				} else {
+					// change 2nd bit to 0
+					switch (curBP) {
+						case '0': case 'T': newBP = curBP; break;
+						case 't': newBP = '0'; break;
+						case '1': newBP = 'T'; break;
+						default:
+							cout << "Unrecognized bitpair value!\n";
+							break;
+					}
+				}
+				setBitPairAtBzetIndex(bzetIndex, newBP);
+				curBP = newBP;
+			}
 			cout << curBP;
+			bitIndex += 2;
 		} else if (curBP == '0' || curBP == '1') {
 			// there is 2^top 1's or 0's
 			cout << curBP;
@@ -505,13 +558,13 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 }
 
 bitpair BinaryBzet::getBitPairAtBzetIndex(u32 index) {
-	u32 indexA = index*2 + 8; // skip first 8 bits since thats where the tree depth is set.
+	u32 indexA = index * 2; // doesn't skip first 8 bits since depth is its own member variable
 	if (indexA + 1 < m_bzet.size()) {
 		bool lBit = m_bzet[indexA];
 		bool rBit = m_bzet[indexA+1];
 		return lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
 	}
-	return 'x';
+	return '0';
 }
 
 void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
@@ -529,7 +582,7 @@ void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
 			break;
 	}
 
-	int indexA = index*2 + 8; // skip first 8 bits since thats where the tree depth is set.
+	int indexA = index * 2; // doesn't skip first 8 bits since depth is its own member variable
 	m_bzet[indexA] = lBit;
 	m_bzet[indexA+1] = rBit;
 }
@@ -545,12 +598,10 @@ void BinaryBzet::testSET() {
 	// d is bzet representation of the bitstring 10011111:
 	// first 8 values are for depth
 	// last 10 values are for TTTt1.
-	bool d[] = { 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1 };
+	bool d[] = { 1, 0, 1, 0, 1, 0, 0, 1, 1, 1 };
 
 	vector<bool> test_bzet;
-	// set first 8 bits to represent depth which is 4
-	vector<bool>::iterator it = test_bzet.begin();
-	test_bzet.insert(it, d, d+18);
+	test_bzet.insert(test_bzet.begin(), d, d+10);
 
 	cout << "Verify test_bzet is set correctly (size = " << test_bzet.size() << ")\n";
 	for (size_t i = 0; i < test_bzet.size(); i++) {
@@ -565,7 +616,16 @@ void BinaryBzet::testSET() {
 	m_depth = 4;
 
 	cout << "\n\nrunning set function....\n\n";
-	bitSet(0, 0); // should display Tt1
+	bitSet(0, 0); // should display 0t1
+
+	cout << "\nVerify m_bzet is changed correctly (size = " << m_bzet.size() << ")\n";
+	for (size_t i = 0; i < m_bzet.size(); i++) {
+		if (i != 0 && i % 4 == 0)
+			cout << ' ';
+		cout << (m_bzet[i]) ? '1' : '0';
+	}
+	cout << "\n";
+
 	cout << "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n";
 }
 
