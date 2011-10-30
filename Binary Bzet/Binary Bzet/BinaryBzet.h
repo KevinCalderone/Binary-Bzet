@@ -32,7 +32,8 @@ public:
 	void set(u32 index);
 	void unset(u32 index);
 	void testSET(); // temporary
-	static void testShift();
+    void bzetWalkTEST();
+    static void testShift();
 	BinaryBzet operator& (const BinaryBzet& rhs);
 	bool operator== (const BinaryBzet& rhs);
 	bool AlignCompare (const BinaryBzet& other);
@@ -53,7 +54,7 @@ private:
 	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int & f, u32& currentPos);
 	int bsDrop(vector<bool> bzet, u32 currentPos, u32 level); //implements DA and DB
 	u32 subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level); // implements _not_
-	u32 bzetWalk(vector<bool> bzet, u32 currentPos, u32 currentLev); //implements walk when ret_n = false
+	u32 bzetWalk(vector<bool> &bzet, u32 currentPos, u32 currentLev); //implements walk when ret_n = false
 	vector<bool> doTreeOp(string operation, u32 level, vector<bool> bzetA, u32& posA, vector<bool> bzetB, u32& posB);
 	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
 	

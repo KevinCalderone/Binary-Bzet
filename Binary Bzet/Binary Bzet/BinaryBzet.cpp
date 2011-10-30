@@ -1,5 +1,6 @@
 #include "BinaryBzet.h"
 #include <stack>
+#include <cassert>
 #include <iomanip>
 #include <sstream>
 
@@ -474,7 +475,7 @@ void BinaryBzet::set(u32 index) {
 }
 
 void BinaryBzet::unset(u32 index) {
-	bitSet(index, false);	
+	bitSet(index, false);
 }
 
 // currently only traverses bzet
@@ -647,7 +648,7 @@ bitpair BinaryBzet::getBitPairAtBzetIndex(u32 index) {
 		bool rBit = m_bzet[indexA+1];
 		return lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
 	}
-	return '0';
+	return 'x';
 }
 
 void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
@@ -1119,10 +1120,75 @@ u32 BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 }
 
 //returns end position of subtree starting at currentPos - ends exclusive
-u32 BinaryBzet::bzetWalk(vector<bool> bzet, u32 currentPos, u32 currentLev)
-{
-	//TODO finish
-	return 0;
+// michael - this seems to be working correctly except when the current position is given to something in level 1
+//           since only passing in the current position and the level doesn't give any info on whether it's
+//           refering to the left or right child. make sense?
+u32 BinaryBzet::bzetWalk(vector<bool>& bzet, u32 currentPos, u32 currentLev) {  
+	u32 *seen = new u32[currentLev+1];
+	seen[currentLev] = 0;
+	u32 top, next, bzetIndex = currentPos;
+	stack<u32> s;
+	s.push(currentLev);
+    
+    // travers all of the current subtree
+	while (!s.empty() && bzetIndex < (u32)(bzet.size())) {
+		top = s.top();
+		seen[top]++;
+		if (seen[top] == 2)
+			s.pop();
+        
+		if (!s.empty()) {
+            if (top != 1) {
+                bool lBit = bzet[bzetIndex];
+                bool rBit = bzet[bzetIndex+1];
+                bitpair curBP = lBit ? (rBit ? '1' : 'T') : (rBit ?  't': '0');
+                if (curBP == '1' || curBP == '0') {
+                    delete [] seen;
+                    return bzetIndex+2;
+                }
+                // set up next index level
+                next = top - 1;
+                s.push(next);
+                seen[next] = 0;
+            }
+            bzetIndex += 2; // 'T' 't' '1' '0' take up two bits so skip both to get to the next..
+		}
+	}
+    
+	delete [] seen;
+    
+	return bzetIndex;
+}
+
+void BinaryBzet::bzetWalkTEST() {
+	cout << "\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n"
+         << "bzetWalkTEST():\n"
+         << "--------------------------------------------------\n"
+         << "\n"
+         << "bzet should be TTTt1 so:\n\n";
+    
+    bool values[] = { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0 }; // TTTTTTttT10
+    vector<bool> bzet;
+    bzet.insert(bzet.begin(), values, values + 22);
+    
+    // display vector values
+    cout << "bzet: ";
+    for (size_t i ; i < bzet.size(); i++)
+        cout << (bzet[i] ? '1' : '0');
+    cout << "\n";
+    
+    assert(bzetWalk(bzet, 2, 3) == 16);
+    cout << "Test 01: Passed\n";
+    assert(bzetWalk(bzet, 4, 2) == 10);
+    cout << "Test 02: Passed\n";
+    assert(bzetWalk(bzet, 10, 2) == 16);
+    cout << "Test 03: Passed\n";
+    cout << "bzetWalk(bzet, 18, 2) = " << bzetWalk(bzet, 18, 2) << "\n";
+    assert(bzetWalk(bzet, 18, 2) == 20);
+    cout << "Test 04: Passed\n";
+    cout << "\nAll tests Passed\n";
+        
+	cout << "\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
 }
 
 //remove unneccessary upper levels that have zeros at the end of the bitset

@@ -38,8 +38,13 @@ int main()
 	cout << endl;
 	cout << "========== Testing Setting Bit ==========" << endl;
 
-	BinaryBzet L;
-	L.testSET();
+	BinaryBzet settingBit;
+	settingBit.testSET();
+    
+    cout << "============ Testing bzetWalk ===========" << endl;
+    
+    BinaryBzet walking;
+    walking.bzetWalkTEST();
 
 	cout << endl;
 	cout << "========== Testing Pretty Print =========" << endl;
