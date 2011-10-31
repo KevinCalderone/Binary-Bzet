@@ -1173,7 +1173,7 @@ void BinaryBzet::bzetWalkTEST() {
     
     // display vector values
     cout << "bzet: ";
-    for (size_t i ; i < bzet.size(); i++)
+    for (size_t i = 0; i < bzet.size(); i++)
         cout << (bzet[i] ? '1' : '0');
     cout << "\n";
     
