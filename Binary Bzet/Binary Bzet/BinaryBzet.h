@@ -31,8 +31,9 @@ public:
 	bool isTAWatching() { return true; } // lol
 	void set(u32 index);
 	void unset(u32 index);
-	void testSET(); // temporary
-    void bzetWalkTEST();
+	void testSET();      // temporary
+    void expandTEST();   // temporary
+    void bzetWalkTEST(); // temporary
     static void testShift();
 	BinaryBzet operator& (const BinaryBzet& rhs);
 	bool operator== (const BinaryBzet& rhs);
