@@ -855,8 +855,10 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 
 	//Non-0 Level bzet
 	int flag = 0;
-	u32 curPos = 0;
-	vector<bool> bzetRet = binaryOp(1,bzetA,1,bzetB,1,depthA,flag,curPos);
+	u32 curPosA = 0;
+	u32 curPosB = 0;
+	//TODO: curPos is used for debug - remove later
+	vector<bool> bzetRet = binaryOp(1,bzetA,0,bzetB,0,depthA,flag,curPosA,curPosB);
 	if(flag == 0)
 	{
 		//TODO change this - need new consturctor
@@ -887,18 +889,99 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 //flag is 2 - return false python
 //branchData == cdr python
 //treeData == ddr python
-vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int& f, u32& currentPos)
+vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int& f, u32& currentPosA, u32& currentPosB)
 {
 	string* operation = g_binOp[operationNo];
 	vector<bool> bzet1 = bzetA;
-	int currentPos1 = posA; 
+	u32 currentPos1 = posA; 
 	vector<bool> bzet2 = bzetB; 
-	int currentPos2 = posB;
+	u32 currentPos2 = posB;
 	
-	int branchData = 0;
-	int treeData = 0;
+	vector<bool> resultBzet;
+	//Handle Level 1 case - subtrees just have data
+	if(level == 1)
+	{
+		//TBD
+	}
+	else
+	{
+		//Determine case of data
+		//TODO - create function to look up value
+		bool lBit = bzet1[currentPos1];
+		bool rBit = bzet1[currentPos1+1];
+		bitpair bp1 = lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
+		currentPos1 += 2;
 
-	return bzetA;
+		lBit = bzet1[currentPos2];
+		rBit = bzet1[currentPos2+1];
+		bitpair bp2 = lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
+		currentPos2 += 2;
+		//TODO - replace with use of case_type array
+		int caseType = 6;
+		if((bp1 == '1'|| bp1 == '0') && (bp2 == '1' || bp2 == '0'))
+		{
+			caseType = 0;
+		}
+		else if(bp1 == '0' && bp2 == 'T')
+		{
+			caseType = 1;
+		}
+		else if(bp1 == 'T' && bp2 == '0')
+		{
+			caseType = 2;
+		}
+		else if(bp1 == '1' && bp2 == 'T')
+		{
+			caseType = 3;
+		}
+		else if(bp1 == 'T' && bp2 == '1')
+		{
+			caseType = 4;
+		}
+		else if(bp1 == 'T' && bp2 == 'T')
+		{
+			caseType = 5;
+		}
+		//Invalid case type
+		else
+		{
+			cout << "Invalid Case Type";
+		}
+
+		//00 or 11 or 10 or 01
+		if( caseType == 0)
+		{
+			//TBD
+		}
+		//0T T0 1T or T1
+		else if (caseType >= 1 && caseType <= 4)
+		{
+			string oper = operation[caseType + 1];
+			//python call cp1, cp2 ,tr = do_tree_op(opr, lev-1,bset1,cp1,bset2,cp2)
+			vector<bool> res = doTreeOp(oper,level-1,bzet1, currentPos1, bzet2, currentPos2);
+			//apped res to resultBzet + handle compression possibly
+		}
+		//TT
+		else if(caseType ==5)
+		{
+			//recurse the tree and apped to result
+			u32 currPosA = 0;
+			u32 currPosB = 0;
+			int resultFlag = 0;
+			vector<bool> res = binaryOp(operationNo,bzet1, currentPos1, bzet2, currentPos2, level-1, resultFlag, currPosA, currPosB);
+			//update positions
+			currentPos1 = currPosA;
+			currentPos2 = currPosB;
+			//TODO: Append res to resultBzet
+			//TODO: Possibly handle flag stuff
+		}
+	}
+
+	f = 0;
+	//TODO do stuff with flag possibly
+
+
+	return resultBzet;
 }
 
 //implements CA and CB
@@ -1066,7 +1149,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back(1);
+			bzetRet.push_back(0);
 			itB++;
 		}
 	}
@@ -1074,7 +1157,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
-			bzetRet.push_back(0);
+			bzetRet.push_back(1);
 			itB++;
 		}
 	}
