@@ -39,7 +39,7 @@ int main()
 	cout << "========== Testing Setting Bit ==========" << endl;
 
     BinaryBzet set;
-    set.testSET();
+    set.setTEST();
     
 	cout << endl;
     cout << "============= Testing expand ============" << endl;
@@ -52,7 +52,19 @@ int main()
     
     BinaryBzet walk;
     walk.bzetWalkTEST();
+    
+    cout << endl;
+    cout << "========= Testing bitSetCollapse ========" << endl;
+    
+    BinaryBzet collapse;
+    collapse.bitSetCollapseTEST();
 
+    cout << endl;
+    cout << "============= Testing flip ==============" << endl;
+    
+    BinaryBzet flip;
+    flip.flipTEST();
+    
 	cout << endl;
 	cout << "========== Testing Pretty Print =========" << endl;
 	cout <<endl;

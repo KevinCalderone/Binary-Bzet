@@ -478,8 +478,61 @@ void BinaryBzet::unset(u32 index) {
 	bitSet(index, false);
 }
 
+void BinaryBzet::flip(u32 index) {
+    bool currentBitValue;
+	u32 *seen = new u32[m_depth+1];
+	seen[m_depth] = 0;
+    
+	u32 currentLevel;
+    u32 nextLevel;
+    u32 bzetIndex = 0;
+    u32 bitIndex = 0;
+	
+    stack<u32> s;
+	s.push(m_depth);
+	
+    while (!s.empty() && bitIndex < (u32)(m_bzet.size())) {
+		currentLevel = s.top();
+		seen[currentLevel]++;
+		if (seen[currentLevel] == 2)
+			s.pop();
+        
+		if (!s.empty()) {
+            bitpair curBP = bitpairFromBools(m_bzet[bzetIndex], m_bzet[bzetIndex+1]);
+            if (currentLevel == 1) {
+                // at level one
+                if (index == bitIndex) {
+                    currentBitValue = m_bzet[bzetIndex];
+                    bitSet(index, !currentBitValue);
+                    break;
+                } else if (index == (bitIndex + 1)) {
+                    currentBitValue = m_bzet[bzetIndex + 1];
+                    bitSet(index, !currentBitValue);
+                    break;
+                }
+                bitIndex += 2;
+            } else if (curBP == '1' || curBP == '0') {
+                u32 count = (u32)pow(2.0, (double)currentLevel);
+                if (index >= bitIndex && index < (bitIndex + count)) {
+                    currentBitValue = (curBP == '1' ? 1: 0);
+                    bitSet(index, !currentBitValue);
+                    break;
+                }
+                
+            } else {
+                // set up next index level
+                nextLevel = currentLevel - 1;
+                s.push(nextLevel);
+                seen[nextLevel] = 0;
+            }
+            bzetIndex += 2; // 'T' 't' '1' '0' take up two bits so skip both to get to the next..
+		}
+	}
+    
+	delete [] seen;
+}
+
 // currently only traverses bzet
-// TODO: Collapsing
 void BinaryBzet::bitSet(u32 index, bool value) {
 	//    s: a stack to keep track of the level the current index in the array is for
 	// seen: an array to keep track of the number of times a level has been seen.
@@ -488,9 +541,9 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 	u32 bitIndex = 0; // index bitstring if it had not been compressed to a bzet.
 
 	stack<u32> s;
-	u32 *seen = new u32[m_depth];
+	u32 *seen = new u32[m_depth+1];
 
-	u32 top = m_depth - 1;
+	u32 top = m_depth;
 	u32 next;
 	s.push(top);
 	seen[top] = 1;
@@ -508,55 +561,46 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 			bitpair newBP;
 			// change first bit?
 			if (index == bitIndex) {
-				if (value) {
-					// change 1st bit to 1
-					switch (curBP) {
-						case '0': newBP = 'T'; break;
-						case 't': newBP = '1'; break;
-						case 'T': case '1': newBP = curBP; break;
-						default:
-							cout << "Unrecognized bitpair value!\n";
-							break;
-					}
-				} else {
-					// change 1st bit to 0
-					switch (curBP) {
-						case '0': case 't': newBP = curBP; break;
-						case 'T': newBP = '0'; break;
-						case '1': newBP = 't'; break;
-						default:
-							cout << "Unrecognized bitpair value!\n";
-							break;
-					}
-				}
+                newBP = bitpairByChangingIndexValue(curBP, 0, value);
 				setBitPairAtBzetIndex(bzetIndex, newBP);
 				curBP = newBP;
+                
+                // collapse 
+                int parent, leftChild, rightChild;
+                if (seen[top] == 1) {
+                    // at left child
+                    leftChild = bzetIndex*2; // = bitIndex;
+                    parent = leftChild - 2;
+                    rightChild = leftChild + 2;
+                } else {
+                    // at right child
+                    rightChild = bzetIndex*2; // = bitIndex;
+                    leftChild = rightChild - 2;
+                    parent = leftChild - 2;
+                }
+                bitSetCollapse(m_bzet, parent, leftChild, rightChild);
+                break; // done
 			} else if (index == bitIndex + 1) { // change 2nd bit?
-				if (value) {
-					// change 2nd bit to 1
-					switch (curBP) {
-						case '0': newBP = 't'; break;
-						case 'T': newBP = '1'; break;
-						case 't': case '1': newBP = curBP; break;
-						default:
-							cout << "Unrecognized bitpair value!\n";
-							break;
-					}
-				} else {
-					// change 2nd bit to 0
-					switch (curBP) {
-						case '0': case 'T': newBP = curBP; break;
-						case 't': newBP = '0'; break;
-						case '1': newBP = 'T'; break;
-						default:
-							cout << "Unrecognized bitpair value!\n";
-							break;
-					}
-				}
+                newBP = bitpairByChangingIndexValue(curBP, 1, value);
 				setBitPairAtBzetIndex(bzetIndex, newBP);
 				curBP = newBP;
+                
+                // collapse 
+                int parent, leftChild, rightChild;
+                if (seen[top] == 1) {
+                    // at left child
+                    leftChild = bzetIndex*2; // = bitIndex;
+                    parent = leftChild - 2;
+                    rightChild = leftChild + 2;
+                } else {
+                    // at right child
+                    rightChild = bzetIndex*2; // = bitIndex;
+                    leftChild = rightChild - 2;
+                    parent = leftChild - 2;
+                }
+                bitSetCollapse(m_bzet, parent, leftChild, rightChild);
+                break; // done
 			}
-			cout << curBP;
 			bitIndex += 2;
 		} else if (curBP == '0' || curBP == '1') {
 			// there is 2^top 1's or 0's
@@ -564,18 +608,8 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 			if (index >= bitIndex && index < bitIndex + size) {
 				// the bit is in this range
 				vector<bool> expandTo;
-				// push 'T' onto vector;
-				//expandTo.push_back(1);
-				//expandTo.push_back(0);
 				expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
-				cout << "\nexpandTo:\n";
-				for (size_t i = 0; i < expandTo.size(); i++)
-					cout << (expandTo[i] ? "1" : "0");
-				// erase current index then insert expansion
 				m_bzet.erase(m_bzet.begin() + bzetIndex*2-1, m_bzet.begin() + bzetIndex*2 + 1);
-				cout << "\nbzet is now:\n";
-				for (size_t i = 0; i < m_bzet.size(); i++)
-					cout << (m_bzet[i] ? "1" : "0");
 				m_bzet.insert(m_bzet.begin() + bitIndex*2, expandTo.begin(), expandTo.end());
 				// done
 			} else {
@@ -591,6 +625,129 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 		bzetIndex++;
 	}
 	delete [] seen;
+}
+
+void BinaryBzet::bitSetCollapse(vector<bool>& bzet, int& parentIndex, int& leftChildIndex, int& rightChildIndex) {
+    if (parentIndex >= 0 && rightChildIndex+1 < bzet.size()) {
+        bitpair lChild = bitpairFromBools(bzet[leftChildIndex], bzet[leftChildIndex+1]);
+        bitpair rChild = bitpairFromBools(bzet[rightChildIndex], bzet[rightChildIndex+1]);
+        if (lChild == rChild && (lChild == '1' || lChild == '0')) {
+            // need to collapse
+            vector<bool>::iterator itBegin = bzet.begin(); 
+            bzet.erase(itBegin + parentIndex, itBegin + rightChildIndex); // erases first two values only.. "T11" is collased to "1" by erasing "T1"
+            
+            // recursive call to check if further collapsing is needed
+            parentIndex-=2;
+            leftChildIndex-=2;
+            rightChildIndex-=2;
+            bitSetCollapse(bzet, parentIndex, leftChildIndex, rightChildIndex);
+        }
+    }
+}
+
+void BinaryBzet::bitSetCollapseTEST() {
+    int parentIndex = 4;
+    int leftChildIndex = 6;
+    int rightChildIndex = 8;
+    
+    //  input: TTT1111
+    //           ^^^ collapse #1, now have: TT111
+    //                                       ^^^ collapse #2, now have T11
+    //                                                                 ^^^ collapse #3, now have: 1
+    bool input1[] = { 1,0, 1,0, 1,0, 1,1, 1,1, 1,1, 1,1 }; // input
+    
+    // answer:
+    bool answer1[] = { 1, 1 }; // result should be this
+    vector<bool>v1;
+    bool t1_passed = true;
+    v1.insert(v1.begin(), input1, input1+14);
+    bitSetCollapse(v1, parentIndex, leftChildIndex, rightChildIndex);
+    for (size_t i = 0; i < v1.size(); i++) {
+        if (i < 2) {
+            if (v1[i] != answer1[i]) {
+                t1_passed = false;
+            }
+        } else {
+            t1_passed = false;
+        }
+    }
+    assert(t1_passed);
+    cout << "Test 1 Passed\n";
+    
+    
+    //  input: TTTTTT1tTTt1TtT
+    //              ^^^ should be collapsed
+    bool  input2[] = { 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 1,1, 1,1, 1,0, 1,0, 0,1, 1,1, 1,0, 0,1, 1,0 };
+    
+    // answer: TTTTT1TTt1TtT
+    //              ^ collapsed value
+    bool answer2[] = { 1,0, 1,0, 1,0, 1,0, 1,0, 1,1, 1,0, 1,0, 0,1, 1,1, 1,0, 0,1, 1,0 }; // result should be this
+    vector<bool>v2;
+    bool t2_passed = true;
+    v2.insert(v2.begin(), input2, input2+30);
+    bitSetCollapse(v2, parentIndex, leftChildIndex, rightChildIndex);
+    for (size_t i = 0; i < v1.size(); i++) {
+        if (i < 26) {
+            if (v2[i] != answer2[i]) {
+                t2_passed = false;
+            }
+        } else {
+            t2_passed = false;
+        }
+    }
+    assert(t2_passed);
+    cout << "Test 2 Passed\n";
+    
+    //  input: TT11TtT
+    //          ^^^ should be collapsed
+    bool  input3[] = { 1,0, 1,0, 1,1, 1,1, 1,0, 0,1, 1,0 };
+    
+    // answer: T1TtT
+    //          ^ collapsed value
+    bool answer3[] = { 1,0, 1,1, 1,0, 0,1, 1,1 };
+    vector<bool>v3;
+    bool t3_passed = true;
+    v3.insert(v3.begin(), input3, input3+14);
+    bitSetCollapse(v3, parentIndex, leftChildIndex, rightChildIndex);
+    for (size_t i = 0; i < v1.size(); i++) {
+        if (i < 10) {
+            if (v2[i] != answer3[i]) {
+                t3_passed = false;
+            }
+        } else {
+            t3_passed = false;
+        }
+    }
+    assert(t3_passed);
+    cout << "Test 3 Passed\n";
+    
+}
+
+bitpair BinaryBzet::bitpairFromBools(bool leftBit, bool rightBit) {
+    return (leftBit ? (rightBit ? '1' : 'T') : (rightBit ? 't' : '0'));
+}
+
+// given a bit pair, modifies bit at index (0 or 1) to tovalue;
+// bitpairByChangingIndexValue('T', 0, 0) --> T (10), 0th bit is change to a zero and becomes 0 (00)
+bitpair BinaryBzet::bitpairByChangingIndexValue(bitpair currentBitPair, int index_0or1, bool toValue) {
+    bool lBit, rBit;
+    switch (currentBitPair) {
+        case '0': lBit = 0; rBit = 0; break;
+        case 't': lBit = 0; rBit = 1; break;
+        case 'T': lBit = 1; rBit = 0; break;
+        case '1': lBit = 1; rBit = 1; break;
+        default:
+            cout << "bitpairByChangingIndexValue: Unrecognized bitpair value!\n";
+            return 'x';
+    }
+    
+    if (index_0or1 == 0) {
+        lBit = toValue;
+    } else {
+        rBit = toValue;
+    }
+    
+    return lBit ? (rBit ? '1': 'T') : (rBit ? 't': '0');
 }
 
 void BinaryBzet::expandTEST() {
@@ -714,40 +871,83 @@ void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
 }
 
 // temporary
-void BinaryBzet::testSET() {
-	cout << "The following test is for the bitstring 10011111\n"
-		 << "bzet should be TTTt1 so:\n\n";
+void BinaryBzet::setTEST() {
+    //     T
+    //  T    1
+    // T 1  1 1
+    // 1011 1111
+    //  ^
+    // TTT11
+    // after set(1) // turns on bit at index 1
+    bool p1[] = { 1,0, 1,0, 1,0, 1,1, 1,1 };
+    vector<bool>bzet;
+    bzet.insert(bzet.begin(), p1, p1+10);
+    m_bzet = bzet;
+    m_depth = 3;
+    set(1);
+    assert(m_bzet.size() == 2 && m_bzet[0] == 1 && m_bzet[1] == 1);
+    cout << "Test 1 Passed\n";
+    
+    // now unsetting the same bit should result in the original (p1)
+    unset(1);
+    bool t2_passed = true;
+    for (int i = 0; i < m_bzet.size(); i++) {
+        if (i < 10) {
+            if (m_bzet[i] != p1[i]) {
+                t2_passed = false;
+            }
+        } else {
+            t2_passed = false;
+            break;
+        }        
+    }
+    assert(t2_passed);
+    cout << "Test 2 Passed\n";
+}
 
-	// d is bzet representation of the bitstring 10011111:
-	// first 8 values are for depth
-	// last 10 values are for TTTt1.
-	bool d[] = { 1, 0, 1, 0, 1, 0, 0, 1, 1, 1 };
-
-	vector<bool> test_bzet;
-	test_bzet.insert(test_bzet.begin(), d, d+10);
-
-	cout << "Verify test_bzet is set correctly (size = " << test_bzet.size() << ")\n";
-	for (size_t i = 0; i < test_bzet.size(); i++) {
-		if (i != 0 && i % 4 == 0)
-			cout << ' ';
-		cout << (test_bzet[i] ? '1' : '0');
-	}
-	cout << "\n";
-
-	// set function works on member variables so...
-	m_bzet = test_bzet;
-	m_depth = 4;
-
-	cout << "\n\nrunning set function....\n\n";
-	bitSet(5, 0); // should display 0t1
-
-	cout << "\nVerify m_bzet is changed correctly (size = " << m_bzet.size() << ")\n";
-	for (size_t i = 0; i < m_bzet.size(); i++) {
-		if (i != 0 && i % 4 == 0)
-			cout << ' ';
-		cout << (m_bzet[i] ? '1' : '0');
-	}
-	cout << "\n";
+// temporary
+void BinaryBzet::flipTEST() {
+    //     T
+    //  T    1
+    // T 1  1 1
+    // 1011 1111
+    //  ^
+    // TTT11
+    // after set(1) // turns on bit at index 1
+    bool p1[] = { 1,0, 1,0, 1,0, 1,1, 1,1 };
+    vector<bool>bzet;
+    bzet.insert(bzet.begin(), p1, p1+10);
+    m_bzet = bzet;
+    m_depth = 3;
+    cout << "b_zet = ";
+    for (size_t i = 0; i < m_bzet.size(); i++) {
+        cout << m_bzet[i];
+    }
+    cout << "\n";
+    flip(1);
+    cout << "b_zet = ";
+    for (size_t i = 0; i < m_bzet.size(); i++) {
+        cout << m_bzet[i];
+    }
+    cout << "\n";
+    assert(m_bzet.size() == 2 && m_bzet[0] == 1 && m_bzet[1] == 1);
+    cout << "Test 1 Passed\n";
+    
+    // flipping again should get back to original (p1)
+    flip(1);
+    bool t2_passed = true;
+    for (int i = 0; i < m_bzet.size(); i++) {
+        if (i < 10) {
+            if (m_bzet[i] != p1[i]) {
+                t2_passed = false;
+            }
+        } else {
+            t2_passed = false;
+            break;
+        }        
+    }
+    assert(t2_passed);
+    cout << "Test 2 Passed\n";
 }
 
 
@@ -1342,7 +1542,7 @@ void BinaryBzet::traversalSkeleton(vector<bool> bzet, u32 level) {
 //returns end position of subtree starting at currentPos - ends exclusive
 // michael - this seems to be working correctly except when the current position is given to something in level 1
 //           since only passing in the current position and the level doesn't give any info on whether it's
-//           refering to the left or right child. make sense?
+//           refering to the left or right child. make sense? 
 u32 BinaryBzet::bzetWalk(vector<bool>& bzet, u32 currentPos, u32 currentLev) {
 	u32 *seen = new u32[currentLev+1];
 	seen[currentLev] = 0;

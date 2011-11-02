@@ -31,9 +31,12 @@ public:
 	bool isTAWatching() { return true; } // lol
 	void set(u32 index);
 	void unset(u32 index);
-	void testSET();      // temporary
-    void expandTEST();   // temporary
-    void bzetWalkTEST(); // temporary
+    void flip(u32 index);
+    void flipTEST();           // temporary
+	void setTEST();            // temporary
+    void expandTEST();         // temporary
+    void bzetWalkTEST();       // temporary
+    void bitSetCollapseTEST(); // tempporary
     static void testShift();
 	BinaryBzet operator& (const BinaryBzet& rhs);
 	bool operator== (const BinaryBzet& rhs);
@@ -86,4 +89,7 @@ private:
 	       } */
 	bitpair getBitPairAtBzetIndex(u32 index);
 	void setBitPairAtBzetIndex(u32 index, bitpair value);
+    bitpair bitpairByChangingIndexValue(bitpair currentBitPair, int index_0or1, bool toValue);
+    void bitSetCollapse(vector<bool>& bzet, int& parentIndex, int& leftChildIndex, int& rightChildIndex);
+    bitpair bitpairFromBools(bool leftBit, bool rightBith);
 };
