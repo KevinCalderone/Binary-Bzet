@@ -12,7 +12,7 @@ int main()
 		b = BinaryBzet(&a.getBzetBinaryString(),a.getDepth());
 	}
 	cout << b.getBzetString() << endl << endl;
-*/
+
 	// END OF ARASH' TEST
 
 
@@ -60,13 +60,74 @@ int main()
 	cout<<a.getBzetString()<<endl;
 	cout << endl;
 	cout << "=========================================" << endl;
+*/
 
-/*
-=======
+//	=======
 	//Michael's Test Code
-	{
+//	{
 
+
+	/*cout << "Copy to result Test\n";
+	vector<bool> subtreeData;
+	subtreeData.push_back(1); subtreeData.push_back(0);
+	subtreeData.push_back(1); subtreeData.push_back(0);
+	subtreeData.push_back(1); subtreeData.push_back(1);
+	vector<bool> resultBzet;
+	resultBzet.push_back(1); resultBzet.push_back(1);
+	resultBzet.push_back(0); resultBzet.push_back(0);
+	resultBzet.push_back(0); resultBzet.push_back(1);
+	for(u32 i = 0; i<subtreeData.size(); i++)
+	{
+			resultBzet.push_back(subtreeData.at(i));
+	}
+	for(u32 i = 0; i<resultBzet.size(); i++)
+	{
+			cout << resultBzet[i] << "\n";
+	}
+
+	cout << "DataOP Test\n";
+	vector<bool>::iterator itA;
+	vector<bool>::iterator itB;
+	vector<bool> bzetRet;
+	
+	itA = subtreeData.begin();
+	itB = resultBzet.begin();
+	for(itA; itA != subtreeData.end(); itA++)
+	{
+		bzetRet.push_back((*itA) & (*itB));
+		itB++;
+	}
+	for(u32 i = 0; i<bzetRet.size(); i++)
+	{
+		cout << bzetRet[i] << "\n";
+	}
+	*/
 	BinaryBzet a;
+	//TT1Ttt
+	vector<bool> bzetA;
+	bzetA.push_back(1); bzetA.push_back(0);
+	bzetA.push_back(1); bzetA.push_back(0);
+	bzetA.push_back(1); bzetA.push_back(1);
+	bzetA.push_back(1); bzetA.push_back(0);
+	bzetA.push_back(1); bzetA.push_back(0);
+	bzetA.push_back(0); bzetA.push_back(1);
+	bzetA.push_back(0); bzetA.push_back(1);
+	vector<bool> bzetB;
+	//T1TT1
+	bzetB.push_back(1); bzetB.push_back(0);
+	bzetB.push_back(1); bzetB.push_back(1);
+	bzetB.push_back(1); bzetB.push_back(0);
+	bzetB.push_back(1); bzetB.push_back(0);
+	bzetB.push_back(1); bzetB.push_back(1);
+	u32 level = 3;
+	vector<bool> resultBzet = a.binaryOp(1,bzetA,0,bzetB,0,level);
+	cout << "Result\n";
+	//Should output TT1TT0t
+	for(u32 i = 0; i<resultBzet.size(); i++)
+	{
+			cout << resultBzet[i] << " ";
+	}
+	/*
 	vector<bool> bzetA;
 //	bool val1[] = {1,0, 1,0, 1,1, 1,0, 1,0, 0,1, 0,1};
 	bzetA.push_back(1); bzetA.push_back(0);

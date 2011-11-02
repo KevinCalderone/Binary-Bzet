@@ -751,41 +751,7 @@ void BinaryBzet::testSET() {
 }
 
 
-/*    # The case type breaks each trees c & d bits
-    # from the left side of the operator and the c & d
-    # bits from the right side (total of 4 bits
-    # and 16 possibilities) into 6 fundamental cases
-    # Trees never have associated data bits thus in
-    # the comments an x or error is placed before
-    # a 1 data bit that corresponds to a tree bit.
-    # These are type 6 data errors and should never
-    # occur. This case table maps each of the 16
-    # possibilities into the 6 operational cases 0-5
-    # and case 6 representing a data error.
-
-    # Inputs  DD      0T     T0     1T     T1    TT
-    #        Case0   Case1  Case2  Case3  Case4 Case5
-    #
-    #                       c1,c2, d1,d2
-    case_type = [0,  #  0     0,0,  0, 0  DD
-                 0,  #  1     0,0,  0, 1  DD
-                 0,  #  2     0,0,  1, 0  DD
-                 0,  #  3     0,0,  1, 1  DD
-                 1,  #  4     0,1,  0, 0  0T
-                 6,  #  5     0,1,  0,x1  0T
-                 3,  #  6     0,1,  1, 0  1T
-                 6,  #  7     0,1,  1,x1  1T
-                 2,  #  8     1,0,  0, 0  T0
-                 4,  #  9     1,0,  0, 1  T1
-                 6,  # 10     1,0, x1, 0  T0
-                 6,  # 11     1,0, x1, 1  T1
-                 5,  # 12     1,1,  0, 0  TT
-                 6,  # 13     1,1,  0,x1  TT
-                 6,  # 14     1,1, x1, 0  TT
-                 6,  # 15     1,1, x1,x1  TT
-                 ]
-
-
+/* 
     # Definitions of all 16 binary Boolean operations.
     # This table drives the computation both of data and tree nodes.
     # Each operation is a 6 tuple with the name of the operation,
@@ -891,149 +857,221 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	}
 
 	//Non-0 Level bzet
-	int flag = 0;
-	u32 curPosA = 0;
-	u32 curPosB = 0;
-	//TODO: curPos is used for debug - remove later
-	vector<bool> bzetRet = binaryOp(1,bzetA,0,bzetB,0,depthA,flag,curPosA,curPosB);
-	if(flag == 0)
-	{
-		//TODO change this - need new consturctor
-		//TODO finish normlaize function
-		// BinaryBzet(bzetRet,0);
-		// return normalize(bzetRet,depthA);
-		return rhs;
-	}
-	else if(flag == 1)
-	{
-		//TODO change this - need new consturctor
-		//return the full bitset
-		//return BinaryBzet(fullBzet,depthA);
-		return rhs;
-	}
-	else if(flag == 2)
-	{
-		//TODO change this - need new consturctor
-		//return the empty set
-		//return BinaryBzet(emptyBzet,1);
-		return rhs;
-	}
-	return rhs;
+	vector<bool> bzetRet = binaryOp(1,bzetA,0,bzetB,0,depthA);
+	BinaryBzet b = BinaryBzet(&bzetRet,m_depth);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
 }
 
-//flag is 0 - return NONE python
-//flag is 1 - return true python
-//flag is 2 - return false python
 //branchData == cdr python
 //treeData == ddr python
-vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level, int& f, u32& currentPosA, u32& currentPosB)
+vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level)
 {
 	string* operation = g_binOp[operationNo];
 	vector<bool> bzet1 = bzetA;
-	u32 currentPos1 = posA; 
 	vector<bool> bzet2 = bzetB; 
-	u32 currentPos2 = posB;
-	
 	vector<bool> resultBzet;
-	//Handle Level 1 case - subtrees just have data
-	if(level == 1)
+
+	u32 *seenA = new u32[level+1/* number of levels in tree + 1 so you can an index of the highest level */];
+	stack<u32> sA; // for the levels
+	sA.push(level/* the top level */);
+	seenA[level/* the top level */] = 0;
+	u32 currentLevelA = 0, nextA = 0, bzetIndexA = posA;
+
+	u32 *seenB = new u32[level+1/* number of levels in tree + 1 so you can an index of the highest level */];
+	stack<u32> sB; // for the levels
+	sB.push(level/* the top level */);
+	seenB[level/* the top level */] = 0;
+	u32 currentLevelB = 0, nextB  = 0, bzetIndexB = posB;
+   
+	while (!sA.empty()) 
 	{
-		//TBD
+		currentLevelA = sA.top();
+		cout << "Current Level A: " << currentLevelA << "\n";
+		currentLevelB = sB.top();
+		cout << "Current Level B: " << currentLevelB << "\n";
+		if(currentLevelA <= currentLevelB)
+		seenA[currentLevelA]++;
+		if(currentLevelB <= currentLevelA)
+		seenB[currentLevelB]++;
+		if (seenA[currentLevelA] == 2) {
+			sA.pop(); // this will empty out the stack when you are done
+		}
+		if (seenB[currentLevelA] == 2) {
+			sB.pop(); // this will empty out the stack when you are done
+		}
+		if (!sA.empty()){
+		//Do operations on this level - only do if on the same level
+		if(currentLevelA == currentLevelB)
+		{
+			if(currentLevelA == 1 && currentLevelB == 1)	{
+				//bottom level do data operation directly
+				vector<bool> data1;
+				data1.push_back(bzet1[bzetIndexA]);
+				data1.push_back(bzet1[bzetIndexA+1]);
+				vector<bool> data2;
+				data2.push_back(bzet2[bzetIndexB]);
+				data2.push_back(bzet2[bzetIndexB+1]);
+				vector<bool> res = doDataOp(operation[1], data1,data2);
+				for(u32 i = 0; i<res.size(); i++)
+				{
+					resultBzet.push_back(res[i]);
+				}
+			}
+			else	{
+				//Determine case of data
+				//TODO - create function to look up value
+				bool lBit3 = bzet1[bzetIndexA];
+				bool rBit3 = bzet1[bzetIndexA+1];
+				bitpair bp1 = lBit3 ? ( rBit3 ? '1' : 'T') : ( rBit3 ?  't': '0');
+
+				bool lBit4 = bzet2[bzetIndexB];
+				bool rBit4 = bzet2[bzetIndexB+1];
+				bitpair bp2 = lBit4 ? ( rBit4 ? '1' : 'T') : ( rBit4 ?  't': '0');
+				//TODO - replace with use of case_type array
+				int caseType = 6;
+				if((bp1 == '1'|| bp1 == '0') && (bp2 == '1' || bp2 == '0'))	{
+					caseType = 0;
+				}
+				else if(bp1 == '0' && bp2 == 'T')	{
+					caseType = 1;
+				}
+				else if(bp1 == 'T' && bp2 == '0')	{
+					caseType = 2;
+				}
+				else if(bp1 == '1' && bp2 == 'T')	{
+					caseType = 3;
+				}
+				else if(bp1 == 'T' && bp2 == '1')	{
+					caseType = 4;
+				}
+				else if(bp1 == 'T' && bp2 == 'T')	{
+					caseType = 5;
+				}
+				//Invalid case type
+				else	{
+					cout << "Invalid Case Type\n";
+				}
+				cout << "Case Type" << caseType << "\n";
+				//00 or 11 or 10 or 01
+				//Do the operation directly
+				if( caseType == 0)	{
+					vector<bool> data1;
+					data1.push_back(bzet1[bzetIndexA]);
+					data1.push_back(bzet1[bzetIndexA+1]);
+					vector<bool> data2;
+					data2.push_back(bzet2[bzetIndexB]);
+					data2.push_back(bzet2[bzetIndexB+1]);
+					vector<bool> res = doDataOp(operation[1], data1,data2);
+					for(u32 i = 0; i<res.size(); i++)
+					{
+						resultBzet.push_back(res[i]);
+					}
+				}
+				//0T T0 1T or T1
+				else if (caseType >= 1 && caseType <= 4)	{
+					string oper = operation[caseType + 1];
+					cout << "Oper" << oper << "\n";
+					//python call cp1, cp2 ,tr = do_tree_op(opr, lev-1,bset1,cp1,bset2,cp2)
+					vector<bool> res = doTreeOp(oper,currentLevelA,bzet1, bzetIndexA, bzet2, bzetIndexB);
+					//apped res to resultBzet + handle compression possibly
+					for(u32 i = 0; i<res.size(); i++)
+					{
+						resultBzet.push_back(res[i]);
+					}
+				}
+				//TT
+				else if(caseType ==5)	{
+					//Push a T to the resultBzet
+					//TODO fix collapsing problem
+					resultBzet.push_back(1);
+					resultBzet.push_back(0);
+				}
+			}
+		}
 	}
-	else
-	{
-		//Determine case of data
-		//TODO - create function to look up value
-		bool lBit = bzet1[currentPos1];
-		bool rBit = bzet1[currentPos1+1];
-		bitpair bp1 = lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
-		currentPos1 += 2;
 
-		lBit = bzet1[currentPos2];
-		rBit = bzet1[currentPos2+1];
-		bitpair bp2 = lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
-		currentPos2 += 2;
-		//TODO - replace with use of case_type array
-		int caseType = 6;
-		if((bp1 == '1'|| bp1 == '0') && (bp2 == '1' || bp2 == '0'))
-		{
-			caseType = 0;
-		}
-		else if(bp1 == '0' && bp2 == 'T')
-		{
-			caseType = 1;
-		}
-		else if(bp1 == 'T' && bp2 == '0')
-		{
-			caseType = 2;
-		}
-		else if(bp1 == '1' && bp2 == 'T')
-		{
-			caseType = 3;
-		}
-		else if(bp1 == 'T' && bp2 == '1')
-		{
-			caseType = 4;
-		}
-		else if(bp1 == 'T' && bp2 == 'T')
-		{
-			caseType = 5;
-		}
-		//Invalid case type
-		else
-		{
-			cout << "Invalid Case Type";
+		if (!sA.empty()) {		
+			bool lBit = bzet1[bzetIndexA];
+			bool rBit = bzet1[bzetIndexA+1];
+			bitpair curBPA = lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
+			cout << "curBPA: " << curBPA << " Index: "<< bzetIndexA <<"\n"; 
+
+			bool lBit2 = bzet2[bzetIndexB];
+			bool rBit2 = bzet2[bzetIndexB+1];
+			bitpair curBPB = lBit2 ? ( rBit2 ? '1' : 'T') : ( rBit2 ?  't': '0');
+			cout << "curBPB: " << curBPB <<" Index: "<< bzetIndexB << "\n"; 
+
+
+			//Traverse A
+			if (currentLevelA == 1) {
+				// at level one
+			
+			} else if (curBPA == '1' || curBPA == '0') {
+				// if you get here it means you are not at level 1 but the value in the tree is 1 or 0
+				 // # of 1's or 0's represented by curBP is 2^(currentLevel)
+				if (seenA[currentLevelA] == 2)
+				sA.pop();
+				// if the stack is empty you have reached the end of the bzet so break?
+				//     (not sure what would work for you so im just leaving a comment)
+				// if its not empty let while loop continue to next iteration
+				//     if you call "continue;" make sure to call "bzetIndex += 2;" before hand to increment index
+			} else if(currentLevelA <= currentLevelB)	{
+					// set up next iteration
+					nextA = currentLevelA - 1;
+					sA.push(nextA);
+					seenA[nextA] = 0;
+			}
+
+			//TraverseB
+			if (currentLevelB == 1 /* && currentLevelB == 1*/) {
+				// at level one
+			
+			} else if (curBPB == '1' || curBPB == '0') {
+				// if you get here it means you are not at level 1 but the value in the tree is 1 or 0
+				// # of 1's or 0's represented by curBP is 2^(currentLevel)
+				if (seenB[currentLevelB] == 2)
+				sB.pop();
+				// if the stack is empty you have reached the end of the bzet so break?
+				//     (not sure what would work for you so im just leaving a comment)
+				// if its not empty let while loop continue to next iteration
+				//     if you call "continue;" make sure to call "bzetIndex += 2;" before hand to increment index
+			} else if(currentLevelB <= currentLevelA)	{
+					// set up next iteration
+					nextB = currentLevelB - 1;
+					sB.push(nextB);
+					seenB[nextB] = 0;
+			}
+				if(currentLevelA <= currentLevelB)
+					bzetIndexA += 2; // its +2 because values are represented by 2 bits in the vector
+				if(currentLevelB <= currentLevelA)
+					bzetIndexB += 2;
 		}
 
-		//00 or 11 or 10 or 01
-		if( caseType == 0)
-		{
-			//TBD
-		}
-		//0T T0 1T or T1
-		else if (caseType >= 1 && caseType <= 4)
-		{
-			string oper = operation[caseType + 1];
-			//python call cp1, cp2 ,tr = do_tree_op(opr, lev-1,bset1,cp1,bset2,cp2)
-			vector<bool> res = doTreeOp(oper,level-1,bzet1, currentPos1, bzet2, currentPos2);
-			//apped res to resultBzet + handle compression possibly
-		}
-		//TT
-		else if(caseType ==5)
-		{
-			//recurse the tree and apped to result
-			u32 currPosA = 0;
-			u32 currPosB = 0;
-			int resultFlag = 0;
-			vector<bool> res = binaryOp(operationNo,bzet1, currentPos1, bzet2, currentPos2, level-1, resultFlag, currPosA, currPosB);
-			//update positions
-			currentPos1 = currPosA;
-			currentPos2 = currPosB;
-			//TODO: Append res to resultBzet
-			//TODO: Possibly handle flag stuff
-		}
 	}
 
-	f = 0;
-	//TODO do stuff with flag possibly
-
-
+	// release memory
+	delete [] seenA;
+	delete [] seenB;
 	return resultBzet;
 }
 
 //implements CA and CB
-//TODO test when Walk Finished - copying currently seems to work
+//TODO remove endPos
 vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos)
 {
+	vector<bool> returnBzet;
 	if(currentPos >= (u32)bzet.size())
 	{
 		endPos = bzet.size();
+		return returnBzet;
 	}
 	else
 	{
-	//	endPos = bzetWalk(bzet,currentPos,level);
+		endPos = bzetWalk(bzet,currentPos,level);
 	}
-	vector<bool> returnBzet;
+
 	//gets copy of subtree at positions currentPos-endPos
 	for(u32 i = currentPos; i<endPos; i++)
 	{
@@ -1043,7 +1081,7 @@ vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, u32 currentPos, u32 level, u3
 }
 
 //implements NA and NB
-//TODO test when Walk Finished - copying currently seems to work
+//TODO remove endPos
 vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos)
 {
 	vector<bool> returnBzet;
@@ -1055,7 +1093,7 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32
 	}
 	else
 	{
-//		endPos = bzetWalk(bzet,currentPos,level);
+		endPos = bzetWalk(bzet,currentPos,level);
 	}
 	//gets copy of subtree at positions currentPos-endPos
 	for(u32 i = currentPos; i<endPos; i++)
@@ -1063,7 +1101,7 @@ vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32
 		returnBzet.push_back(bzet.at(i));
 	}
 	//not the subtree in place
-	//subtreeNot(returnBzet, 1, level);
+	subtreeNot(returnBzet, 0, level);
 	return returnBzet;
 }
 
@@ -1080,48 +1118,59 @@ int BinaryBzet::bsDrop(vector<bool> bzet, u32 currentPos, u32 level)
 }
 
 //TODO finish typing problems with this function
-vector<bool> BinaryBzet::doTreeOp(string operation, u32 level, vector<bool> bzetA, u32& posA, vector<bool> bzetB, u32& posB)
+vector<bool> BinaryBzet::doTreeOp(string operation, u32 level, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB)
 {
 	bool dr;
-	int end = 0;
+	u32 end = 0;
+	vector<bool> bzetRet;
+	//TODO find out difference if any between DA0, DA1, DB0, DB1 are
 	if(operation.compare("DA0") == 0)
 	{
-		posA = bsDrop(bzetA,posA,level);
-		dr = false;
+//		posA = bsDrop(bzetA,posA,level);
+//		dr = false;
+		bzetRet.push_back(0);
+		bzetRet.push_back(0);
 	}
 	else if(operation.compare("DA1") == 0)
 	{
-		posA = bsDrop(bzetA,posA,level);
-		dr = true;
+//		posA = bsDrop(bzetA,posA,level);
+//		dr = true;
+		cout << "OP DA1\n";
+		bzetRet.push_back(1);
+		bzetRet.push_back(1);
 	}
 	else if(operation.compare("DB0") == 0)
 	{
-		posB = bsDrop(bzetB,posB,level);
-		dr = false;
+		bzetRet.push_back(0);
+		bzetRet.push_back(0);
+//		posB = bsDrop(bzetB,posB,level);
+//		dr = false;
 	}
 	else if(operation.compare("DB1") == 0)
 	{
-		posB = bsDrop(bzetB,posB,level);
-		dr = true;
+		bzetRet.push_back(1);
+		bzetRet.push_back(1);
+//		posB = bsDrop(bzetB,posB,level);
+//		dr = true;
 	}
 	else if(operation.compare("CA") == 0)
 	{
-		//posA = bsCopy(bzetA,posA,level,end);
+		bzetRet = bsCopy(bzetA,posA,level,end);
 	}
 	else if(operation.compare("CB") == 0)
 	{
-		//posB = bsCopy(bzetB,posB,level,end);
+		bzetRet = bsCopy(bzetB,posB,level,end);
 	}
 	else if(operation.compare("NA") == 0)
 	{
-		//posA = bsNeg(bzetA,posA,level,end);
+		bzetRet = bsNeg(bzetA,posA,level,end);
 	}
 	else if(operation.compare("NB") == 0)
 	{
-		//posB = bsNeg(bzetB,posB,level,end);
+		bzetRet = bsNeg(bzetB,posB,level,end);
 	}
 
-	return bzetA;  // I just put this so it would compile for me, delete this when you fix it
+	return bzetRet;
 }
 
 //not sure if we need this function
@@ -1187,6 +1236,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 		for(itA; itA != data1.end(); itA++)
 		{
 			bzetRet.push_back(0);
+			bzetRet.push_back(0);
 			itB++;
 		}
 	}
@@ -1194,6 +1244,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	{
 		for(itA; itA != data1.end(); itA++)
 		{
+			bzetRet.push_back(1);
 			bzetRet.push_back(1);
 			itB++;
 		}
@@ -1240,49 +1291,52 @@ u32 BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 }
 
 
-//void traversalSkeleton() {
-//    // initialize
-//    u32 *seen = new u32[2/* number of levels in tree + 1 so you can an index of the highest level */];
-//    stack<u32> s; // for the levels
-//    s.push(2/* the top level */);
-//    seen[2/* the top level */] = 0;
-//    u32 currentLevel, next, bzetIndex = 0;
+void BinaryBzet::traversalSkeleton(vector<bool> bzet, u32 level) {
+	// initialize
+	u32 *seen = new u32[level + 1/* number of levels in tree + 1 so you can an index of the highest level */];
+	stack<u32> s; // for the levels
+	s.push(level/* the top level */);
+	seen[level/* the top level */] = 0;
+	 u32 currentLevel, next, bzetIndex = 0;
 //    
-//    while (!s.empty()) {
-//        currentLevel = s.top();
-//        seen[currentLevel]++;
-//        if (seen[currentLevel] == 2) {
-//            s.pop(); // this will empty out the stack when you are done
-//        }
+	while (!s.empty()) {
+		currentLevel = s.top();
+		cout << "Current Level" << currentLevel << "\n";
+		seen[currentLevel]++;
+		if (seen[currentLevel] == 2) {
+			cout << "Removing Current Level from Stack\n";
+			s.pop(); // this will empty out the stack when you are done
+		}
 //        
-//        if (!s.empty()) {
-//            // get value in bzet
-//            bool lBit = bzet[bzetIndex];   // bzet of your choice..
-//            bool rBit = bzet[bzetIndex+1]; // bzet of your choice..
-//            bitpair curBP = (lBit ? (rBit ? '1' : 'T') : (rBit ?  't': '0'));
-//            
-//            if (currentLevel == 1) {
-//                // at level one
-//            } else if (curBP == '1' || curBP == '0') {
-//                // if you get here it means you are not at level 1 but the value in the tree is 1 or 0
-//                // # of 1's or 0's represented by curBP is 2^(currentLevel)
-//                s.pop();
-//                // if the stack is empty you have reached the end of the bzet so break?
-//                //     (not sure what would work for you so im just leaving a comment)
-//                // if its not empty let while loop continue to next iteration
-//                //     if you call "continue;" make sure to call "bzetIndex += 2;" before hand to increment index
-//            } else {
-//                // set up next iteration
-//                next = currentLevel - 1;
-//                s.push(next);
-//                seen[next] = 0;
-//            }
-//            bzetIndex += 2; // its +2 because values are represented by 2 bits in the vector
-//        }
-//    }
-//    // release memory
-//    delete [] seen;
-//}
+		if (!s.empty()) {
+			// get value in bzet
+			bool lBit = bzet[bzetIndex];   // bzet of your choice..
+			bool rBit = bzet[bzetIndex+1]; // bzet of your choice..
+			 bitpair curBP = (lBit ? (rBit ? '1' : 'T') : (rBit ?  't': '0'));
+			cout << curBP << "\n";
+			if (currentLevel == 1) {
+				// at level one
+			} else if (curBP == '1' || curBP == '0') {
+				// if you get here it means you are not at level 1 but the value in the tree is 1 or 0
+				// # of 1's or 0's represented by curBP is 2^(currentLevel)
+				if (seen[currentLevel] == 2)
+				s.pop();
+				// if the stack is empty you have reached the end of the bzet so break?
+				//     (not sure what would work for you so im just leaving a comment)
+				// if its not empty let while loop continue to next iteration
+				//     if you call "continue;" make sure to call "bzetIndex += 2;" before hand to increment index
+			} else {
+				// set up next iteration
+				next = currentLevel - 1;
+				s.push(next);
+				seen[next] = 0;
+			}
+			bzetIndex += 2; // its +2 because values are represented by 2 bits in the vector
+		}
+	}
+	// release memory
+	delete [] seen;
+}
 
 
 //returns end position of subtree starting at currentPos - ends exclusive
