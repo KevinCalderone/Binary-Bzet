@@ -656,7 +656,7 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 				// the bit is in this range
 				vector<bool> expandTo;
 				expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
-				m_bzet.erase(m_bzet.begin() + bzetIndex*2-1, m_bzet.begin() + bzetIndex*2 + 1);
+				m_bzet.erase(m_bzet.begin() + bzetIndex*2, m_bzet.begin() + bzetIndex*2 + 2);
 				m_bzet.insert(m_bzet.begin() + bitIndex*2, expandTo.begin(), expandTo.end());
 				// done
 			} else {
