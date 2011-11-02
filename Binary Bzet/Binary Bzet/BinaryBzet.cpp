@@ -406,6 +406,53 @@ void BinaryBzet::shift(int distance) {
 	m_depth = resultDepth;
 }
 
+u32 BinaryBzet::getLastBit () {
+	u32 resultIndex = c_u32_max;		
+	u32 bitstringIndex = 0;		
+	u32 bzetIndex = 0;			
+
+	do {
+		int numLeadingT = GetNumEndingZero(bitstringIndex, m_depth - 1);
+		u32 bitsFound = 2 << numLeadingT;
+		int value = getBzetIndex(bzetIndex);
+		bzetIndex++;
+
+		while (value == 0x2 && numLeadingT > 0) {
+			value = getBzetIndex(bzetIndex);
+			bzetIndex++;
+			bitsFound /= 2;
+			numLeadingT--;
+		}
+
+		bitstringIndex += bitsFound / 2;
+
+		if (value == 0)
+			continue;
+
+		// depending on the value, how far back was the last one bit
+		//					    x, 01, 10, 11
+		const u32 offset[4] = { 0, 1, 2, 1 };
+		resultIndex = bitstringIndex * 2 - offset[value];
+
+	} while (bitstringIndex < u32(1) << (m_depth - 1));
+
+	return resultIndex;
+}
+
+void BinaryBzet::getLastBitTest () {
+	for (int i = 0; i < 10; ++i) {
+		u32 testNum = rand()%1000;
+		BinaryBzet a(testNum);
+		u32 lastBit = a.getLastBit();
+		if (lastBit == c_u32_max) { // couldn't find any bit set
+			;// count << "something seems to be messed up?";
+		}
+		else if (lastBit != testNum) {  // some bit was found, but it was wrong one
+			cout << "getLastBit Failed! " << testNum<< endl;
+		}
+	}
+}
+
 void BinaryBzet::bitstringToBzet(string bitstring)
 {
 	string input = "";

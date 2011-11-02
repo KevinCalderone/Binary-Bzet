@@ -36,6 +36,11 @@ int main()
 	BinaryBzet::testShift();
 
 	cout << endl;
+	cout << "============ Testing GetLastBit ===========" << endl;
+
+	BinaryBzet::getLastBitTest();
+
+	cout << endl;
 	cout << "========== Testing Setting Bit ==========" << endl;
 
     BinaryBzet set;

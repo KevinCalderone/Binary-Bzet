@@ -10,6 +10,8 @@ typedef uint8_t u8; // unsigned 8 bit int
 typedef unsigned int u32;
 typedef unsigned char bitpair;
 
+const u32 c_u32_max = 0xffffffff;
+
 class BinaryBzet {
 public:
 	BinaryBzet();
@@ -41,6 +43,9 @@ public:
 	BinaryBzet operator& (const BinaryBzet& rhs);
 	bool operator== (const BinaryBzet& rhs);
 	bool AlignCompare (const BinaryBzet& other);
+
+	u32 getLastBit ();	// returns c_u32_max is none are found
+	static void getLastBitTest ();
 
 	//TODO - move method to private - temporary for testing
 	void align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u32& depthB);
