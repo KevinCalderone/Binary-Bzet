@@ -7,6 +7,8 @@ Mary Chau
 Michael Koyama 
 
 News:
+Michael Koyama(11/1/2011)
+binaryOP and related functions work
 
 Mary Chau (10/28/2011 12:28PM)
 Completed the Following:
