@@ -7,6 +7,10 @@ Mary Chau
 Michael Koyama 
 
 News:
+Lus Aguiniga (11/01/2011)
+* changed set/unset: they now collapse
++ added flip function
+
 Michael Koyama(11/1/2011)
 binaryOP and related functions work
 
