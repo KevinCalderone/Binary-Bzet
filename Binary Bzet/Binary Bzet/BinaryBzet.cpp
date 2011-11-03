@@ -516,14 +516,19 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 		}
 }
 
+// * turns on bit at index
+// * does not make bzet larger to turn on a bit at an index that is outside the current size (2^m_depth)
 void BinaryBzet::set(u32 index) {
 	bitSet(index, true);
 }
 
+// * turns off bit at index
+// * does not make bzet larger to turn off a bit at an index that is outside the current size (2^m_depth)
 void BinaryBzet::unset(u32 index) {
 	bitSet(index, false);
 }
 
+// * Traverses m_bzet to get bit then calls bitSet with !bit
 void BinaryBzet::flip(u32 index) {
     bool currentBitValue;
 	u32 *seen = new u32[m_depth+1];
@@ -578,7 +583,9 @@ void BinaryBzet::flip(u32 index) {
 	delete [] seen;
 }
 
-// currently only traverses bzet
+// * traverses bzet, changes bit to value
+// * collapses when needed
+// * expands when needed
 void BinaryBzet::bitSet(u32 index, bool value) {
 	//    s: a stack to keep track of the level the current index in the array is for
 	// seen: an array to keep track of the number of times a level has been seen.
@@ -652,12 +659,14 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 			// there is 2^top 1's or 0's
 			u32 size = (u32)pow(2.0, (double)top);
 			if (index >= bitIndex && index < bitIndex + size) {
-				// the bit is in this range
-				vector<bool> expandTo;
-				expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
-				m_bzet.erase(m_bzet.begin() + bzetIndex*2, m_bzet.begin() + bzetIndex*2 + 2);
-				m_bzet.insert(m_bzet.begin() + bitIndex*2, expandTo.begin(), expandTo.end());
-				// done
+                if ((curBP == '0' && value) || (curBP == '1' && !value)) {
+                    // value is different from current bit, change it
+                    vector<bool> expandTo;
+                    expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
+                    m_bzet.erase(m_bzet.begin() + bzetIndex*2, m_bzet.begin() + bzetIndex*2 + 2);
+                    m_bzet.insert(m_bzet.begin() + bitIndex*2, expandTo.begin(), expandTo.end());
+                }
+				break; // done
 			} else {
 				// bit to set is not in this range..
 				bitIndex += size; // skip bits
@@ -673,6 +682,8 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 	delete [] seen;
 }
 
+// * checks if both children are 1's or 0, if they are it collapses them
+// * recursively calls itself to see if newly collapse part needs to be collapsed further
 void BinaryBzet::bitSetCollapse(vector<bool>& bzet, int& parentIndex, int& leftChildIndex, int& rightChildIndex) {
     if (parentIndex >= 0 && rightChildIndex+1 < bzet.size()) {
         bitpair lChild = bitpairFromBools(bzet[leftChildIndex], bzet[leftChildIndex+1]);
@@ -769,12 +780,13 @@ void BinaryBzet::bitSetCollapseTEST() {
     
 }
 
+// * given two bool inputs returns 0, t, T, or 1
 bitpair BinaryBzet::bitpairFromBools(bool leftBit, bool rightBit) {
     return (leftBit ? (rightBit ? '1' : 'T') : (rightBit ? 't' : '0'));
 }
 
-// given a bit pair, modifies bit at index (0 or 1) to tovalue;
-// bitpairByChangingIndexValue('T', 0, 0) --> T (10), 0th bit is change to a zero and becomes 0 (00)
+// * given a bit pair, modifies bit at index (0 or 1) to tovalue;
+// * bitpairByChangingIndexValue('T', 0, 0) --> T (10), 0th bit is change to a zero and becomes 0 (00)
 bitpair BinaryBzet::bitpairByChangingIndexValue(bitpair currentBitPair, int index_0or1, bool toValue) {
     bool lBit, rBit;
     switch (currentBitPair) {
@@ -849,7 +861,8 @@ void BinaryBzet::expandTEST() {
     cout << "Expand Test 4 Passed\n";    
 }
 
-// value is the value to which the single bit is change so current bit values is !value
+// * value is the value to which the single bit is change so current bit values is !value
+// * recursively calls itself only when further expanding is need in a subtree
 void BinaryBzet::expand(vector<bool> &newbzet, u32 start, u32 end, u32 bitLocation, bool value) {
 	u32 midPoint = (start + end) / 2;
     u32 length = end - start + 1;
@@ -886,6 +899,10 @@ void BinaryBzet::expand(vector<bool> &newbzet, u32 start, u32 end, u32 bitLocati
     }
 }
 
+// * reads two values from bzet
+// * index 0 refers to the first "T", that is index 0 and 1 in the bzet
+// * return 0, t, T, 1 for a valid index
+// * return x for an index that is out of range
 bitpair BinaryBzet::getBitPairAtBzetIndex(u32 index) {
 	u32 indexA = index * 2; // doesn't skip first 8 bits since depth is its own member variable
 	if (indexA + 1 < m_bzet.size()) {
@@ -896,6 +913,9 @@ bitpair BinaryBzet::getBitPairAtBzetIndex(u32 index) {
 	return 'x';
 }
 
+// * given 0, t, T or 1, inserts bit values into bzet
+// * calling this with index = 0, value = 'T', it inserts bit values 1 and 0 at index 0 and 1 of bzet
+// * an invalid value is ignored and does nothing
 void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
 	if (index >= m_bzet.size())
 		m_bzet.reserve(index);
@@ -908,7 +928,7 @@ void BinaryBzet::setBitPairAtBzetIndex(u32 index, bitpair value) {
 		case '1': lBit = 1; rBit = 1; break;
 		default:
 			cout << "\nUnrecognized value for a bitpair\n";
-			break;
+			return;
 	}
 
 	int indexA = index * 2; // doesn't skip first 8 bits since depth is its own member variable
@@ -949,6 +969,93 @@ void BinaryBzet::setTEST() {
     }
     assert(t2_passed);
     cout << "Test 2 Passed\n";
+    
+    // TEST: setting a bit that is already on should not expand bzet
+    bool p2[] = { 1, 1 };
+    vector<bool> v2(p2, p2 + 2);
+    assert(v2.size() == 2 && v2[0] == 1 && v2[0] == 1);
+    
+    // bzet encoding 8 1's
+    m_bzet = v2;
+    m_depth = 3;
+    
+    // turn on bit at index 0
+    set(0);
+    
+    // bzet should be unchanged
+    cout << "\nm_bzet = ";
+    for (size_t i = 0; i < m_bzet.size(); i++) {
+        cout << m_bzet[i];
+    }
+    cout << "\n\n";
+    assert(m_bzet.size() == 2 && m_bzet[0] == 1 && m_bzet[0] == 1);
+    cout << "Test 3 Passed\n";
+    
+    // TEST: setting a bit that is already on should not expand bzet
+    bool p3[] = { 0, 0 };
+    vector<bool> v3(p3, p3 + 2);
+    assert(v3.size() == 2 && v3[0] == 0 && v3[0] == 0);
+    
+    // bzet encoding 8 0's
+    m_bzet = v3;
+    m_depth = 3;
+    
+    // turn on bit at index 0
+    unset(0);
+    
+    // bzet should be unchanged
+    cout << "\nm_bzet = ";
+    for (size_t i = 0; i < m_bzet.size(); i++) {
+        cout << m_bzet[i];
+    }
+    cout << "\n\n";
+    assert(m_bzet.size() == 2 && m_bzet[0] == 0 && m_bzet[0] == 0);
+    cout << "Test 4 Passed\n";
+    
+    // set a bit in a bzet = 00 and depth = 5 (32 0's)
+    bool p4[] = { 0, 0 };
+    vector<bool> v4(p4, p4 + 2);
+    assert(v4.size() == 2 && v4[0] == 0 && v4[0] == 0);
+    
+    // bzet encoding 8 0's
+    m_bzet = v4;
+    m_depth = 5;
+    
+    // turn on bit at index 8
+    set(8);
+    
+    // bzet should be unchanged
+    cout << "\nm_bzet = ";
+    for (size_t i = 0; i < m_bzet.size(); i++) {
+        cout << m_bzet[i];
+        if ((i+1) % 2 == 0) {
+            cout << " ";
+        }
+    }
+    cout << "\nTest 5 Passed? (manually check output)\n";
+    
+    // set a bit in a bzet = 00 and depth = 5 (32 0's)
+    bool p5[] = { 0, 0 };
+    vector<bool> v5(p5, p5 + 2);
+    assert(v5.size() == 2 && v5[0] == 0 && v5[0] == 0);
+    
+    // bzet encoding 8 0's
+    m_bzet = v5;
+    m_depth = 6;
+    
+    // turn on bit at index 63
+    set(63);
+    
+    // bzet should be unchanged
+    cout << "\nm_bzet = ";
+    for (size_t i = 0; i < m_bzet.size(); i++) {
+        cout << m_bzet[i];
+        if ((i+1) % 2 == 0) {
+            cout << " ";
+        }
+    }
+    cout << "\nTest 6 Passed? (manually check output)\n";
+    
 }
 
 // temporary
@@ -1630,13 +1737,7 @@ void BinaryBzet::bzetWalkTEST() {
     bool values[] = { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0 }; // TTTTTTttT10
     vector<bool> bzet;
     bzet.insert(bzet.begin(), values, values + 22);
-    
-    // display vector values
-    cout << "bzet: ";
-    for (size_t i = 0; i < bzet.size(); i++)
-        cout << (bzet[i] ? '1' : '0');
-    cout << "\n";
-    
+        
     assert(bzetWalk(bzet, 2, 3) == 16);
     cout << "Test 01: Passed\n";
     assert(bzetWalk(bzet, 4, 2) == 10);
