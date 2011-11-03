@@ -111,7 +111,7 @@ string BinaryBzet::getBzetString(){
     m_depth = 5;*/
 
 	ostringstream output;
-	//output<< m_depth<<":";///////////////////////////////WHATDOYOUMEAN/////////////
+	output<< m_depth<<":";
 	u32 indexB;
 	for(indexB = 0 ; indexB < m_bzet.size()/2; indexB++){
 		output<<getCharFromBzet(indexB);
