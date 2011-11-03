@@ -277,12 +277,6 @@ void BinaryBzet::shift(int distance) {
 
 	// TODO: -This should probably be encapsulated into a seperate struct so that it will be a lot
 	//	     cleaner passing the algorithm state through the control flow of the algorithm.
-	//		 -This produces a bzet that is fully collapsed, but it may not output a correctly
-	//       normalized bzet(eg. it may use a depth that is too large).  It picks the output
-	//		 depth based on the worst case, and this can easily be improved to use the optimal 
-	//       depth by adding a method that will find the index of the last one in the bzet.
-	//		 -This only updates m_bzet, so m_bzet_string will be incorrect after execution.
-	//	     -The copy of the result into the current bzet should be done in a copy constructor.
 
 	// ALGORITHM STATE
 	vector<bool> result;		// The result bzet
@@ -294,16 +288,17 @@ void BinaryBzet::shift(int distance) {
 	u32 bzetIndex = 0;			// The index of the current letter in the compressed bzet form that it is currently parsing
 
 	// DEPTH OF RESULT BZET
-	// Can avoid need for normalization by implementing getIndexOfLastOne
-	// and finding the minimum size depth bzet that will fit it.
-	// For now, just assume the worst case that all bits are one.
-	u32 neededSize = (1 << m_depth);
+	u32 neededSize = getLastBit() + 1;
+	if (neededSize == c_u32_max) {
+		neededSize = 1 << m_depth;  // There is some problem with the bzet
+	}
+
 	if (distance < 0 && (u32)(distance * -1) > neededSize)
 		neededSize = 0;
 	else 
 		neededSize -= u32(-1 * distance);
 
-	u8 resultDepth = m_depth;
+	u8 resultDepth = 1;
 	while ((u32)(1 << resultDepth) < neededSize)
 		resultDepth++;
 
