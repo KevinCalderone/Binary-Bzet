@@ -110,7 +110,7 @@ string BinaryBzet::getBzetString(){
     m_depth = 5;*/
 
 	ostringstream output;
-	output<< m_depth<<":";
+	//output<< m_depth<<":";///////////////////////////////WHATDOYOUMEAN/////////////
 	u32 indexB;
 	for(indexB = 0 ; indexB < m_bzet.size()/2; indexB++){
 		output<<getCharFromBzet(indexB);
@@ -427,7 +427,7 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 			else
 				input.push_back('1');
 	}
-	m_depth = (u32)(log((float)input.length())/log(2.0) + 1);
+	m_depth = (u32)(log((double)input.length())/log(2.0) + 1);
 	i = 0;
 	int num_end_zero;
 	do{
@@ -436,11 +436,10 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 		int number_of_times_to_expand = num_end_zero;
 		if (input.at(i) == '1' || input.at(i) == '0')
 			while (number_of_times_to_expand  > 0) {
-				bool same = true;
-				//cout << number_of_times_to_expand << " " << num_to_encode <<  "   " << input.length()-1 << endl;////////////////
-				for(u32 j = i; (j < i + (1 << num_to_encode) - 1) && (j < input.length()-1); j++){////////////////////
-					same = same && (input[j]==input[j+1]);}
-				//cout << endl;/////////////////
+				bool same = true; //(j < i + (1 << num_to_encode) - 1) //(j < (1 << num_to_encode)
+				for(u32 j = i; ((j < i + num_to_encode*2-1) && (j < input.length()-1)); j++){
+					same = same && (input[j]==input[j+1]);
+				}
 				if (!same)
 					break;
 				num_to_encode*=2;
@@ -450,7 +449,7 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 			m_bzet_string += temp.append(number_of_times_to_expand,'T');
 			m_bzet_string += input.at(i);
 			i +=num_to_encode;
-			if (num_to_encode == 1 && m_depth!=1 /*input.length() > i*/) {
+			if (num_to_encode == 1 && m_depth!=1) {
 				m_bzet_string += input.at(i);
 				i++;
 			}
