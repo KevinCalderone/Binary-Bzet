@@ -134,10 +134,14 @@ string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	oss << m_depth<<": ";
 	string output = oss.str();
 	u32 indexB=1;
-	if(m_depth > 0){
+	if(m_depth > 1){
 		output[2] = getCharFromBzet(0);
 		output += getBzetPrettyRecursive(m_depth-1,indexB);
 	}
+	else{
+		output[2] = getCharFromBzet(0);
+	}
+
 	return output;
 
 }// end getBzetPRetty()
