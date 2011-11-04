@@ -1620,7 +1620,7 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 u32 BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 {
 	// avoid a crash for badly formed bzets for now
-	if (currentPos + 1 < bzet.size()) {
+	if (currentPos + 1 > bzet.size()) {
 		cout << "Warning: Bad Bzet Data" << endl;
 		return currentPos;
 	}
