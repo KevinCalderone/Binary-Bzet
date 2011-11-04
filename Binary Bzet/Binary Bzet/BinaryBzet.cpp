@@ -1586,6 +1586,14 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 			itB++;
 		}
 	}
+	else if(operation.compare("~b") == 0)
+	{
+		for(itA; itA != data1.end(); itA++)
+		{
+			bzetRet.push_back(~(*itB));
+			itB++;
+		}
+	}
 	else if(operation.compare("0") == 0)
 	{
 		for(itA; itA != data1.end(); itA++)
@@ -1611,16 +1619,22 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 //implements _not_ in python code
 u32 BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 {
+	// avoid a crash for badly formed bzets for now
+	if (currentPos + 1 < bzet.size()) {
+		cout << "Warning: Bad Bzet Data" << endl;
+		return currentPos;
+	}
+
 	u32 nextPos = currentPos + 2;
-	switch(bzet[(currentPos - 1)] << 1 | bzet[currentPos]) {
+	switch(bzet[currentPos] << 1 | bzet[currentPos + 1]) {
 		case 0:	// '0'
-			bzet[(currentPos - 1)] = 1;
 			bzet[currentPos] = 1;
+			bzet[currentPos + 1] = 1;
 		break;
 	
 		case 1: // 't'
-			bzet[(currentPos - 1)] = 1;
-			bzet[currentPos] = 0;	
+			bzet[currentPos] = 1;
+			bzet[currentPos + 1] = 0;	
 		break;
 	
 		case 2: // 'T'
@@ -1631,14 +1645,14 @@ u32 BinaryBzet::subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level)
 				nextPos = subtreeNot(bzet, nextPos, level - 1);
 			}
 			else {
-				bzet[(currentPos - 1)] = 0;
-				bzet[currentPos] = 1;	
+				bzet[currentPos] = 0;
+				bzet[currentPos + 1] = 1;	
 			}
 		break;
 	
 		case 3: // '1'
-			bzet[(currentPos - 1)] = 0;
 			bzet[currentPos] = 0;
+			bzet[currentPos + 1] = 0;
 		break;
 	}
 
