@@ -858,10 +858,214 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 
 	//Non-0 Level bzet
 	vector<bool> bzetRet = binaryOp(1,bzetA,0,bzetB,0,depthA);
-	BinaryBzet b = BinaryBzet(&bzetRet,m_depth);
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
 	b.shift(0);
 	return b;
+}
+
+BinaryBzet BinaryBzet::operator |(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(7,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::operator ^(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(6,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::operator ~()
+{
+	vector<bool> bzetA = m_bzet;
+	subtreeNot(bzetA,0,m_depth);
+	BinaryBzet b = BinaryBzet(&bzetA,m_depth);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::FALSE (const BinaryBzet& rhs)
+{
+	//Return empty Bzet
+	return BinaryBzet();
+}
+
+BinaryBzet BinaryBzet::AND (const BinaryBzet& rhs)
+{
+	return *this & rhs;
+}
+
+BinaryBzet BinaryBzet::NonImplication (const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(2,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::A(const BinaryBzet& rhs)
+{
+	return *this;
+}
+
+BinaryBzet BinaryBzet::ConverseNonImplication(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(4,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::B(const BinaryBzet& rhs)
+{
+	return rhs;
+}
+
+BinaryBzet BinaryBzet::XOR(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(6,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::OR(const BinaryBzet& rhs)
+{
+	return *this | rhs;
+}
+
+BinaryBzet BinaryBzet::NOR(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(8,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::EQ(const BinaryBzet& rhs)
+{
+	return *this == rhs;
+}
+
+BinaryBzet BinaryBzet::NotB(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = rhs.m_bzet;
+	BinaryBzet bzet = BinaryBzet(&bzetA,rhs.m_depth);
+	return ~bzet;
+}
+
+BinaryBzet BinaryBzet::ConverseImplication(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(11,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::NotA(const BinaryBzet& rhs)
+{
+	return ~*this;
+}
+
+BinaryBzet BinaryBzet::Implication(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(13,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::NAND(const BinaryBzet& rhs)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	u32 depthA = m_depth;
+	u32 depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(14,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.shift(0);
+	return b;
+}
+
+BinaryBzet BinaryBzet::TRUE(const BinaryBzet& rhs)
+{
+	//return full Bzet
+	//TODO fix
+	return rhs;
 }
 
 //branchData == cdr python

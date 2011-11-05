@@ -36,6 +36,28 @@ public:
     void bzetWalkTEST(); // temporary
     static void testShift();
 	BinaryBzet operator& (const BinaryBzet& rhs);
+	BinaryBzet operator| (const BinaryBzet& rhs);
+	BinaryBzet operator ^(const BinaryBzet& rhs);
+	BinaryBzet operator ~();
+
+	//Binary Boolean Operations
+	BinaryBzet FALSE (const BinaryBzet& rhs);
+	BinaryBzet AND (const BinaryBzet& rhs);
+	BinaryBzet NonImplication (const BinaryBzet& rhs);
+	BinaryBzet A(const BinaryBzet& rhs);
+	BinaryBzet ConverseNonImplication(const BinaryBzet& rhs);
+	BinaryBzet B(const BinaryBzet& rhs);
+	BinaryBzet XOR(const BinaryBzet& rhs);
+	BinaryBzet OR(const BinaryBzet& rhs);
+	BinaryBzet NOR(const BinaryBzet& rhs);
+	BinaryBzet EQ(const BinaryBzet& rhs);
+	BinaryBzet NotB(const BinaryBzet& rhs);
+	BinaryBzet ConverseImplication(const BinaryBzet& rhs);
+	BinaryBzet NotA(const BinaryBzet& rhs);
+	BinaryBzet Implication(const BinaryBzet& rhs);
+	BinaryBzet NAND(const BinaryBzet& rhs);
+	BinaryBzet TRUE(const BinaryBzet& rhs);
+
 	bool operator== (const BinaryBzet& rhs);
 	bool AlignCompare (const BinaryBzet& other);
 
