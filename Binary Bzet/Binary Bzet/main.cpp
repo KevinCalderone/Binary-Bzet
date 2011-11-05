@@ -28,18 +28,6 @@ int main()
 
 	cout << "A  |  B =        " << d.getBzetString() << endl;
 
-	/*
-	// Messed up NOT test
-	{
-		BinaryBzet z(0,8,1);
-
-		v = a.binaryOp(NOT,z.getBzetBinaryString(),0,b.getBzetBinaryString(),0,z.getDepth());
-		BinaryBzet q(&v, z.getDepth()); d.shift(0);
-
-		cout << "~B =             " << q.getBzetString() << endl;
-	}
-	*/
-
 	v = a.binaryOp(NAND,a.getBzetBinaryString(),0,b.getBzetBinaryString(),0,a.getDepth());
 	BinaryBzet e(&v, a.getDepth()); e.shift(0);
 

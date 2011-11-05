@@ -66,7 +66,11 @@ public:
 	bool operator== (const BinaryBzet& rhs);
 	bool AlignCompare (const BinaryBzet& other);
 
+	u32 getFirstBit (); // returns c_u32_max is none are found
 	u32 getLastBit ();	// returns c_u32_max is none are found
+	u32 countBits ();
+	vector<u32> bitList ();
+
 	static void getLastBitTest ();
 
 	//TODO - move method to private - temporary for testing
@@ -96,6 +100,9 @@ private:
 	void writeValue(vector<bool>& result, u32& resultIndex, u8 resultDepth, u8 value, u32 valuesToEncode);
 	void writeBits(bool value, u32 count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth);
 	void encodeBits(bool value, u32 count, vector<bool>& result, bool& valueCounting, u32& bitsCounted, u32& resultIndex, u8 resultDepth, bool forced = false);
+
+	// Helper function of bitList
+	void findBits (vector<bool>& bzet, u32& bzetPos, u32& bitstringPos, u32 level, vector<u32>& result);
 
 	u8 GetNumEndingZero(u32 index, u32 bits);
 	void bitstringToBzet(string bitstring);

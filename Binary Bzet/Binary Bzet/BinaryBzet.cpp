@@ -405,37 +405,73 @@ void BinaryBzet::shift(int distance) {
 	m_depth = resultDepth;
 }
 
+vector<u32> BinaryBzet::bitList () {
+	vector<u32> result;
+	u32 bzetPos = 0;
+	u32 bitstringPos = 0;
+	findBits(m_bzet, bzetPos, bitstringPos, m_depth, result);
+	return result;
+}
+
+void BinaryBzet::findBits (vector<bool>& bzet, u32& bzetPos, u32& bitstringPos, u32 level, vector<u32>& result) {
+	// avoid a crash for badly formed bzets for now
+	if (2 * bzetPos + 1> bzet.size()) {
+		cout << "Warning: Bad Bzet Data" << endl;
+		return;
+	}
+
+	u8 bzetLetter = getBzetIndex(bzetPos);
+	bzetPos++;
+
+	switch(bzetLetter) {
+		case 0:	// '0'
+			bitstringPos += 1 << level;
+		break;
+	
+		case 1: // 't'
+			result.push_back(bitstringPos + 1);	
+			bitstringPos += 2;
+		break;
+	
+		case 2: // 'T'
+			if (level > 1) {
+				// left subtree
+				findBits(bzet, bzetPos, bitstringPos, level - 1, result);
+				// right subtree
+				findBits(bzet, bzetPos, bitstringPos, level - 1, result);
+			}
+			else {
+				result.push_back(bitstringPos);	
+				bitstringPos += 2;
+			}
+		break;
+	
+		case 3: // '1'
+			for (int i = bitstringPos; i < bitstringPos + (1 << level); ++i)
+				result.push_back(i);	
+			bitstringPos += 1 << level;
+		break;
+	}
+}
+
+u32 BinaryBzet::getFirstBit () {
+	vector<u32> bits = bitList();
+	if (bits.size() == 0)
+		return c_u32_max;
+	else
+		return bits.front();
+}
+
 u32 BinaryBzet::getLastBit () {
-	u32 resultIndex = c_u32_max;		
-	u32 bitstringIndex = 0;		
-	u32 bzetIndex = 0;			
+	vector<u32> bits = bitList();
+	if (bits.size() == 0)
+		return c_u32_max;
+	else
+		return bits.back();
+}
 
-	do {
-		int numLeadingT = GetNumEndingZero(bitstringIndex, m_depth - 1);
-		u32 bitsFound = 2 << numLeadingT;
-		int value = getBzetIndex(bzetIndex);
-		bzetIndex++;
-
-		while (value == 0x2 && numLeadingT > 0) {
-			value = getBzetIndex(bzetIndex);
-			bzetIndex++;
-			bitsFound /= 2;
-			numLeadingT--;
-		}
-
-		bitstringIndex += bitsFound / 2;
-
-		if (value == 0)
-			continue;
-
-		// depending on the value, how far back was the last one bit
-		//					    x, 01, 10, 11
-		const u32 offset[4] = { 0, 1, 2, 1 };
-		resultIndex = bitstringIndex * 2 - offset[value];
-
-	} while (bitstringIndex < u32(1) << (m_depth - 1));
-
-	return resultIndex;
+u32 BinaryBzet::countBits () {
+	return bitList().size();
 }
 
 void BinaryBzet::getLastBitTest () {
