@@ -7,6 +7,13 @@ Mary Chau
 Michael Koyama 
 
 News:
+Kevin Calderone (11/1/2011)
+added getLastBit()
+
+Lus Aguiniga (11/01/2011)
+* changed set/unset: they now collapse
++ added flip function
+
 Michael Koyama(11/1/2011)
 binaryOP and related functions work
 

@@ -1,178 +1,68 @@
-#include <cstdlib>
+//#include <cstdlib>
 #include <stdio.h>
 #include "BinaryBzet.h"
 
+enum operations {
+	AND=1, OR=7, NAND=14, NOR=1, NOT=10
+};
+
 int main()
 {
-	// ARASH'S TEST
-/*
-	BinaryBzet b;
-	if(true){
-		BinaryBzet a(1,5);
-		b = BinaryBzet(&a.getBzetBinaryString(),a.getDepth());
-	}
-	cout << b.getBzetString() << endl << endl;
+	BinaryBzet a(7);
+	BinaryBzet b((u32)0,7);
+	BinaryBzet z(1,7,1);
 
-	// END OF ARASH' TEST
+	cout << "\nBinaryBzet A(7);\nBinaryBzet B(0,7);\nBinaryBzet C(1,7,1);\n" << endl
+		 << "A:  00000001     " << a.getBzetString() << endl 
+		 << "B:  11111110     " << b.getBzetString() << endl
+		 << "C:  01010100     " << z.getBzetString() << endl;
 
-
-
-//=======
-	// TEST CODE
-	cout << "=========================================" << endl;
-	cout << "========== Binary Bzet - CS130 ==========" << endl;
-	cout << "===== Milestone 1: Core Algorithms ======" << endl;
-	cout << "=========================================" << endl;
-
-	cout << endl;
-	cout << "========== Testing Constructors =========" << endl;
-
-	BinaryBzet a((1<<2),(1<<5),516);
-	cout << a.getBzetString() << endl;
-
-	cout << endl;
-	cout << "============ Testing Shifting ===========" << endl;
-
-	BinaryBzet::testShift();
-
-	cout << endl;
-	cout << "========== Testing Setting Bit ==========" << endl;
-
-    BinaryBzet set;
-    set.testSET();
-    
-	cout << endl;
-    cout << "============= Testing expand ============" << endl;
-    
-    BinaryBzet x;
-    x.expandTEST();
-    
-	cout << endl;
-    cout << "============ Testing bzetWalk ===========" << endl;
-    
-    BinaryBzet walk;
-    walk.bzetWalkTEST();
-
-	cout << endl;
-	cout << "========== Testing Pretty Print =========" << endl;
-	cout <<endl;
-	cout<<a.getBzetPretty()<<endl;
-	cout<<a.getBzetString()<<endl;
-	cout << endl;
-	cout << "=========================================" << endl;
-*/
-
-//	=======
-	//Michael's Test Code
-//	{
-
-
-	/*cout << "Copy to result Test\n";
-	vector<bool> subtreeData;
-	subtreeData.push_back(1); subtreeData.push_back(0);
-	subtreeData.push_back(1); subtreeData.push_back(0);
-	subtreeData.push_back(1); subtreeData.push_back(1);
-	vector<bool> resultBzet;
-	resultBzet.push_back(1); resultBzet.push_back(1);
-	resultBzet.push_back(0); resultBzet.push_back(0);
-	resultBzet.push_back(0); resultBzet.push_back(1);
-	for(u32 i = 0; i<subtreeData.size(); i++)
-	{
-			resultBzet.push_back(subtreeData.at(i));
-	}
-	for(u32 i = 0; i<resultBzet.size(); i++)
-	{
-			cout << resultBzet[i] << "\n";
-	}
-
-	cout << "DataOP Test\n";
-	vector<bool>::iterator itA;
-	vector<bool>::iterator itB;
-	vector<bool> bzetRet;
+	cout << "==========================\n" << endl;
+	vector<bool> v = a.binaryOp(AND,a.getBzetBinaryString(),0,b.getBzetBinaryString(),0,a.getDepth());
+	BinaryBzet c(&v, a.getDepth()); c.shift(0);
 	
-	itA = subtreeData.begin();
-	itB = resultBzet.begin();
-	for(itA; itA != subtreeData.end(); itA++)
-	{
-		bzetRet.push_back((*itA) & (*itB));
-		itB++;
-	}
-	for(u32 i = 0; i<bzetRet.size(); i++)
-	{
-		cout << bzetRet[i] << "\n";
-	}
-	*/
-	BinaryBzet a;
-	//TT1Ttt
-	vector<bool> bzetA;
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(1); bzetA.push_back(1);
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(0); bzetA.push_back(1);
-	bzetA.push_back(0); bzetA.push_back(1);
-	vector<bool> bzetB;
-	//T1TT1
-	bzetB.push_back(1); bzetB.push_back(0);
-	bzetB.push_back(1); bzetB.push_back(1);
-	bzetB.push_back(1); bzetB.push_back(0);
-	bzetB.push_back(1); bzetB.push_back(0);
-	bzetB.push_back(1); bzetB.push_back(1);
-	u32 level = 3;
-	vector<bool> resultBzet = a.binaryOp(1,bzetA,0,bzetB,0,level);
-	cout << "Result\n";
-	//Should output TT1TT0t
-	for(u32 i = 0; i<resultBzet.size(); i++)
-	{
-			cout << resultBzet[i] << " ";
-	}
+	cout << "A  &  B =        " << c.getBzetString() << endl;
+
+	v = a.binaryOp(OR,a.getBzetBinaryString(),0,b.getBzetBinaryString(),0,a.getDepth());
+	BinaryBzet d(&v, a.getDepth()); d.shift(0);
+
+	cout << "A  |  B =        " << d.getBzetString() << endl;
+
 	/*
-	vector<bool> bzetA;
-//	bool val1[] = {1,0, 1,0, 1,1, 1,0, 1,0, 0,1, 0,1};
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(1); bzetA.push_back(1);
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(1); bzetA.push_back(0);
-	bzetA.push_back(0); bzetA.push_back(1);
-	bzetA.push_back(0); bzetA.push_back(1);
+	// Messed up NOT test
+	{
+		BinaryBzet z(0,8,1);
 
-	u32 depthA = 3;
-	u32 test = 8;
-	vector<bool> result = a.bsNeg(bzetA,2,depthA,test);
-	
-	vector<bool>::iterator it;
-	cout<<"Bzet A\n Depth A: " << depthA << "\n";
-	for(it = result.begin(); it != result.end(); it++)
-	{
-		cout<<*it<<" ";
-	};
-	cout << "\n";
-	
-	vector<bool> bzetB;
-//	bool val2[] = {1,0, 1,1, 1,0};
-	bzetB.push_back(1); bzetB.push_back(0);
-	bzetB.push_back(1); bzetB.push_back(1);
-	bzetB.push_back(1); bzetB.push_back(0);
-//	bzetB = vector<bool>(val1,val1+8);
-	u32 depthB = 3;
-	a.align(bzetB,depthB,bzetA,depthA);
+		v = a.binaryOp(NOT,z.getBzetBinaryString(),0,b.getBzetBinaryString(),0,z.getDepth());
+		BinaryBzet q(&v, z.getDepth()); d.shift(0);
 
-	vector<bool>::iterator it;
-	cout<<"Bzet A\n Depth A: " << depthA << "\n";
-	for(it = bzetA.begin(); it != bzetA.end(); it++)
-	{
-		cout<<*it<<" ";
-	};
-	cout << "\n";
-	cout<<"Bzet B\n Depth B: " << depthB << "\n";
-	for(it = bzetB.begin(); it != bzetB.end(); it++)
-	{
-		cout<<*it<<" ";
+		cout << "~B =             " << q.getBzetString() << endl;
 	}
-	//End of Michael's Test code.
 	*/
+
+	v = a.binaryOp(NAND,a.getBzetBinaryString(),0,b.getBzetBinaryString(),0,a.getDepth());
+	BinaryBzet e(&v, a.getDepth()); e.shift(0);
+
+	cout << "A  ~& B =        " << e.getBzetString() << endl;
+
+	v = a.binaryOp(NOR,a.getBzetBinaryString(),0,b.getBzetBinaryString(),0,a.getDepth());
+	BinaryBzet f(&v, a.getDepth()); f.shift(0);
+
+	cout << "A  ~| B =        " << f.getBzetString() << endl;
+
+	BinaryBzet g(a);
+	g.shift(3);
+	cout << "A  >> 3 =        " << g.getBzetString() << endl;
+
+	BinaryBzet h(a);
+	h.shift(-2);
+	cout << "A  << 2 =        " << h.getBzetString() << endl;
+
+	cout << "B.getLastBit():  " << b.getLastBit() << endl;
+	cout << "B.charAt(2):     " << b.getCharFromBzet(2) << endl;
+	cout << "C.prettyOutput():" << endl << endl 
+		 << z.getBzetPretty() << endl;
+
 
 	system("pause");
     return 0;
