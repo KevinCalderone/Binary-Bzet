@@ -79,6 +79,10 @@ BinaryBzet::BinaryBzet(string bitstring){
 		bitstringToBzet(bitstring.substr(0,bitstring.length()-1));
 		return;}
 	else{
+		if(bitstring.find("-")!=string::npos){
+			cerr << "NO NEGATIVE INDEXES!" << endl;
+			system("pause");
+			exit(1);}
 		bitR* bitr = new bitR();
 		string temp = bitstring;
 		size_t found = temp.find(" ");

@@ -12,6 +12,7 @@ public:
 	{
 		if(end==0)	end = start+1;
 		if(end > m_size)	m_size = end;
+		if(end<=start || start<0)	exit(1);
 		m_start.push_back(start);
 		m_end.push_back(end);
 		m_step.push_back(step+1);
