@@ -31,6 +31,7 @@ BinaryBzet::BinaryBzet() {
 /* index is the index of the bit in the
    BINARY BITSTRING you would like turned ON.*/
 BinaryBzet::BinaryBzet(u32 index){
+	bitR bitR();
 	if(index < 0)
 		return;
 	string temp;
@@ -74,7 +75,69 @@ BinaryBzet::BinaryBzet(u32 indexi, u32 indexe, u32 step){
 }
 
 BinaryBzet::BinaryBzet(string bitstring){
-	bitstringToBzet(bitstring);
+	if(bitstring.at(bitstring.length()-1) == '#'){
+		bitstringToBzet(bitstring.substr(0,bitstring.length()-1));
+		return;}
+	else{
+		bitR* bitr = new bitR();
+		string temp = bitstring;
+		size_t found = temp.find(" ");
+		while(found!=string::npos)
+		{
+			temp.erase(found,1);
+			found = temp.find(" ");
+		}
+		u32 s,e,t;
+		for(u32 i=0; i<temp.size(); i++)
+		{
+			if(temp.at(i)=='('){
+				string temp2 = "";
+				i++;
+				while(temp.at(i)!=','){
+					temp2+=temp.at(i);
+					i++;}
+				stringstream convert1(temp2);
+				if ( !(convert1 >> s) )
+					s = 0;
+				i++;
+				temp2 = "";
+				while(temp.at(i)!=')' && temp.at(i)!=','){
+					temp2+=temp.at(i);
+					i++;}
+				stringstream convert2(temp2);
+				if ( !(convert2 >> e) )
+					e = 0;
+				temp2 = "";
+				if(temp.at(i)==','){
+					i++;
+					while(temp.at(i)!=')'){
+						temp2+=temp.at(i);
+						i++;}
+					stringstream convert3(temp2);
+					if ( !(convert3 >> t) )
+						t = 0;
+				}
+				else
+					t = 0;
+				i++;
+			}
+			else{
+				string temp2 = "";
+				while(i < temp.size() && (temp.at(i)!=',' && temp.at(i)!='(')){
+					temp2+=temp.at(i);
+					i++;}
+				stringstream convert(temp2);
+				if ( !(convert >> s) )
+					s = 0;
+				e = s+1;
+				t = 0;
+			}
+			bitr->add(s,e,t);
+		}
+		generateBzet(bitr);
+		//for(int j=0;j<bitr->size();j++)
+		//	cout << bitr->at(j);
+	}
 }
 
 BinaryBzet::BinaryBzet(vector<bool>* bzetvector, u32 depth){
@@ -552,6 +615,48 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 			m_bzet.push_back(0); m_bzet.push_back(1); break;
 		}
 		}
+}
+
+void BinaryBzet::generateBzet(bitR* bitr)
+{
+	u32 i = 1;
+	for(i;i<31;i++)
+		if(bitr->size()<(u32)(1<<i))
+			break;
+	u32 bitstringsize = 1<<i;
+	m_depth = 1;
+	while ((u32)(1 << m_depth) <= (bitstringsize>>1))
+		m_depth++;
+	i = 0;
+	int num_end_zero;
+	do{
+		num_end_zero = GetNumEndingZero(i,m_depth-1);
+		int num_to_encode = 1;
+		int number_of_times_to_expand = num_end_zero;
+		if ((bitr->at(2*i)&&bitr->at(2*i+1)) || (!bitr->at(2*i)&&!bitr->at(2*i+1)))
+			while (number_of_times_to_expand  > 0) {
+				bool same = true;
+				for(u32 j = i; ((j < i + num_to_encode*2-1) && (j < bitstringsize/2-1)); j++){
+					same = same && ((bitr->at(2*j)==bitr->at(2*(j+1)))&&(bitr->at(2*j+1)==bitr->at(2*(j+1)+1)));
+				}
+				if (!same)
+					break;
+				num_to_encode*=2;
+				number_of_times_to_expand--;
+			}
+			for(int k=0;k<number_of_times_to_expand;k++){
+				m_bzet.push_back(1);
+				m_bzet.push_back(0);
+			}
+			m_bzet.push_back(bitr->at(2*i));
+			m_bzet.push_back(bitr->at(2*i+1));
+			i +=num_to_encode;
+			if (num_to_encode == 1 && m_depth!=1) {
+				m_bzet.push_back(bitr->at(2*i));
+				m_bzet.push_back(bitr->at(2*i+1));
+				i++;
+			}
+	} while ( GetNumEndingZero(i, m_depth-1) != m_depth-1);
 }
 
 // * turns on bit at index

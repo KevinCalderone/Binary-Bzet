@@ -1,8 +1,12 @@
+#ifndef __BINARYBZET_H__
+#define __BINARYBZET_H__
+
 #include <stdint.h>
 #include <vector>
 #include <string>
 #include <cmath>
 #include <iostream>
+#include "bitR.h"
 
 using namespace std;
 
@@ -106,6 +110,7 @@ private:
 
 	u8 GetNumEndingZero(u32 index, u32 bits);
 	void bitstringToBzet(string bitstring);
+	void generateBzet(bitR* bitr);
 
 
 	//helper function for printPretty
@@ -127,3 +132,4 @@ private:
     void bitSetCollapse(vector<bool>& bzet, int& parentIndex, int& leftChildIndex, int& rightChildIndex);
     bitpair bitpairFromBools(bool leftBit, bool rightBith);
 };
+#endif

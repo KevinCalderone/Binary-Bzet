@@ -26,5 +26,8 @@
     <ClInclude Include="BinaryBzet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="bitR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
