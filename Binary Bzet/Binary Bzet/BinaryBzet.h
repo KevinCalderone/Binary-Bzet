@@ -19,9 +19,9 @@ const u32 c_u32_max = 0xffffffff;
 class BinaryBzet {
 public:
 	BinaryBzet();
-	BinaryBzet(u32 index);
+	//BinaryBzet(u32 index);
 	//BinaryBzet(u32 indexi, u32 indexe);
-	BinaryBzet(u32 indexi, u32 indexe, u32 step=0);
+	BinaryBzet(u32 indexi, u32 indexe=0, u32 step=0);
 	BinaryBzet(string bitstring);
 	BinaryBzet(vector<bool>* bzetvector, u32 depth);
 	~BinaryBzet();

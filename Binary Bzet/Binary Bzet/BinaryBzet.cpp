@@ -30,15 +30,15 @@ BinaryBzet::BinaryBzet() {
 
 /* index is the index of the bit in the
    BINARY BITSTRING you would like turned ON.*/
-BinaryBzet::BinaryBzet(u32 index){
-	bitR bitR();
-	if(index < 0)
-		return;
-	string temp;
-	temp.append(index,'0');
-	temp+='1';
-	bitstringToBzet(temp);
-}
+//BinaryBzet::BinaryBzet(u32 index){
+//	bitR bitR();
+//	if(index < 0)
+//		return;
+//	string temp;
+//	temp.append(index,'0');
+//	temp+='1';
+//	bitstringToBzet(temp);
+//}
 
 ///* indexe is the index of the bit in the
 //   BINARY BITSTRING you would like turned OFF.*/
@@ -58,9 +58,12 @@ BinaryBzet::BinaryBzet(u32 index){
    lands the index on indexe, that bit will
    be turned OFF */
 BinaryBzet::BinaryBzet(u32 indexi, u32 indexe, u32 step){
-	if(indexe <= indexi || indexi < 0 || step < 0)
+	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step < 0)
 		return;
-	string temp;
+	bitR* bitr = new bitR();
+	bitr->add(indexi,indexe,step);
+	generateBzet(bitr);
+	/*string temp;
 	temp.append(indexi, '0');
 	int a = step;
 	for(indexi;indexi<indexe;indexi++){
@@ -71,12 +74,13 @@ BinaryBzet::BinaryBzet(u32 indexi, u32 indexe, u32 step){
 	}
 	while(temp.length()<=indexe)
 		temp+="0";
-	bitstringToBzet(temp);
+	bitstringToBzet(temp);*/
 }
 
 BinaryBzet::BinaryBzet(string bitstring){
 	if(bitstring.at(bitstring.length()-1) == '#'){
 		bitstringToBzet(bitstring.substr(0,bitstring.length()-1));
+		cout << bitstring << endl;
 		return;}
 	else{
 		if(bitstring.find("-")!=string::npos){

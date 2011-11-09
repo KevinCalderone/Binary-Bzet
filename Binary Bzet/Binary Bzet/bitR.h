@@ -11,7 +11,7 @@ public:
 	void bitR::add(u32 start,u32 end=0, u32 step=0)
 	{
 		if(end==0)	end = start+1;
-		if(end > m_size)	m_size = end;
+		if(end > m_size)	m_size = end-1;
 		if(end<=start || start<0)	exit(1);
 		m_start.push_back(start);
 		m_end.push_back(end);
