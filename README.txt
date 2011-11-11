@@ -8,6 +8,10 @@ Michael Koyama
 
 News:
 
+Michael Koyama(11/11/2011)
++Fixed some bugs with binary operations
++Implemented clean size and compare
+
 Kevin Calderone (11/5/2011)
 + generalized getLastBit() to implement similar operations
 + added getFirstBit(), countBits(), and bitList()
