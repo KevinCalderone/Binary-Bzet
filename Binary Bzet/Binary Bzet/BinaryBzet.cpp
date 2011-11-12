@@ -728,7 +728,7 @@ void BinaryBzet::flip(u32 index) {
     stack<u32> s;
 	s.push(m_depth);
 	
-    while (!s.empty() && bitIndex < (u32)(m_bzet.size())) {
+    while (!s.empty() && bzetIndex < (u32)(m_bzet.size())) {
 		currentLevel = s.top();
 		seen[currentLevel]++;
 		if (seen[currentLevel] == 2)
@@ -775,6 +775,16 @@ void BinaryBzet::flip(u32 index) {
 void BinaryBzet::bitSet(u32 index, bool value) {
 	//    s: a stack to keep track of the level the current index in the array is for
 	// seen: an array to keep track of the number of times a level has been seen.
+    
+    // if index is out of range, extend bzet
+    if ((index == 0 && m_depth == 0) || (index >= (u32)pow(2.0, (double)m_depth))) {
+        cout << getBzetString() << endl;
+        u32 newLevel = (index == 0)  ? 1 : ceil(log((double)index+1.0)/log(2.0));
+        cout << "needs to be level: " << newLevel << endl;
+        vector<bool> dummy;
+        align(m_bzet, m_depth, dummy, newLevel);
+        cout << getBzetString() << endl;
+    }
 
 	u32 bzetIndex = 0;
 	u32 bitIndex = 0; // index bitstring if it had not been compressed to a bzet.
@@ -785,86 +795,92 @@ void BinaryBzet::bitSet(u32 index, bool value) {
 	u32 top = m_depth;
 	u32 next;
 	s.push(top);
-	seen[top] = 1;
+	seen[top] = 0;
 
 	bitpair curBP;
-	while (!s.empty() && bzetIndex < (u32)(m_bzet.size())) {
+	while (!s.empty() && bzetIndex*2 < (u32)(m_bzet.size())) {
 		top = s.top();
 		seen[top]++;
 		if (seen[top] == 2)
 			s.pop();
-
-		curBP = getBitPairAtBzetIndex(bzetIndex);
-		if (top == 1) {
-			// curBP: T has special meaning now
-			bitpair newBP;
-			// change first bit?
-			if (index == bitIndex) {
-                newBP = bitpairByChangingIndexValue(curBP, 0, value);
-				setBitPairAtBzetIndex(bzetIndex, newBP);
-				curBP = newBP;
-                
-                // collapse 
-                int parent, leftChild, rightChild;
-                if (seen[top] == 1) {
-                    // at left child
-                    leftChild = bzetIndex*2; // = bitIndex;
-                    parent = leftChild - 2;
-                    rightChild = leftChild + 2;
+        
+        if (!s.empty()) {
+            curBP = getBitPairAtBzetIndex(bzetIndex);
+            if (top == 1) {
+                // curBP: T has special meaning now
+                bitpair newBP;
+                // change first bit?
+                if (index == bitIndex) {
+                    newBP = bitpairByChangingIndexValue(curBP, 0, value);
+                    setBitPairAtBzetIndex(bzetIndex, newBP);
+                    curBP = newBP;
+                    
+                    // collapse 
+                    int parent, leftChild, rightChild;
+                    if (seen[top] == 1) {
+                        // at left child
+                        leftChild = bzetIndex*2; // = bitIndex;
+                        parent = leftChild - 2;
+                        rightChild = leftChild + 2;
+                    } else {
+                        // at right child
+                        rightChild = bzetIndex*2; // = bitIndex;
+                        leftChild = rightChild - 2;
+                        parent = leftChild - 2;
+                    }
+                    //bitSetCollapse(m_bzet, parent, leftChild, rightChild);
+                    leftShift(0);
+                    break; // done
+                } else if (index == bitIndex + 1) { // change 2nd bit?
+                    newBP = bitpairByChangingIndexValue(curBP, 1, value);
+                    setBitPairAtBzetIndex(bzetIndex, newBP);
+                    curBP = newBP;
+                    
+                    // collapse 
+                    int parent, leftChild, rightChild;
+                    if (seen[top] == 1) {
+                        // at left child
+                        leftChild = bzetIndex*2; // = bitIndex;
+                        parent = leftChild - 2;
+                        rightChild = leftChild + 2;
+                    } else {
+                        // at right child
+                        rightChild = bzetIndex*2; // = bitIndex;
+                        leftChild = rightChild - 2;
+                        parent = leftChild - 2;
+                    }
+                    //bitSetCollapse(m_bzet, parent, leftChild, rightChild);
+                    leftShift(0);
+                    break; // done
+                }
+                bitIndex += 2;
+            } else if (curBP == '0' || curBP == '1') {
+                // there is 2^top 1's or 0's
+                u32 size = (u32)pow(2.0, (double)top);
+                if (index >= bitIndex && index < bitIndex + size) {
+                    if ((curBP == '0' && value) || (curBP == '1' && !value)) {
+                        // value is different from current bit, change it
+                        vector<bool> expandTo;
+                        expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
+                        m_bzet.erase(m_bzet.begin() + bzetIndex*2, m_bzet.begin() + bzetIndex*2 + 2);
+                        m_bzet.insert(m_bzet.begin() + bzetIndex*2, expandTo.begin(), expandTo.end());
+                    }
+                    break; // done
                 } else {
-                    // at right child
-                    rightChild = bzetIndex*2; // = bitIndex;
-                    leftChild = rightChild - 2;
-                    parent = leftChild - 2;
+                    // bit to set is not in this range..
+                    bitIndex += size; // skip bits
                 }
-                bitSetCollapse(m_bzet, parent, leftChild, rightChild);
-                break; // done
-			} else if (index == bitIndex + 1) { // change 2nd bit?
-                newBP = bitpairByChangingIndexValue(curBP, 1, value);
-				setBitPairAtBzetIndex(bzetIndex, newBP);
-				curBP = newBP;
-                
-                // collapse 
-                int parent, leftChild, rightChild;
-                if (seen[top] == 1) {
-                    // at left child
-                    leftChild = bzetIndex*2; // = bitIndex;
-                    parent = leftChild - 2;
-                    rightChild = leftChild + 2;
-                } else {
-                    // at right child
-                    rightChild = bzetIndex*2; // = bitIndex;
-                    leftChild = rightChild - 2;
-                    parent = leftChild - 2;
-                }
-                bitSetCollapse(m_bzet, parent, leftChild, rightChild);
-                break; // done
-			}
-			bitIndex += 2;
-		} else if (curBP == '0' || curBP == '1') {
-			// there is 2^top 1's or 0's
-			u32 size = (u32)pow(2.0, (double)top);
-			if (index >= bitIndex && index < bitIndex + size) {
-                if ((curBP == '0' && value) || (curBP == '1' && !value)) {
-                    // value is different from current bit, change it
-                    vector<bool> expandTo;
-                    expand(expandTo, bitIndex, bitIndex + size - 1, index, value);
-                    m_bzet.erase(m_bzet.begin() + bzetIndex*2, m_bzet.begin() + bzetIndex*2 + 2);
-                    m_bzet.insert(m_bzet.begin() + bzetIndex*2, expandTo.begin(), expandTo.end());
-                }
-				break; // done
-			} else {
-				// bit to set is not in this range..
-				bitIndex += size; // skip bits
-			}
-		} else if (bzetIndex == 0 || !s.empty()) {
-			// set up next index level
-			next = top - 1;
-			s.push(next);
-			seen[next] = 0;
-		}
-		bzetIndex++;
+            } else {
+                // set up next index level
+                next = top - 1;
+                s.push(next);
+                seen[next] = 0;
+            }
+            
+            bzetIndex++;
+        }
 	}
+    
 	delete [] seen;
 }
 
@@ -963,7 +979,6 @@ void BinaryBzet::bitSetCollapseTEST() {
     }
     assert(t3_passed);
     cout << "Test 3 Passed\n";
-    
 }
 
 // * given two bool inputs returns 0, t, T, or 1
