@@ -8,6 +8,9 @@ Michael Koyama
 
 News:
 
+Mary Chau (11/12/2011)
++Add python3 wrapper and module
+
 Kevin Calderone (11/11/2011)
 + Added slice()
 + Got the initial version of the python module running
