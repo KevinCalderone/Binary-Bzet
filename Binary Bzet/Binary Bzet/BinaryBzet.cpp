@@ -476,6 +476,23 @@ void BinaryBzet::shift(int distance) {
 	m_depth = resultDepth;
 }
 
+BinaryBzet BinaryBzet::slice(u32 startIndex, u32 endIndex) {
+	if (endIndex < startIndex)
+		return BinaryBzet();
+
+	BinaryBzet mask((u32)0, (u32)(endIndex - startIndex));
+	BinaryBzet result = *this;
+
+	// since indexes are unsigned, but shifting requires signed
+	// it may take 2 shifts since int has 1 bit less percision and u32
+	if (startIndex >= 1 << 31) {
+		result.shift(c_i32_min);
+	}
+	result.shift(-(int)(startIndex & 0x7fffffff));
+
+	return result & mask;
+}
+
 vector<u32> BinaryBzet::bitList () {
 	vector<u32> result;
 	u32 bzetPos = 0;

@@ -15,6 +15,7 @@ typedef unsigned int u32;
 typedef unsigned char bitpair;
 
 const u32 c_u32_max = 0xffffffff;
+const int c_i32_min = 0x80000000;
 
 class BinaryBzet {
 public:
@@ -34,6 +35,7 @@ public:
 	char getCharFromBzet(u32 indexB);	//return a char from Bzet
 
 	void shift(int distance);
+	BinaryBzet slice(u32 startIndex, u32 endIndex);
 	bool isTAWatching() { return true; } // lol
 	void set(u32 index);
 	void unset(u32 index);

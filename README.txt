@@ -8,6 +8,9 @@ Michael Koyama
 
 News:
 
+Kevin Calderone (11/11/2011)
++ Added slice()
+
 Kevin Calderone (11/5/2011)
 + generalized getLastBit() to implement similar operations
 + added getFirstBit(), countBits(), and bitList()
