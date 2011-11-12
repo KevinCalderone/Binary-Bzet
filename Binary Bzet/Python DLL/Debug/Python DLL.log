@@ -1,30 +1,15 @@
-﻿Build started 11/11/2011 6:20:44 PM.
-     1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" on node 2 (build target(s)).
+﻿Build started 11/11/2011 8:52:15 PM.
+     1>Project "D:\Git\cs130\Binary-Bzet\Binary Bzet\Python DLL\Python DLL.vcxproj" on node 3 (build target(s)).
      1>InitializeBuildStatus:
          Touching "Debug\Python DLL.unsuccessfulbuild".
        ClCompile:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Python27\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PYTHONDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\Binary Bzet\BinaryBzet.cpp" "..\Binary Bzet\main.cpp" "..\Binary Bzet\mymodule_wrap.cpp"
+         d:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Python27\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PYTHONDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\Binary Bzet\main.cpp" "..\Binary Bzet\mymodule_wrap.cpp"
          mymodule_wrap.cpp
+     1>d:\git\cs130\binary-bzet\binary bzet\binary bzet\mymodule_wrap.cpp(149): fatal error C1083: Cannot open include file: 'Python.h': No such file or directory
          main.cpp
-         BinaryBzet.cpp
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(539): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(857): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(1129): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(1261): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(1990): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(2260): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(2260): warning C4018: '<' : signed/unsigned mismatch
          Generating Code...
-       ManifestResourceCompile:
-         All outputs are up-to-date.
-       Link:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Debug\Python DLL.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Python DLL.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Debug\Python DLL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Debug\Python DLL.lib" /MACHINE:X86 /DLL "Debug\Python DLL.dll.embed.manifest.res"
-         Debug\BinaryBzet.obj
-         Debug\main.obj
-         Debug\mymodule_wrap.obj
-     1>LINK : fatal error LNK1104: cannot open file 'python27_d.lib'
-     1>Done Building Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" (build target(s)) -- FAILED.
+     1>Done Building Project "D:\Git\cs130\Binary-Bzet\Binary Bzet\Python DLL\Python DLL.vcxproj" (build target(s)) -- FAILED.
 
 Build FAILED.
 
-Time Elapsed 00:00:06.52
+Time Elapsed 00:00:00.57
