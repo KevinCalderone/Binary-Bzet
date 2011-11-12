@@ -4,6 +4,10 @@
 #include <iomanip>
 #include <sstream>
 
+#ifdef __cplusplus
+extern "C" {
+#endif 
+
 //Used for determining 6 cases in binary operations
 static string g_binOp[][6]  = {           
 	//				    0T     T0     1T     T1
@@ -475,6 +479,23 @@ void BinaryBzet::shift(int distance) {
 	// copy result bzet into this bzet
 	m_bzet = result;
 	m_depth = resultDepth;
+}
+
+BinaryBzet BinaryBzet::slice(u32 startIndex, u32 endIndex) {
+	if (endIndex < startIndex)
+		return BinaryBzet();
+
+	BinaryBzet mask((u32)0, (u32)(endIndex - startIndex));
+	BinaryBzet result = *this;
+
+	// since indexes are unsigned, but shifting requires signed
+	// it may take 2 shifts since int has 1 bit less percision and u32
+	if (startIndex >= 1 << 31) {
+		result.shift(c_i32_min);
+	}
+	result.shift(-(int)(startIndex & 0x7fffffff));
+
+	return result & mask;
 }
 
 vector<u32> BinaryBzet::bitList () {
@@ -2253,3 +2274,7 @@ int BinaryBzet::compare(BinaryBzet& bzet)
 		return (bzetA.size() > bzetB.size()) ? 1: -1;
 	}
 }
+
+#ifdef __cplusplus
+}  // extern "C"
+#endif 

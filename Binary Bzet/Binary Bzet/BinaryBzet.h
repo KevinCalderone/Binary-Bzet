@@ -1,6 +1,7 @@
 #ifndef __BINARYBZET_H__
 #define __BINARYBZET_H__
 
+
 #include <stdint.h>
 #include <vector>
 #include <string>
@@ -15,6 +16,7 @@ typedef unsigned int u32;
 typedef unsigned char bitpair;
 
 const u32 c_u32_max = 0xffffffff;
+const int c_i32_min = 0x80000000;
 
 class BinaryBzet {
 public:
@@ -66,6 +68,7 @@ public:
 	void shift(int distance);
 
 	//Slice/Substring
+	BinaryBzet slice(u32 startIndex, u32 endIndex);
 
 	//Miscellaneous Bzet Property Functions
 	u32 getDepth();

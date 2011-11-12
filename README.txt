@@ -8,6 +8,10 @@ Michael Koyama
 
 News:
 
+Kevin Calderone (11/11/2011)
++ Added slice()
++ Got the initial version of the python module running
+
 Michael Koyama(11/11/2011)
 +Fixed some bugs with binary operations
 +Implemented clean size and compare
