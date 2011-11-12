@@ -1,15 +1,11 @@
-﻿Build started 11/11/2011 8:52:15 PM.
-     1>Project "D:\Git\cs130\Binary-Bzet\Binary Bzet\Python DLL\Python DLL.vcxproj" on node 3 (build target(s)).
-     1>InitializeBuildStatus:
-         Touching "Debug\Python DLL.unsuccessfulbuild".
-       ClCompile:
-         d:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Python27\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PYTHONDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\Binary Bzet\main.cpp" "..\Binary Bzet\mymodule_wrap.cpp"
-         mymodule_wrap.cpp
-     1>d:\git\cs130\binary-bzet\binary bzet\binary bzet\mymodule_wrap.cpp(149): fatal error C1083: Cannot open include file: 'Python.h': No such file or directory
-         main.cpp
-         Generating Code...
-     1>Done Building Project "D:\Git\cs130\Binary-Bzet\Binary Bzet\Python DLL\Python DLL.vcxproj" (build target(s)) -- FAILED.
-
-Build FAILED.
-
-Time Elapsed 00:00:00.57
+﻿  mymodule_wrap.cpp
+  main.cpp
+  BinaryBzet.cpp
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(556): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(782): warning C4244: 'initializing' : conversion from 'double' to 'u32', possible loss of data
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(890): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(1161): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(1293): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(2024): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
+  Generating Code...
+LINK : fatal error LNK1104: cannot open file 'python27_d.lib'

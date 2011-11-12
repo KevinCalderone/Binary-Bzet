@@ -1,29 +1,11 @@
-﻿Build started 11/12/2011 2:05:39 PM.
-     1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Touching "Debug\Python3DLL.unsuccessfulbuild".
-       ClCompile:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"../../Binary Bzet/" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D PYTHON3DLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\..\Binary Bzet\BinaryBzet.cpp" "..\..\Binary Bzet\main.cpp" python3_wrap.cpp
-         python3_wrap.cpp
-         main.cpp
-         BinaryBzet.cpp
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(556): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(782): warning C4244: 'initializing' : conversion from 'double' to 'u32', possible loss of data
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(890): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(1161): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(1293): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\binarybzet.cpp(2024): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
-         Generating Code...
-       ManifestResourceCompile:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\Python3DLL.dll.embed.manifest.res" Debug\Python3DLL_manifest.rc 
-       Link:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Debug\Python3DLL.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Python3DLL.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Debug\Python3DLL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Debug\Python3DLL.lib" /MACHINE:X86 /DLL Debug\Python3DLL.dll.embed.manifest.res
-         Debug\BinaryBzet.obj
-         Debug\main.obj
-         Debug\python3_wrap.obj
-     1>LINK : fatal error LNK1104: cannot open file 'python32_d.lib'
-     1>Done Building Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" (build target(s)) -- FAILED.
-
-Build FAILED.
-
-Time Elapsed 00:00:07.06
+﻿  mymodule_wrap.cpp
+  main.cpp
+  BinaryBzet.cpp
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(556): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(782): warning C4244: 'initializing' : conversion from 'double' to 'u32', possible loss of data
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(890): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(1161): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(1293): warning C4018: '<' : signed/unsigned mismatch
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\binarybzet.cpp(2024): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
+  Generating Code...
+LINK : fatal error LNK1104: cannot open file 'python32_d.lib'

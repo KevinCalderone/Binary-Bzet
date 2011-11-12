@@ -14,3 +14,20 @@ For example:
 	"import mymodule"
 	"x = mymodule.BinaryBzet(3)"
 	"x.getBzetString()"
+
+------------------------------------------------
+To Run the Python Module in Python 2:
+1. Go to ~\Binary-Bzet\BinaryBzet\Binary Bzet
+2. Open python.exe
+3. In the python shell:
+	import mymodule
+	x = mymoduel.BinaryBzet()
+	x.getBzetString()
+------------------------------------------------
+To Run the Python Module in Python 3:
+1. Go to ~\Binary-Bzet\BinaryBzet\Python3DLL\Python3DLL
+2. Open python3.exe
+3. In the Python shell:
+	import mymodule
+	x = mymodule.BinaryBzet()
+	x.getBzetstring()
