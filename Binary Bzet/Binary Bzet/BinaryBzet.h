@@ -60,7 +60,7 @@ public:
 	BinaryBzet TRUE(const BinaryBzet& rhs);
 
 	//Comparison Operators
-	int compare(BinaryBzet& bzet);	//TODO
+	int compare(BinaryBzet& bzet);
 
 	//Shifing Operators
 	void shift(int distance);
@@ -69,11 +69,11 @@ public:
 
 	//Miscellaneous Bzet Property Functions
 	u32 getDepth();
-	u32 size();				//TODO
+	u32 size();
 	void set(u32 index);
 	void unset(u32 index);
     void flip(u32 index);
-	void clean();			//TODO
+	void clean();
 	u32 countBits ();
 	u32 getFirstBit (); // returns c_u32_max is none are found
 	u32 getLastBit ();	// returns c_u32_max is none are found

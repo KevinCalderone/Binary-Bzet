@@ -22,20 +22,32 @@ int main()
 */
 	BinaryBzet a;
 	vector<bool> data1;
-	data1.push_back(0);
-	data1.push_back(0);
-	data1.push_back(1);
-	data1.push_back(1);
-	vector<bool> data2;
-	data2.push_back(0);
-	data2.push_back(1);
-	data2.push_back(0);
-	data2.push_back(1);
+	data1.push_back(1);	data1.push_back(0);
+	data1.push_back(1);	data1.push_back(0);
+	data1.push_back(1);	data1.push_back(1);
+	data1.push_back(1);	data1.push_back(0);
+	data1.push_back(1);	data1.push_back(0);
+	data1.push_back(0);	data1.push_back(1);
+	data1.push_back(0);	data1.push_back(1);
 
-	vector<bool> result = a.doDataOp( "~&", data1, data2);
+	vector<bool> data2;
+	data2.push_back(1);	data2.push_back(0);
+	data2.push_back(0);	data2.push_back(0);
+	data2.push_back(1);	data2.push_back(0);
+	data2.push_back(1);	data2.push_back(0);
+	data2.push_back(1);	data2.push_back(1);
+	int aa = 0xE5;
+	int bb = 0xFB;
+	int c = aa&bb;
+	cout << c << endl;
+	vector<bool> result = a.binaryOp(14,data2,0,data1,0,3);
+
+//	vector<bool> result = a.doDataOp( "~&", data1, data2);
 	vector<bool>::iterator it;
 	for(it = result.begin(); it != result.end(); it++)
 	{
+		cout<<*it;
+		it++;
 		cout<<*it<<endl;
 	}
 	system("pause");

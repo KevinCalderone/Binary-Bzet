@@ -1594,17 +1594,19 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 	while (!sA.empty()) 
 	{
 		currentLevelA = sA.top();
-		//cout << "Current Level A: " << currentLevelA << "\n";
+		cout << "Current Level A: " << currentLevelA << "\n";
 		currentLevelB = sB.top();
-		//cout << "Current Level B: " << currentLevelB << "\n";
+		cout << "Current Level B: " << currentLevelB << "\n";
 		if(currentLevelA <= currentLevelB)
 		seenA[currentLevelA]++;
+		cout << "SeenA: " << seenA[currentLevelA] << endl;
 		if(currentLevelB <= currentLevelA)
 		seenB[currentLevelB]++;
+		cout << "SeenB: " << seenB[currentLevelB] << endl;
 		if (seenA[currentLevelA] == 2) {
 			sA.pop(); // this will empty out the stack when you are done
 		}
-		if (seenB[currentLevelA] == 2) {
+		if (seenB[currentLevelB] == 2) {
 			sB.pop(); // this will empty out the stack when you are done
 		}
 		if (!sA.empty()){
@@ -1659,7 +1661,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 				else	{
 					cout << "Invalid Case Type\n";
 				}
-				//cout << "Case Type" << caseType << "\n";
+				cout << "Case Type" << caseType << "\n";
 				//00 or 11 or 10 or 01
 				//Do the operation directly
 				if( caseType == 0)	{
@@ -1678,7 +1680,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 				//0T T0 1T or T1
 				else if (caseType >= 1 && caseType <= 4)	{
 					string oper = operation[caseType + 1];
-					//cout << "Oper" << oper << "\n";
+					cout << "Oper" << oper << "\n";
 					//python call cp1, cp2 ,tr = do_tree_op(opr, lev-1,bset1,cp1,bset2,cp2)
 					vector<bool> res = doTreeOp(oper,currentLevelA,bzet1, bzetIndexA, bzet2, bzetIndexB);
 					//apped res to resultBzet + handle compression possibly
@@ -1702,12 +1704,12 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 			bool lBit = bzet1[bzetIndexA];
 			bool rBit = bzet1[bzetIndexA+1];
 			bitpair curBPA = lBit ? ( rBit ? '1' : 'T') : ( rBit ?  't': '0');
-			//cout << "curBPA: " << curBPA << " Index: "<< bzetIndexA <<"\n"; 
+			cout << "curBPA: " << curBPA << " Index: "<< bzetIndexA <<"\n"; 
 
 			bool lBit2 = bzet2[bzetIndexB];
 			bool rBit2 = bzet2[bzetIndexB+1];
 			bitpair curBPB = lBit2 ? ( rBit2 ? '1' : 'T') : ( rBit2 ?  't': '0');
-			//cout << "curBPB: " << curBPB <<" Index: "<< bzetIndexB << "\n"; 
+			cout << "curBPB: " << curBPB <<" Index: "<< bzetIndexB << "\n"; 
 
 
 			//Traverse A
@@ -2233,27 +2235,21 @@ int BinaryBzet::compare(BinaryBzet& bzet)
 {
 	vector<bool> bzetA = m_bzet;
 	vector<bool> bzetB = bzet.m_bzet;
-	if(*this == bzet)
-	{
+	if(*this == bzet)	{
 		return 0;
 	}
-	else
-	{
-		int i = 0;
-		while(i<bzetA.size() && i<bzetB.size())
-		{
+	else	{
+		u32 i = 0;
+		while(i<bzetA.size() && i<bzetB.size())	{
 			//A bigger than B
-			if(bzetA[i] > bzetB[i])
-			{
+			if(bzetA[i] > bzetB[i])	{
 				return 1;
 			}
 			//B bigger than A
-			else if(bzetA[i] < bzetB[i])
-			{
+			else if(bzetA[i] < bzetB[i])	{
 				return -1;
 			}
 		}
 		return (bzetA.size() > bzetB.size()) ? 1: -1;
-		
 	}
 }
