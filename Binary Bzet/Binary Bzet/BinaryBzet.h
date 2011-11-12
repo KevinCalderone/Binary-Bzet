@@ -19,6 +19,7 @@ const int c_i32_min = 0x80000000;
 
 class BinaryBzet {
 public:
+	//Constructors
 	BinaryBzet();
 	//BinaryBzet(u32 index);
 	//BinaryBzet(u32 indexi, u32 indexe);
@@ -27,28 +28,18 @@ public:
 	BinaryBzet(vector<bool>* bzetvector, u32 depth);
 	~BinaryBzet();
 	
-	u32 getDepth();
+	//Print Bzet
 	string getBzetString();		//return "TTT11..." thingy
 	vector<bool> getBzetBinaryString() { return m_bzet; }	// return binary Bzet string
 	string getBzetPretty();	//get pretty formatted Bzet
-	//char getDepth();		//get the depth of the Bzet tree
 	char getCharFromBzet(u32 indexB);	//return a char from Bzet
 
-	void shift(int distance);
-	BinaryBzet slice(u32 startIndex, u32 endIndex);
 	bool isTAWatching() { return true; } // lol
-	void set(u32 index);
-	void unset(u32 index);
-    void flip(u32 index);
-    void flipTEST();           // temporary
-	void setTEST();            // temporary
-    void expandTEST();         // temporary
-    void bzetWalkTEST();       // temporary
-    void bitSetCollapseTEST(); // tempporary
-    static void testShift();
-	BinaryBzet operator& (const BinaryBzet& rhs);
-	BinaryBzet operator| (const BinaryBzet& rhs);
-	BinaryBzet operator ^(const BinaryBzet& rhs);
+
+	BinaryBzet operator&  (const BinaryBzet& rhs);
+	BinaryBzet operator|  (const BinaryBzet& rhs);
+	BinaryBzet operator ^ (const BinaryBzet& rhs);
+	bool	   operator== (const BinaryBzet& rhs);
 	BinaryBzet operator ~();
 
 	//Binary Boolean Operations
@@ -69,15 +60,37 @@ public:
 	BinaryBzet NAND(const BinaryBzet& rhs);
 	BinaryBzet TRUE(const BinaryBzet& rhs);
 
-	bool operator== (const BinaryBzet& rhs);
-	bool AlignCompare (const BinaryBzet& other);
+	//Comparison Operators
+	int compare(BinaryBzet& bzet);	//TODO
 
+	//Shifing Operators
+	void shift(int distance);
+
+	//Slice/Substring
+	BinaryBzet slice(u32 startIndex, u32 endIndex);
+
+	//Miscellaneous Bzet Property Functions
+	u32 getDepth();
+	u32 size();				//TODO
+	void set(u32 index);
+	void unset(u32 index);
+    void flip(u32 index);
+	void clean();			//TODO
+	u32 countBits ();
 	u32 getFirstBit (); // returns c_u32_max is none are found
 	u32 getLastBit ();	// returns c_u32_max is none are found
-	u32 countBits ();
 	vector<u32> bitList ();
+	
+	bool AlignCompare (const BinaryBzet& other);
 
+	//Test functions
 	static void getLastBitTest ();
+	void flipTEST();           // temporary
+	void setTEST();            // temporary
+    void expandTEST();         // temporary
+    void bzetWalkTEST();       // temporary
+    void bitSetCollapseTEST(); // tempporary
+	static void testShift();
 
 	//TODO - move method to private - temporary for testing
 	void align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u32& depthB);
@@ -85,6 +98,7 @@ public:
 	vector<bool> bsNeg(vector<bool> bzet, u32 currentPos, u32 level, u32& endPos); //implements NA and NB
 	u32 bzetWalk(vector<bool> &bzet, u32 currentPos, u32 currentLev);
 	void traversalSkeleton(vector<bool> bzet, u32 level);
+	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
 	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB, u32 level);
 
 private:
@@ -93,12 +107,10 @@ private:
 	u32 m_depth;
 
 	//Helper functions for binary operations
-	void setDepth(u32 newDepth);  // Might not need this
 	vector<bool> normalize(vector<bool> bzet, u32 level);
 	int bsDrop(vector<bool> bzet, u32 currentPos, u32 level); //implements DA and DB
 	u32 subtreeNot(vector<bool>& bzet, u32 currentPos, u32 level); // implements _not_
 	vector<bool> doTreeOp(string operation, u32 level, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB);
-	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
 	
 	// Helper functions for shift
 	u8 getBzetIndex(u32 index);

@@ -5,24 +5,25 @@
 #include <sstream>
 
 //Used for determining 6 cases in binary operations
-static int g_caseType[] = {0,0,0,0,1,6,3,6,2,4,6,6,5,6,6,6};
 static string g_binOp[][6]  = {           
-	{ "FALSE", "0",  "DB0", "DA0", "DB0", "DA0" }, //00 0000 Result
-	{ "AND",   "&",  "DB0", "DA0", "CB",  "CA"  }, //01 0001    |
-    { "A<-B",  "<-", "CB",  "CA",  "NB",  "DA0" }, //02 0010    |
-    { "A",     "a",  "DB0", "CA",  "DB0", "CA"  }, //03 0011    V
-    { "????",  "x",  "DB0", "DA0", "DB0", "CA"  }, //04 0100
-    { "B",     "b",  "CB",  "DA0", "CB",  "DA0" }, //05 0101
-    { "XOR",   "^",  "CB",  "CA",  "NB",  "NA"  }, //06 0110
-    { "OR",    "|",  "CB",  "CA",  "DB1", "DA1" }, //07 0111
-    { "NOR",   "~|", "NB",  "NA",  "DB0", "DA0" }, //08 1000
-    { "EQ",    "~^", "NB",  "NA",  "CB",  "CA"  }, //09 1001
-    { "~B",    "~b", "NB",  "DA0", "NB",  "DA0" }, //10 1010
-    { "????",  "x",  "CB",  "CA",  "CB",  "CA"  }, //11 1011
-    { "~A",    "~a", "DB0", "NA",  "DB0", "NA"  }, //12 1100
-    { "A->B",  "->", "DB0", "NA",  "CB",  "CA"  }, //13 1101
-    { "NAND",  "~&", "CB",  "DA1", "NB",  "NA"  }, //14 1110
-    { "TRUE",  "1",  "DB1", "DA1", "DB1", "DA1" }}; //15 1111
+	//				    0T     T0     1T     T1
+	{ "FALSE", "0",		"DB0", "DA0", "DB0", "DA0" }, //00 0000 Result
+	{ "AND",   "&",		"DB0", "DA0", "CB",  "CA"  }, //01 0001    |
+    { "A~->B", "~->",   "DB0", "CA",  "NB",  "DA0" }, //02 0010    |
+    { "A",     "a",		"DB0", "CA",  "DB0", "CA"  }, //03 0011    V
+    { "A~<-B", "~<-",	"CB",  "DA0", "DB0", "NA"  }, //04 0100
+    { "B",     "b",		"CB",  "DA0", "CB",  "DA0" }, //05 0101
+    { "XOR",   "^",		"CB",  "CA",  "NB",  "NA"  }, //06 0110
+    { "OR",    "|",		"CB",  "CA",  "DB1", "DA1" }, //07 0111
+    { "NOR",   "~|",	"NB",  "NA",  "DB0", "DA0" }, //08 1000
+    { "EQ",    "~^",	"NB",  "NA",  "CB",  "CA"  }, //09 1001
+    { "~B",    "~b",	"NB",  "DA0", "NB",  "DA0" }, //10 1010
+    { "A<-B",  "<-",	"NB",  "DA1", "DB1", "CA"  }, //11 1011
+    { "~A",    "~a",	"DB0", "NA",  "DB0", "NA"  }, //12 1100
+    { "A->B",  "->",	"DB1", "NA",  "CB",  "DA1" }, //13 1101
+    { "NAND",  "~&",	"DB1", "DA1", "NB",  "NA"  }, //14 1110
+    { "TRUE",  "1",		"DB1", "DA1", "DB1", "DA1" }}; //15 1111
+
 
 BinaryBzet::BinaryBzet() {
 	m_depth = 0;
@@ -1318,7 +1319,6 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	vector<bool> emptyBzet;
 	
 	//Create emptyBzet
-	//TODO confirm emptyBzet representation
 	emptyBzet.push_back(0);
 	emptyBzet.push_back(0);
 	
@@ -1326,14 +1326,12 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	if(equal( bzetA.begin(), bzetA.end(), emptyBzet.begin()))
 	{
 		//return empty bzet
-		//TODO confirm emptyBzet representation
-		return BinaryBzet();
+		return BinaryBzet(&emptyBzet,1);
 	}
 	if(equal( bzetB.begin(), bzetB.end(), emptyBzet.begin()))
 	{
 		// return empty bzet
-		//TODO confirm emptyBzet representation
-		return BinaryBzet();
+		return BinaryBzet(&emptyBzet,1);
 	}
 
 	u32 depthA = m_depth;
@@ -1344,7 +1342,6 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	//Full set vs anything
 	//TODO move to above align after testing
 	vector<bool> fullBzet;
-	//TODO confirm full representation
 	fullBzet.push_back(1);
 	fullBzet.push_back(1);
 	if(equal( bzetA.begin(), bzetA.end(), fullBzet.begin()))
@@ -1357,7 +1354,6 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	}
 	
 	//Level 0 bzet
-	//TODO finish once constructor implemented
 	if(depthA == 0)
 	{
 		vector<bool>::iterator itA;
@@ -1372,9 +1368,7 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 			bzetRet.push_back((*itA) & (*itB));
 			itB++;
 		}
-		//TODO change this - need new consturctor
-		// return BinaryBzet(bzetRet,0);
-		return rhs;
+		return BinaryBzet(&bzetRet,1);
 	}
 
 	//Non-0 Level bzet
@@ -1429,8 +1423,10 @@ BinaryBzet BinaryBzet::operator ~()
 
 BinaryBzet BinaryBzet::FALSE (const BinaryBzet& rhs)
 {
-	//Return empty Bzet
-	return BinaryBzet();
+	vector<bool> emptyBzet;
+	emptyBzet.push_back(0);
+	emptyBzet.push_back(0);
+	return BinaryBzet(&emptyBzet,1);
 }
 
 BinaryBzet BinaryBzet::AND (const BinaryBzet& rhs)
@@ -1585,8 +1581,10 @@ BinaryBzet BinaryBzet::NAND(const BinaryBzet& rhs)
 BinaryBzet BinaryBzet::TRUE(const BinaryBzet& rhs)
 {
 	//return full Bzet
-	//TODO fix
-	return rhs;
+	vector<bool> fullBzet;
+	fullBzet.push_back(1);
+	fullBzet.push_back(1);
+	return BinaryBzet(&fullBzet,1);
 }
 
 //branchData == cdr python
@@ -1845,7 +1843,7 @@ int BinaryBzet::bsDrop(vector<bool> bzet, u32 currentPos, u32 level)
 //TODO finish typing problems with this function
 vector<bool> BinaryBzet::doTreeOp(string operation, u32 level, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB)
 {
-	bool dr;
+//	bool dr;
 	u32 end = 0;
 	vector<bool> bzetRet;
 	//TODO find out difference if any between DA0, DA1, DB0, DB1 are
@@ -1860,7 +1858,7 @@ vector<bool> BinaryBzet::doTreeOp(string operation, u32 level, vector<bool> bzet
 	{
 //		posA = bsDrop(bzetA,posA,level);
 //		dr = true;
-		cout << "OP DA1\n";
+//		cout << "OP DA1\n";
 		bzetRet.push_back(1);
 		bzetRet.push_back(1);
 	}
@@ -1894,11 +1892,16 @@ vector<bool> BinaryBzet::doTreeOp(string operation, u32 level, vector<bool> bzet
 	{
 		bzetRet = bsNeg(bzetB,posB,level,end);
 	}
+	else
+	{
+		//Should never get here
+		cout << "doTreeOp Invalid call\n";
+		cout << "Operation:" << operation <<"\n";
+	}
 
 	return bzetRet;
 }
 
-//not sure if we need this function
 vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<bool> data2)
 {
 	vector<bool>::iterator itA;
@@ -1908,79 +1911,67 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 	itA = data1.begin();
 	itB = data2.begin();
 
-	if(operation.compare("&") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
+	if(operation.compare("&") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
 			bzetRet.push_back((*itA) & (*itB));
 			itB++;
 		}
 	}
-	else if(operation.compare("|") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back((*itA) | (*itB));
+	else if(operation.compare("~->") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bzetRet.push_back((*itA) & (~(*itB)));
 			itB++;
 		}
 	}
-	else if(operation.compare("^") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
+	else if(operation.compare("~<-") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bzetRet.push_back((~(*itA)) & (*itB));
+			itB++;
+		}
+	}
+	else if(operation.compare("^") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
 			bzetRet.push_back((*itA) ^ (*itB));
 			itB++;
 		}
 	}
-	else if(operation.compare("~&") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back((~((*itA)&(*itB))));
+	else if(operation.compare("|") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bzetRet.push_back((*itA) | (*itB));
 			itB++;
 		}
 	}
-	else if(operation.compare("~|") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back((~((*itA)|(*itB))));
+	else if(operation.compare("~|") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bool aorb = (*itA) | (*itB);
+			bzetRet.push_back(aorb ? 0:1);
 			itB++;
 		}
 	}
-	else if(operation.compare("~^") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back((~((*itA)^(*itB))));
+	else if(operation.compare("<-") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bzetRet.push_back((*itA) | (~(*itB)));
 			itB++;
 		}
 	}
-	else if(operation.compare("~b") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back(~(*itB));
+	else if(operation.compare("->") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bzetRet.push_back(~(*itA) | (*itB));
 			itB++;
 		}
 	}
-	else if(operation.compare("0") == 0)
-	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back(0);
-			bzetRet.push_back(0);
+	else if(operation.compare("~&") == 0)	{
+		for(itA; itA != data1.end(); itA++)	{
+			bool aandb = (*itA) & (*itB);
+			bzetRet.push_back(aandb ? 0:1);
 			itB++;
 		}
 	}
-	else if(operation.compare("1") == 0)
+	else
 	{
-		for(itA; itA != data1.end(); itA++)
-		{
-			bzetRet.push_back(1);
-			bzetRet.push_back(1);
-			itB++;
-		}
+		//Should never get here
+		cout << "doDataOp Invalid call\n";
+		cout << "Operation:" << operation <<"\n";
 	}
 	return bzetRet;
 }
@@ -2193,12 +2184,6 @@ void BinaryBzet::align(vector<bool>& bzetA, u32& depthA, vector<bool>& bzetB, u3
 	return;
 }
 
-//sets depth of a BinaryBzet
-void BinaryBzet::setDepth(u32 newDepth)
-{
-	m_depth = newDepth;
-}
-
 // == operator for BinaryBzet
 bool BinaryBzet::operator ==(const BinaryBzet& rhs)
 {
@@ -2248,4 +2233,44 @@ void BinaryBzet::testShift () {
 
 	if (passed)
 		cout << "All shifting tests passed :D" << endl;
+}
+
+void BinaryBzet::clean()
+{
+	m_bzet.assign(2,(bool) 0);
+	m_depth = 1;
+}
+
+u32 BinaryBzet::size()
+{
+	return m_bzet.capacity();
+}
+
+int BinaryBzet::compare(BinaryBzet& bzet)
+{
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = bzet.m_bzet;
+	if(*this == bzet)
+	{
+		return 0;
+	}
+	else
+	{
+		int i = 0;
+		while(i<bzetA.size() && i<bzetB.size())
+		{
+			//A bigger than B
+			if(bzetA[i] > bzetB[i])
+			{
+				return 1;
+			}
+			//B bigger than A
+			else if(bzetA[i] < bzetB[i])
+			{
+				return -1;
+			}
+		}
+		return (bzetA.size() > bzetB.size()) ? 1: -1;
+		
+	}
 }

@@ -6,6 +6,7 @@
 
 int main()
 {
+/*
 	cout << "NANA NANA NANA NANA BATMAAAAAAAN!" << endl;
 	cout << endl <<
 "               _,    _   _    ,_ " << endl <<
@@ -18,7 +19,25 @@ int main()
 "         Y888   '8'   Y8P   '8'   888Y " << endl <<
 "          '8o          V          o8' " << endl <<
 "            `                     ` " << endl << endl;
+*/
+	BinaryBzet a;
+	vector<bool> data1;
+	data1.push_back(0);
+	data1.push_back(0);
+	data1.push_back(1);
+	data1.push_back(1);
+	vector<bool> data2;
+	data2.push_back(0);
+	data2.push_back(1);
+	data2.push_back(0);
+	data2.push_back(1);
 
+	vector<bool> result = a.doDataOp( "~&", data1, data2);
+	vector<bool>::iterator it;
+	for(it = result.begin(); it != result.end(); it++)
+	{
+		cout<<*it<<endl;
+	}
 	system("pause");
     return 0;
 }
