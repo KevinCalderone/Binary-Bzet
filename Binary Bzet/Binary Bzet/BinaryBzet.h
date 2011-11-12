@@ -65,7 +65,8 @@ public:
 	int compare(BinaryBzet& bzet);
 
 	//Shifing Operators
-	void shift(int distance);
+	void leftShift(u32 distance);
+	void rightShift(u32 distance);
 
 	//Slice/Substring
 	BinaryBzet slice(u32 startIndex, u32 endIndex);
@@ -114,6 +115,7 @@ private:
 	vector<bool> doTreeOp(string operation, u32 level, vector<bool> bzetA, u32 posA, vector<bool> bzetB, u32 posB);
 	
 	// Helper functions for shift
+	void shift(u32 distance, bool isRightShift); // 0 is left, 1 is right
 	u8 getBzetIndex(u32 index);
 	void writeLetter(vector<bool>& result, u32& resultIndex, u8 letter, u32 lettersToEncode);
 	void writeValue(vector<bool>& result, u32& resultIndex, u8 resultDepth, u8 value, u32 valuesToEncode);

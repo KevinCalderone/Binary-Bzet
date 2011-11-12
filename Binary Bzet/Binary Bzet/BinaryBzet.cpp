@@ -346,7 +346,7 @@ void BinaryBzet::encodeBits(bool value, u32 count, vector<bool>& result, bool& v
 		writeBits(0, 0, result, valueCounting, bitsCounted, resultIndex, resultDepth);
 }
 
-void BinaryBzet::shift(int distance) {
+void BinaryBzet::shift(u32 distance, bool isRightShift) {
 	// This algoritm parses through the bzet string extracting the data that it is storing,
 	// and reencodes the data back into a result bzet starting from some offset into the 
 	// original bzet.
@@ -366,13 +366,23 @@ void BinaryBzet::shift(int distance) {
 	// DEPTH OF RESULT BZET
 	u32 neededSize = getLastBit() + 1;
 	if (neededSize == c_u32_max) {
-		neededSize = 1 << m_depth;  // There is some problem with the bzet
+		neededSize = 1 << m_depth;  
 	}
 
-	if (distance < 0 && (u32)(distance * -1) > neededSize)
-		neededSize = 0;
-	else 
-		neededSize -= u32(-1 * distance);
+	if (isRightShift) {
+		if (neededSize + distance < neededSize) {
+			printf("Not enough space to shift");
+			return;
+		}
+
+		neededSize += distance;
+	}
+	else {
+		if (distance > neededSize)
+			neededSize = 0;
+		else
+			neededSize -= distance;
+	}
 
 	u8 resultDepth = 1;
 	while ((u32)(1 << resultDepth) < neededSize)
@@ -383,13 +393,13 @@ void BinaryBzet::shift(int distance) {
 
 	// STATE INITIALIZATION
 	// Determine where to start encoding into the result bzet
-	if (distance > 0) {
+	if (isRightShift) {
 		bitsCounted = distance;
 		valueCounting = 0;
 		bitsToSkip = 0;
 	}
 	else {
-		bitsToSkip = u32(-1 * distance);
+		bitsToSkip = distance;
 	}
 
 	// MAIN ALGORITHM
@@ -481,6 +491,14 @@ void BinaryBzet::shift(int distance) {
 	m_depth = resultDepth;
 }
 
+void BinaryBzet::leftShift(u32 distance) {
+	shift(distance, 0);
+}
+
+void BinaryBzet::rightShift(u32 distance) {
+	shift(distance, 1);
+}
+
 BinaryBzet BinaryBzet::slice(u32 startIndex, u32 endIndex) {
 	if (endIndex < startIndex)
 		return BinaryBzet();
@@ -488,12 +506,7 @@ BinaryBzet BinaryBzet::slice(u32 startIndex, u32 endIndex) {
 	BinaryBzet mask((u32)0, (u32)(endIndex - startIndex));
 	BinaryBzet result = *this;
 
-	// since indexes are unsigned, but shifting requires signed
-	// it may take 2 shifts since int has 1 bit less percision and u32
-	if (startIndex >= 1 << 31) {
-		result.shift(c_i32_min);
-	}
-	result.shift(-(int)(startIndex & 0x7fffffff));
+	result.leftShift(startIndex);
 
 	return result & mask;
 }
@@ -1379,7 +1392,7 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	vector<bool> bzetRet = binaryOp(1,bzetA,0,bzetB,0,depthA);
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1395,7 +1408,7 @@ BinaryBzet BinaryBzet::operator |(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1411,7 +1424,7 @@ BinaryBzet BinaryBzet::operator ^(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1421,7 +1434,7 @@ BinaryBzet BinaryBzet::operator ~()
 	subtreeNot(bzetA,0,m_depth);
 	BinaryBzet b = BinaryBzet(&bzetA,m_depth);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1450,7 +1463,7 @@ BinaryBzet BinaryBzet::NonImplication (const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1471,7 +1484,7 @@ BinaryBzet BinaryBzet::ConverseNonImplication(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1492,7 +1505,7 @@ BinaryBzet BinaryBzet::XOR(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1513,7 +1526,7 @@ BinaryBzet BinaryBzet::NOR(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1541,7 +1554,7 @@ BinaryBzet BinaryBzet::ConverseImplication(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1562,7 +1575,7 @@ BinaryBzet BinaryBzet::Implication(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -1578,7 +1591,7 @@ BinaryBzet BinaryBzet::NAND(const BinaryBzet& rhs)
 
 	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
 	//Used to collapse Bzet
-	b.shift(0);
+	b.leftShift(0);
 	return b;
 }
 
@@ -2214,9 +2227,12 @@ void BinaryBzet::testShift () {
 	for (int i=2; i<20; ++i)
 		for (int j=2; j<20; ++j) {
 			BinaryBzet a(i);
-			a.shift(0);			// The constructor isn't creating an optimized bzet
+			a.leftShift(0);			// The constructor isn't creating an optimized bzet
 			BinaryBzet b(j);
-			b.shift(i - j);
+			if (i > j)
+				b.rightShift(i - j);
+			else
+				b.leftShift(j - i);
 	
 			if (!a.AlignCompare(b)) {	// The shifting operation may not create an correctly normalized bzet
 				cout << "Shifting Test (" << i << ", " << j << "): Failed!" << endl;
@@ -2226,9 +2242,9 @@ void BinaryBzet::testShift () {
 
 	{
 		BinaryBzet a(0, 4, 2);
-		a.shift(0);			// The constructor isn't creating an optimized bzet
+		a.leftShift(0);			// The constructor isn't creating an optimized bzet
 		BinaryBzet b(1, 5, 2);
-		b.shift(-1);
+		b.leftShift(1);
 	
 		if (!a.AlignCompare(b)) { // The shifting operation may not create an correctly normalized bzet
 			cout << "Shifting Test: Failed!" << endl;
