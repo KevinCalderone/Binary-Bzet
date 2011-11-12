@@ -1,0 +1,24 @@
+﻿Build started 11/12/2011 2:09:32 PM.
+     1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Release\Python3DLL.unsuccessfulbuild".
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.dll" /INCREMENTAL:NO /NOLOGO python32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Python3DLL.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.lib" /MACHINE:X86 /DLL Release\BinaryBzet.obj
+         Release\main.obj
+         Release\python3_wrap.obj
+            Creating library C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.lib and object C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.exp
+         Generating code
+         Finished generating code
+         Python3DLL.vcxproj -> C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.dll
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Release\Python3DLL.dll;#2" /manifest Release\Python3DLL.dll.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\Python3DLL.unsuccessfulbuild".
+         Touching "Release\Python3DLL.lastbuildstate".
+     1>Done Building Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.31
