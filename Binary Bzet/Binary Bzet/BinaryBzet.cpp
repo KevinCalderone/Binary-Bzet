@@ -4,6 +4,10 @@
 #include <iomanip>
 #include <sstream>
 
+#ifdef __cplusplus
+extern "C" {
+#endif 
+
 //Used for determining 6 cases in binary operations
 static string g_binOp[][6]  = {           
 	//				    0T     T0     1T     T1
@@ -2274,3 +2278,7 @@ int BinaryBzet::compare(BinaryBzet& bzet)
 		
 	}
 }
+
+#ifdef __cplusplus
+}  // extern "C"
+#endif 

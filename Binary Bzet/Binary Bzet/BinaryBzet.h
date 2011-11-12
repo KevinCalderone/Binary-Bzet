@@ -1,6 +1,7 @@
 #ifndef __BINARYBZET_H__
 #define __BINARYBZET_H__
 
+
 #include <stdint.h>
 #include <vector>
 #include <string>

@@ -1,0 +1,15 @@
+Instructions for how to setup the Python Module.  We should make this into a script.
+
+1. To update the wrapper file by running SWIG in the command line:
+swig.exe -c++ -python -o mymodule_wrap.cpp mymodule.i
+
+2. Build the .DLL by compiling the Python DLL project.  It must be in release mode to work.
+
+3. Copy the .DLL into the folder that has SWIG, and rename it to _mymodule.pyd
+
+4. Run python.exe in that folder to test it.
+
+5. In the python shell:
+	"import mymodule"
+	"x = mymodule.BinaryBzet()"
+	"x.getBzetString()" 
