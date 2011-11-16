@@ -29,8 +29,13 @@
     <ClCompile Include="..\Binary Bzet\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Binary Bzet\mymodule_wrap.cpp">
+    <ClCompile Include="..\Binary Bzet\BinaryBzet_wrap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Binary Bzet\BinaryBzet.i">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

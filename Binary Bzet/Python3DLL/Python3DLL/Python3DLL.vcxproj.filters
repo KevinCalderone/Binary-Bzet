@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BinaryBzet.cpp">
+    <ClCompile Include="..\..\Binary Bzet\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\..\Binary Bzet\BinaryBzet_wrap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mymodule_wrap.cpp">
+    <ClCompile Include="..\..\Binary Bzet\BinaryBzet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinaryBzet.h">
+    <ClInclude Include="..\..\Binary Bzet\BinaryBzet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bitR.h">
+    <ClInclude Include="..\..\Binary Bzet\bitR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="mymodule.i">
-      <Filter>Header Files</Filter>
+    <None Include="..\..\Binary Bzet\BinaryBzet.i">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
 </Project>

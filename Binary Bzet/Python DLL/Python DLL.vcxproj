@@ -16,8 +16,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Binary Bzet\BinaryBzet.cpp" />
+    <ClCompile Include="..\Binary Bzet\BinaryBzet_wrap.cpp" />
     <ClCompile Include="..\Binary Bzet\main.cpp" />
-    <ClCompile Include="..\Binary Bzet\mymodule_wrap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Binary Bzet\BinaryBzet.i" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4FF1F0DB-6B65-4258-A70D-D8E158749436}</ProjectGuid>

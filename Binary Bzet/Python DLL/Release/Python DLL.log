@@ -1,13 +1,25 @@
-﻿  BinaryBzet.cpp
-..\Binary Bzet\BinaryBzet.cpp(556): warning C4018: '<' : signed/unsigned mismatch
-..\Binary Bzet\BinaryBzet.cpp(782): warning C4244: 'initializing' : conversion from 'double' to 'u32', possible loss of data
-..\Binary Bzet\BinaryBzet.cpp(890): warning C4018: '<' : signed/unsigned mismatch
-..\Binary Bzet\BinaryBzet.cpp(1161): warning C4018: '<' : signed/unsigned mismatch
-..\Binary Bzet\BinaryBzet.cpp(1293): warning C4018: '<' : signed/unsigned mismatch
-..\Binary Bzet\BinaryBzet.cpp(2024): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
-  main.cpp
-  mymodule_wrap.cpp
-     Creating library C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python DLL.lib and object C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python DLL.exp
-  Generating code
-  Finished generating code
-  Python DLL.vcxproj -> C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python DLL.dll
+﻿Build started 11/15/2011 4:24:57 PM.
+     1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\Python DLL.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Python27\include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D PYTHONDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\Binary Bzet\BinaryBzet_wrap.cpp"
+         BinaryBzet_wrap.cpp
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.dll" /INCREMENTAL:NO /NOLOGO python27.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Python DLL.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.lib" /MACHINE:X86 /DLL Release\BinaryBzet.obj
+         Release\BinaryBzet_wrap.obj
+         Release\main.obj
+            Creating library C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.lib and object C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.exp
+         Generating code
+         Finished generating code
+         Python DLL.vcxproj -> C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.dll
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python DLL.dll;#2" /manifest "Release\Python DLL.dll.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Release\Python DLL.unsuccessfulbuild".
+         Touching "Release\Python DLL.lastbuildstate".
+     1>Done Building Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.39
