@@ -85,7 +85,7 @@ BinaryBzet::BinaryBzet(u32 indexi, u32 indexe, u32 step){
 BinaryBzet::BinaryBzet(string bitstring){
 	if(bitstring.at(bitstring.length()-1) == '#'){
 		bitstringToBzet(bitstring.substr(0,bitstring.length()-1));
-		cout << bitstring << endl;
+		//cout << bitstring << endl;
 		return;}
 	else{
 		if(bitstring.find("-")!=string::npos){
