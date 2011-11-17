@@ -71,20 +71,16 @@ int main()
 		while ( myfile2.good() )
 			getline (myfile2,line2);
 		myfile2.close();
-	}
+	}*/
 
-	BinaryBzet O(line1+"#");
-	BinaryBzet A(line2+"#");*/
-	//BinaryBzet anded = O | A;
+	//BinaryBzet O(line1+"#");
+	//BinaryBzet A(line2+"#");
 
-	BinaryBzet x(72);
-	BinaryBzet y(118);
+	BinaryBzet O("0101011101010100001010101101010#");
+	BinaryBzet A("0101010001110#");
+	BinaryBzet anded = O & A;
 
-	cout << (x|y).getBzetString() << endl;
-
-	//anded = O.AND(A);
-	//std::cout << anded.getBzetString() << std::endl;
-//	std::cout << A.getBzetString() << std::endl;
+	std::cout << anded.getBzetString() << std::endl;
 
 
 	system("pause");
