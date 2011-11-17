@@ -77,8 +77,8 @@ int main()
 	BinaryBzet A(line2+"#");*/
 	//BinaryBzet anded = O | A;
 
-	BinaryBzet x(15);
-	BinaryBzet y(72);
+	BinaryBzet x(72);
+	BinaryBzet y(118);
 
 	cout << (x|y).getBzetString() << endl;
 
