@@ -1368,9 +1368,20 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 
 	u32 depthA = m_depth;
 	u32 depthB = rhs.m_depth;
-
+//	cout << "Depth A" << depthA << "Depth B" << depthB << endl;
 	align(bzetA,depthA,bzetB,depthB);
-	
+
+//	cout << "Depth A" << depthA << "Depth B" << depthB << endl;
+	vector<bool>::iterator it;
+/*	cout << "Bzet B Bzet";
+	for(it = bzetB.begin(); it != bzetB.end(); it++)
+	{
+		cout<<*it;
+		it++;
+		cout<<*it << " ";
+	}
+	cout << endl;*/
+
 	//Full set vs anything
 	//TODO move to above align after testing
 	vector<bool> fullBzet;
@@ -1642,27 +1653,34 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
    
 	while (!sA.empty() && !sB.empty()) 
 	{
+//		cout << "Stack B size " << sB.size()  << endl;
 		currentLevelA = sA.top();
 //		cout << "Current Level A: " << currentLevelA << "\n";
 		currentLevelB = sB.top();
 //		cout << "Current Level B: " << currentLevelB << "\n";
-		if(currentLevelA <= currentLevelB)
+		//TODO verify this works
+		if(currentLevelA <= currentLevelB || (level == currentLevelA && seenA[currentLevelA] == 1))
 		seenA[currentLevelA]++;
 //		cout << "SeenA: " << seenA[currentLevelA] << endl;
-		if(currentLevelB <= currentLevelA)
+		//(level == currentLevelB && seenB[currentLevelB] == 1) - this means that we are at the end
+		if(currentLevelB <= currentLevelA || (level == currentLevelB && seenB[currentLevelB] == 1))
 		seenB[currentLevelB]++;
 //		cout << "SeenB: " << seenB[currentLevelB] << endl;
 		if (seenA[currentLevelA] == 2) {
+//			cout << "Removing " << currentLevelA << " from A's stack " << endl;
 			sA.pop(); // this will empty out the stack when you are done
 		}
 		if (seenB[currentLevelB] == 2) {
+//			cout << endl << "Removing " << sB.top() << " from B's stack " << endl;
 			sB.pop(); // this will empty out the stack when you are done
 		}
-		if (!sA.empty() && !sB.empty()){
+
+		if (!sA.empty() && !sB.empty())	{
 		//Do operations on this level - only do if on the same level
 		if(currentLevelA == currentLevelB)
 		{
 			if(currentLevelA == 1 && currentLevelB == 1)	{
+//				cout << "Data operation" << "\n";
 				//bottom level do data operation directly
 				vector<bool> data1;
 				data1.push_back(bzet1[bzetIndexA]);
@@ -1746,6 +1764,15 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 					resultBzet.push_back(0);
 				}
 			}
+/*				vector<bool>::iterator it;
+//				cout << "Result Bzet";
+				for(it = resultBzet.begin(); it != resultBzet.end(); it++)
+				{
+					cout<<*it;
+					it++;
+					cout<<*it << " ";
+				}
+				cout << endl;*/
 		}
 	}
 
@@ -1768,8 +1795,14 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 			} else if (curBPA == '1' || curBPA == '0') {
 				// if you get here it means you are not at level 1 but the value in the tree is 1 or 0
 				 // # of 1's or 0's represented by curBP is 2^(currentLevel)
-				if (seenA[currentLevelA] == 2)
-				sA.pop();
+				if (seenA[currentLevelA] == 2)	{
+
+					//make sure we are removing the correct value
+//					cout << "Removing " << sA.top() << " from A's stack " << endl;
+//					if(currentLevelA == sA.top())	{
+						sA.pop();
+//					}
+				}
 				// if the stack is empty you have reached the end of the bzet so break?
 				//     (not sure what would work for you so im just leaving a comment)
 				// if its not empty let while loop continue to next iteration
@@ -1777,6 +1810,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 			} else if(currentLevelA <= currentLevelB)	{
 					// set up next iteration
 					nextA = currentLevelA - 1;
+//					cout << "Pushing " << nextA << " onto A's stack" << endl;
 					sA.push(nextA);
 					seenA[nextA] = 0;
 			}
@@ -1789,7 +1823,16 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 				// if you get here it means you are not at level 1 but the value in the tree is 1 or 0
 				// # of 1's or 0's represented by curBP is 2^(currentLevel)
 				if (seenB[currentLevelB] == 2)
-				sB.pop();
+				{
+					//make sure we are removing the correct value
+//					cout << "Removing " << sB.top() << " from B's stack " << endl;
+//					cout << "currentLevelB" << currentLevelB << endl;
+					if(currentLevelB == sB.top())
+					{
+//						cout << "Removing " << sB.top() << " from B's stack " << endl;
+						sB.pop();
+					}
+				}
 				// if the stack is empty you have reached the end of the bzet so break?
 				//     (not sure what would work for you so im just leaving a comment)
 				// if its not empty let while loop continue to next iteration
@@ -1797,9 +1840,11 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, u32 posA,
 			} else if(currentLevelB <= currentLevelA)	{
 					// set up next iteration
 					nextB = currentLevelB - 1;
+//					cout<< endl << "Pushing " << nextB << " onto B's stack" << endl;
 					sB.push(nextB);
 					seenB[nextB] = 0;
 			}
+
 				if(currentLevelA <= currentLevelB)
 					bzetIndexA += 2; // its +2 because values are represented by 2 bits in the vector
 				if(currentLevelB <= currentLevelA)
@@ -2108,6 +2153,7 @@ void BinaryBzet::traversalSkeleton(vector<bool> bzet, u32 level) {
 //           since only passing in the current position and the level doesn't give any info on whether it's
 //           refering to the left or right child. make sense? 
 u32 BinaryBzet::bzetWalk(vector<bool>& bzet, u32 currentPos, u32 currentLev) {
+	cout<<endl << "Calling bzetWalk " << endl;
 	u32 *seen = new u32[currentLev+1];
 	seen[currentLev] = 0;
 	u32 top, next, bzetIndex = currentPos;
