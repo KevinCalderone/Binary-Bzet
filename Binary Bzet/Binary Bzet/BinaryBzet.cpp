@@ -2126,14 +2126,16 @@ u32 BinaryBzet::bzetWalk(vector<bool>& bzet, u32 currentPos, u32 currentLev) {
                 bool lBit = bzet[bzetIndex];
                 bool rBit = bzet[bzetIndex+1];
                 bitpair curBP = lBit ? (rBit ? '1' : 'T') : (rBit ?  't': '0');
-                if (curBP == '1' || curBP == '0') {
+                if ((s.size() == 1) && (curBP == '1' || curBP == '0')) {
                     delete [] seen;
                     return bzetIndex+2;
                 }
                 // set up next index level
-                next = top - 1;
-                s.push(next);
-                seen[next] = 0;
+                if (curBP != '0' && curBP != '1') {
+                    next = top - 1;
+                    s.push(next);
+                    seen[next] = 0;
+                }
             }
             bzetIndex += 2; // 'T' 't' '1' '0' take up two bits so skip both to get to the next..
 		}
@@ -2145,9 +2147,9 @@ u32 BinaryBzet::bzetWalk(vector<bool>& bzet, u32 currentPos, u32 currentLev) {
 }
 
 void BinaryBzet::bzetWalkTEST() {    
-    bool values[] = { 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0 }; // TTTTTTttT10
-    vector<bool> bzet;
-    bzet.insert(bzet.begin(), values, values + 22);
+    //                 T    T    T    T    T    T    t    t    T    1    0
+    bool values[] = { 1,0, 1,0, 1,0, 1,0, 1,0, 1,0, 0,1, 0,1, 1,0, 1,1, 0,0 }; // TTTTTTttT10
+    vector<bool> bzet(values, values + 22);
         
     assert(bzetWalk(bzet, 2, 3) == 16);
     cout << "Test 01: Passed\n";
@@ -2157,6 +2159,19 @@ void BinaryBzet::bzetWalkTEST() {
     cout << "Test 03: Passed\n";
     assert(bzetWalk(bzet, 18, 2) == 20);
     cout << "Test 04: Passed\n";
+    
+    // Bzet walk is called with
+    // currentPos 2 and level = 6
+    // It returns 10 instead of 24.
+    
+    //             T    T    T    T    0    T    0    T    0    t    0    0    0
+    //             7    6    5    4    3    3    2    2    1    1    4    5    6
+    //                  ^(called with [pos 2, level 6])                        ^(should return [pos 24, level 6])
+    bool t5[] = { 1,0, 1,0, 1,0, 1,0, 0,0, 1,0, 0,0, 1,0, 0,0, 0,1, 0,0, 0,0, 0,0 };
+    vector<bool> bzetForTest5(t5, t5 + 24);
+    cout << "bzetWalk(bzet, 2, 6) == " << bzetWalk(bzetForTest5, 2, 6) << endl;
+    assert(bzetWalk(bzetForTest5, 2, 6) == 24);
+    
     cout << "\nAll tests Passed\n";
 }
 
