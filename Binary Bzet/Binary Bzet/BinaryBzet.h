@@ -74,6 +74,7 @@ public:
 	//Miscellaneous Bzet Property Functions
 	u32 getDepth();
 	u32 size();
+	bool test(u32 index);
 	void set(u32 index);
 	void unset(u32 index);
     void flip(u32 index);

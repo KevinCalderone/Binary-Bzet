@@ -75,7 +75,7 @@ int main()
 
 	//BinaryBzet O(line1+"#");
 	//BinaryBzet A(line2+"#");
-
+	/*
 //	BinaryBzet O("01 01 01 11 01 01 01 00 00 10 10 10 11 01 01 00#");
 //	BinaryBzet A("01 01 01 00 01 11 00 00 00 00 00 00 00 00 00 00#");
 	BinaryBzet O("0101011101010100001010101101010#");
@@ -85,8 +85,9 @@ int main()
 	BinaryBzet anded = O & A;
 
 	std::cout << anded.getBzetString() << std::endl;
+*/
 
-
+	
 	system("pause");
     return 0;
 }

@@ -2153,7 +2153,7 @@ void BinaryBzet::traversalSkeleton(vector<bool> bzet, u32 level) {
 //           since only passing in the current position and the level doesn't give any info on whether it's
 //           refering to the left or right child. make sense? 
 u32 BinaryBzet::bzetWalk(vector<bool>& bzet, u32 currentPos, u32 currentLev) {
-	cout<<endl << "Calling bzetWalk " << endl;
+	//cout<<endl << "Calling bzetWalk " << endl;
 	u32 *seen = new u32[currentLev+1];
 	seen[currentLev] = 0;
 	u32 top, next, bzetIndex = currentPos;
@@ -2342,6 +2342,16 @@ void BinaryBzet::clean()
 u32 BinaryBzet::size()
 {
 	return m_bzet.capacity();
+}
+
+bool BinaryBzet::test(u32 index) 
+{
+	BinaryBzet mask(0);
+	mask.rightShift(index);
+
+	BinaryBzet result = AND(mask);
+
+	return result.getBzetString() != "1:0";
 }
 
 int BinaryBzet::compare(BinaryBzet& bzet)
