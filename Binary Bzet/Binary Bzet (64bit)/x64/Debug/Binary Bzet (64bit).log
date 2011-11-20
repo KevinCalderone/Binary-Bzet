@@ -1,0 +1,36 @@
+﻿Build started 11/19/2011 8:54:36 PM.
+     1>Project "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet (64bit)\Binary Bzet (64bit).vcxproj" on node 2 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Debug\".
+       InitializeBuildStatus:
+         Creating "x64\Debug\Binary Bzet (64bit).unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /Od /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vcWindows7.1SDK.pdb" /Gd /TP /errorReport:prompt "..\Binary Bzet\BinaryBzet.cpp" "..\Binary Bzet\main.cpp"
+         main.cpp
+         BinaryBzet.cpp
+     1>..\Binary Bzet\BinaryBzet.cpp(556): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Binary Bzet\BinaryBzet.cpp(580): warning C4267: 'return' : conversion from 'size_t' to 'u32', possible loss of data
+     1>..\Binary Bzet\BinaryBzet.cpp(604): warning C4334: '<<' : result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?)
+     1>..\Binary Bzet\BinaryBzet.cpp(782): warning C4244: 'initializing' : conversion from 'double' to 'u32', possible loss of data
+     1>..\Binary Bzet\BinaryBzet.cpp(1869): warning C4267: '=' : conversion from 'size_t' to 'u32', possible loss of data
+     1>..\Binary Bzet\BinaryBzet.cpp(1892): warning C4267: '=' : conversion from 'size_t' to 'u32', possible loss of data
+     1>..\Binary Bzet\BinaryBzet.cpp(1917): warning C4267: '=' : conversion from 'size_t' to 'u32', possible loss of data
+     1>..\Binary Bzet\BinaryBzet.cpp(2069): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
+     1>..\Binary Bzet\BinaryBzet.cpp(2344): warning C4267: 'return' : conversion from 'size_t' to 'u32', possible loss of data
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Debug\Binary Bzet (64bit).exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Debug\Binary Bzet (64bit).exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet (64bit)\x64\Debug\Binary Bzet (64bit).pdb." /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Debug\Binary Bzet (64bit).lib" /MACHINE:X64 x64\Debug\BinaryBzet.obj
+         x64\Debug\main.obj
+         Binary Bzet (64bit).vcxproj -> C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Debug\Binary Bzet (64bit).exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.1\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Debug\Binary Bzet (64bit).exe;#1" /manifest "x64\Debug\Binary Bzet (64bit).exe.intermediate.manifest"
+       CopyFilesToOutputDirectory:
+         Copying file from "x64\Debug\Binary Bzet (64bit).pdb" to "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Debug\Binary Bzet (64bit).pdb".
+       FinalizeBuildStatus:
+         Deleting file "x64\Debug\Binary Bzet (64bit).unsuccessfulbuild".
+         Touching "x64\Debug\Binary Bzet (64bit).lastbuildstate".
+     1>Done Building Project "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet (64bit)\Binary Bzet (64bit).vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.47

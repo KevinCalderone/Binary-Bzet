@@ -87,6 +87,7 @@ int main()
 	std::cout << anded.getBzetString() << std::endl;
 */
 
+	std::cout << sizeof(vector<bool>::size_type) << std::endl;
 	
 	system("pause");
     return 0;
