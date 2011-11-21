@@ -140,6 +140,7 @@ class BinaryBzet(_object):
     def slice(self, *args): return _BinaryBzet.BinaryBzet_slice(self, *args)
     def getDepth(self): return _BinaryBzet.BinaryBzet_getDepth(self)
     def size(self): return _BinaryBzet.BinaryBzet_size(self)
+    def test(self, *args): return _BinaryBzet.BinaryBzet_test(self, *args)
     def set(self, *args): return _BinaryBzet.BinaryBzet_set(self, *args)
     def unset(self, *args): return _BinaryBzet.BinaryBzet_unset(self, *args)
     def flip(self, *args): return _BinaryBzet.BinaryBzet_flip(self, *args)
@@ -168,8 +169,7 @@ class BinaryBzet(_object):
 BinaryBzet_swigregister = _BinaryBzet.BinaryBzet_swigregister
 BinaryBzet_swigregister(BinaryBzet)
 cvar = _BinaryBzet.cvar
-c_u32_max = cvar.c_u32_max
-c_i32_min = cvar.c_i32_min
+c_uint_max = cvar.c_uint_max
 
 def BinaryBzet_getLastBitTest():
   return _BinaryBzet.BinaryBzet_getLastBitTest()

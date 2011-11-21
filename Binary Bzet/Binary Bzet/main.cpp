@@ -7,6 +7,17 @@
 
 int main()
 {
+	/*
+	BinaryBzet a(0);
+
+	BinaryBzet::getLastBitTest ();
+	a.flipTEST();           // temporary
+	a.setTEST();            // temporary
+    a.expandTEST();         // temporary
+    a.bzetWalkTEST();       // temporary
+    a.bitSetCollapseTEST(); // tempporary
+	BinaryBzet::testShift();
+	*/
 ///////*
 //////	cout << "NANA NANA NANA NANA BATMAAAAAAAN!" << endl;
 //////	cout << endl <<

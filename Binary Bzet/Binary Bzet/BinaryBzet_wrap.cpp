@@ -2944,13 +2944,13 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 
 #define SWIGTYPE_p_BinaryBzet swig_types[0]
 #define SWIGTYPE_p_char swig_types[1]
-#define SWIGTYPE_p_std__invalid_argument swig_types[2]
-#define SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t swig_types[3]
-#define SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t swig_types[4]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[5]
-#define SWIGTYPE_p_uint8_t swig_types[6]
-#define SWIGTYPE_p_unsigned_char swig_types[7]
-#define SWIGTYPE_p_unsigned_int swig_types[8]
+#define SWIGTYPE_p_size_t swig_types[2]
+#define SWIGTYPE_p_std__invalid_argument swig_types[3]
+#define SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t swig_types[4]
+#define SWIGTYPE_p_std__vectorT_size_t_std__allocatorT_size_t_t_t swig_types[5]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[6]
+#define SWIGTYPE_p_uint8_t swig_types[7]
+#define SWIGTYPE_p_unsigned_char swig_types[8]
 static swig_type_info *swig_types[10];
 static swig_module_info swig_module = {swig_types, 9, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
@@ -3424,42 +3424,9 @@ SWIG_From_unsigned_SS_long  (unsigned long value)
 
 
 SWIGINTERNINLINE PyObject *
-SWIG_From_unsigned_SS_int  (unsigned int value)
+SWIG_From_size_t  (size_t value)
 {    
-  return SWIG_From_unsigned_SS_long  (value);
-}
-
-
-SWIGINTERNINLINE PyObject *
-SWIG_From_int  (int value)
-{    
-  return SWIG_From_long  (value);
-}
-
-
-#include <limits.h>
-#if !defined(SWIG_NO_LLONG_MAX)
-# if !defined(LLONG_MAX) && defined(__GNUC__) && defined (__LONG_LONG_MAX__)
-#   define LLONG_MAX __LONG_LONG_MAX__
-#   define LLONG_MIN (-LLONG_MAX - 1LL)
-#   define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
-# endif
-#endif
-
-
-SWIGINTERN int
-SWIG_AsVal_unsigned_SS_int (PyObject * obj, unsigned int *val)
-{
-  unsigned long v;
-  int res = SWIG_AsVal_unsigned_SS_long (obj, &v);
-  if (SWIG_IsOK(res)) {
-    if ((v > UINT_MAX)) {
-      return SWIG_OverflowError;
-    } else {
-      if (val) *val = static_cast< unsigned int >(v);
-    }
-  }  
-  return res;
+  return SWIG_From_unsigned_SS_long  (static_cast< unsigned long >(value));
 }
 
 
@@ -3616,6 +3583,23 @@ SWIG_From_char  (char c)
 { 
   return SWIG_FromCharPtrAndSize(&c,1);
 }
+
+
+SWIGINTERNINLINE PyObject *
+SWIG_From_int  (int value)
+{    
+  return SWIG_From_long  (value);
+}
+
+
+#include <limits.h>
+#if !defined(SWIG_NO_LLONG_MAX)
+# if !defined(LLONG_MAX) && defined(__GNUC__) && defined (__LONG_LONG_MAX__)
+#   define LLONG_MAX __LONG_LONG_MAX__
+#   define LLONG_MIN (-LLONG_MAX - 1LL)
+#   define ULLONG_MAX (LLONG_MAX * 2ULL + 1ULL)
+# endif
+#endif
 
 
 SWIGINTERN int
@@ -4480,30 +4464,16 @@ SWIGINTERN PyObject *SwigPyIterator_swigregister(PyObject *SWIGUNUSEDPARM(self),
   return SWIG_Py_Void();
 }
 
-SWIGINTERN int Swig_var_c_u32_max_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable c_u32_max is read-only.");
+SWIGINTERN int Swig_var_c_uint_max_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable c_uint_max is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *Swig_var_c_u32_max_get(void) {
+SWIGINTERN PyObject *Swig_var_c_uint_max_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(c_u32_max));
-  return pyobj;
-}
-
-
-SWIGINTERN int Swig_var_c_i32_min_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable c_i32_min is read-only.");
-  return 1;
-}
-
-
-SWIGINTERN PyObject *Swig_var_c_i32_min_get(void) {
-  PyObject *pyobj = 0;
-  
-  pyobj = SWIG_From_int(static_cast< int >(c_i32_min));
+  pyobj = SWIG_From_size_t(static_cast< size_t >(c_uint_max));
   return pyobj;
 }
 
@@ -4523,14 +4493,14 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_BinaryBzet__SWIG_1(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  u32 arg1 ;
-  u32 arg2 ;
-  u32 arg3 ;
-  unsigned int val1 ;
+  uint arg1 ;
+  uint arg2 ;
+  uint arg3 ;
+  size_t val1 ;
   int ecode1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
-  unsigned int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -4538,21 +4508,21 @@ SWIGINTERN PyObject *_wrap_new_BinaryBzet__SWIG_1(PyObject *SWIGUNUSEDPARM(self)
   BinaryBzet *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"OOO:new_BinaryBzet",&obj0,&obj1,&obj2)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "uint""'");
   } 
-  arg1 = static_cast< u32 >(val1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  arg1 = static_cast< uint >(val1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_BinaryBzet" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_BinaryBzet" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  arg2 = static_cast< uint >(val2);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_BinaryBzet" "', argument " "3"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "new_BinaryBzet" "', argument " "3"" of type '" "uint""'");
   } 
-  arg3 = static_cast< u32 >(val3);
+  arg3 = static_cast< uint >(val3);
   result = (BinaryBzet *)new BinaryBzet(arg1,arg2,arg3);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_BinaryBzet, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -4563,27 +4533,27 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_BinaryBzet__SWIG_2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  u32 arg1 ;
-  u32 arg2 ;
-  unsigned int val1 ;
+  uint arg1 ;
+  uint arg2 ;
+  size_t val1 ;
   int ecode1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   BinaryBzet *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"OO:new_BinaryBzet",&obj0,&obj1)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "uint""'");
   } 
-  arg1 = static_cast< u32 >(val1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  arg1 = static_cast< uint >(val1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_BinaryBzet" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_BinaryBzet" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   result = (BinaryBzet *)new BinaryBzet(arg1,arg2);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_BinaryBzet, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -4594,18 +4564,18 @@ fail:
 
 SWIGINTERN PyObject *_wrap_new_BinaryBzet__SWIG_3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  u32 arg1 ;
-  unsigned int val1 ;
+  uint arg1 ;
+  size_t val1 ;
   int ecode1 = 0 ;
   PyObject * obj0 = 0 ;
   BinaryBzet *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)"O:new_BinaryBzet",&obj0)) SWIG_fail;
-  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  ecode1 = SWIG_AsVal_size_t(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "uint""'");
   } 
-  arg1 = static_cast< u32 >(val1);
+  arg1 = static_cast< uint >(val1);
   result = (BinaryBzet *)new BinaryBzet(arg1);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_BinaryBzet, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -4641,10 +4611,10 @@ fail:
 SWIGINTERN PyObject *_wrap_new_BinaryBzet__SWIG_5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::vector< bool > *arg1 = (std::vector< bool > *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -4656,11 +4626,11 @@ SWIGINTERN PyObject *_wrap_new_BinaryBzet__SWIG_5(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "new_BinaryBzet" "', argument " "1"" of type '" "std::vector< bool > *""'"); 
   }
   arg1 = reinterpret_cast< std::vector< bool > * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_BinaryBzet" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "new_BinaryBzet" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   result = (BinaryBzet *)new BinaryBzet(arg1,arg2);
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_BinaryBzet, SWIG_POINTER_NEW |  0 );
   return resultobj;
@@ -4685,7 +4655,7 @@ SWIGINTERN PyObject *_wrap_new_BinaryBzet(PyObject *self, PyObject *args) {
   if (argc == 1) {
     int _v;
     {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
       _v = SWIG_CheckState(res);
     }
     if (_v) {
@@ -4707,7 +4677,7 @@ SWIGINTERN PyObject *_wrap_new_BinaryBzet(PyObject *self, PyObject *args) {
     _v = SWIG_CheckState(res);
     if (_v) {
       {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
@@ -4718,12 +4688,12 @@ SWIGINTERN PyObject *_wrap_new_BinaryBzet(PyObject *self, PyObject *args) {
   if (argc == 2) {
     int _v;
     {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
       _v = SWIG_CheckState(res);
     }
     if (_v) {
       {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
@@ -4734,17 +4704,17 @@ SWIGINTERN PyObject *_wrap_new_BinaryBzet(PyObject *self, PyObject *args) {
   if (argc == 3) {
     int _v;
     {
-      int res = SWIG_AsVal_unsigned_SS_int(argv[0], NULL);
+      int res = SWIG_AsVal_size_t(argv[0], NULL);
       _v = SWIG_CheckState(res);
     }
     if (_v) {
       {
-        int res = SWIG_AsVal_unsigned_SS_int(argv[1], NULL);
+        int res = SWIG_AsVal_size_t(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
         {
-          int res = SWIG_AsVal_unsigned_SS_int(argv[2], NULL);
+          int res = SWIG_AsVal_size_t(argv[2], NULL);
           _v = SWIG_CheckState(res);
         }
         if (_v) {
@@ -4758,11 +4728,11 @@ fail:
   SWIG_SetErrorMsg(PyExc_NotImplementedError,"Wrong number or type of arguments for overloaded function 'new_BinaryBzet'.\n"
     "  Possible C/C++ prototypes are:\n"
     "    BinaryBzet::BinaryBzet()\n"
-    "    BinaryBzet::BinaryBzet(u32,u32,u32)\n"
-    "    BinaryBzet::BinaryBzet(u32,u32)\n"
-    "    BinaryBzet::BinaryBzet(u32)\n"
+    "    BinaryBzet::BinaryBzet(uint,uint,uint)\n"
+    "    BinaryBzet::BinaryBzet(uint,uint)\n"
+    "    BinaryBzet::BinaryBzet(uint)\n"
     "    BinaryBzet::BinaryBzet(std::string)\n"
-    "    BinaryBzet::BinaryBzet(std::vector< bool > *,u32)\n");
+    "    BinaryBzet::BinaryBzet(std::vector< bool > *,uint)\n");
   return 0;
 }
 
@@ -4857,10 +4827,10 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_getCharFromBzet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -4872,11 +4842,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getCharFromBzet(PyObject *SWIGUNUSEDPARM(s
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_getCharFromBzet" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_getCharFromBzet" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_getCharFromBzet" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   result = (char)(arg1)->getCharFromBzet(arg2);
   resultobj = SWIG_From_char(static_cast< char >(result));
   return resultobj;
@@ -5646,10 +5616,10 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_leftShift(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5660,11 +5630,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_leftShift(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_leftShift" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_leftShift" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_leftShift" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   (arg1)->leftShift(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5676,10 +5646,10 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_rightShift(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5690,11 +5660,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_rightShift(PyObject *SWIGUNUSEDPARM(self),
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_rightShift" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_rightShift" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_rightShift" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   (arg1)->rightShift(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5706,13 +5676,13 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_slice(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
-  u32 arg3 ;
+  uint arg2 ;
+  uint arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
-  unsigned int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5725,16 +5695,16 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_slice(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_slice" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_slice" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_slice" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  arg2 = static_cast< uint >(val2);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_slice" "', argument " "3"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_slice" "', argument " "3"" of type '" "uint""'");
   } 
-  arg3 = static_cast< u32 >(val3);
+  arg3 = static_cast< uint >(val3);
   result = (arg1)->slice(arg2,arg3);
   resultobj = SWIG_NewPointerObj((new BinaryBzet(static_cast< const BinaryBzet& >(result))), SWIGTYPE_p_BinaryBzet, SWIG_POINTER_OWN |  0 );
   return resultobj;
@@ -5749,7 +5719,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getDepth(PyObject *SWIGUNUSEDPARM(self), P
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  u32 result;
+  uint result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:BinaryBzet_getDepth",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -5757,8 +5727,8 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getDepth(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_getDepth" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  result = (u32)(arg1)->getDepth();
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  result = (arg1)->getDepth();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -5771,7 +5741,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_size(PyObject *SWIGUNUSEDPARM(self), PyObj
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  u32 result;
+  uint result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:BinaryBzet_size",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -5779,8 +5749,39 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_size(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_size" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  result = (u32)(arg1)->size();
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  result = (arg1)->size();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_BinaryBzet_test(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  BinaryBzet *arg1 = (BinaryBzet *) 0 ;
+  uint arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  size_t val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:BinaryBzet_test",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_test" "', argument " "1"" of type '" "BinaryBzet *""'"); 
+  }
+  arg1 = reinterpret_cast< BinaryBzet * >(argp1);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_test" "', argument " "2"" of type '" "uint""'");
+  } 
+  arg2 = static_cast< uint >(val2);
+  result = (bool)(arg1)->test(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
   return resultobj;
 fail:
   return NULL;
@@ -5790,10 +5791,10 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5804,11 +5805,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_set(PyObject *SWIGUNUSEDPARM(self), PyObje
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_set" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_set" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_set" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   (arg1)->set(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5820,10 +5821,10 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_unset(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5834,11 +5835,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_unset(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_unset" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_unset" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_unset" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   (arg1)->unset(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5850,10 +5851,10 @@ fail:
 SWIGINTERN PyObject *_wrap_BinaryBzet_flip(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
-  u32 arg2 ;
+  uint arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  unsigned int val2 ;
+  size_t val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -5864,11 +5865,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_flip(PyObject *SWIGUNUSEDPARM(self), PyObj
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_flip" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_size_t(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_flip" "', argument " "2"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "BinaryBzet_flip" "', argument " "2"" of type '" "uint""'");
   } 
-  arg2 = static_cast< u32 >(val2);
+  arg2 = static_cast< uint >(val2);
   (arg1)->flip(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5904,7 +5905,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_countBits(PyObject *SWIGUNUSEDPARM(self), 
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  u32 result;
+  uint result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:BinaryBzet_countBits",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -5912,8 +5913,8 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_countBits(PyObject *SWIGUNUSEDPARM(self), 
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_countBits" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  result = (u32)(arg1)->countBits();
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  result = (arg1)->countBits();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -5926,7 +5927,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getFirstBit(PyObject *SWIGUNUSEDPARM(self)
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  u32 result;
+  uint result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:BinaryBzet_getFirstBit",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -5934,8 +5935,8 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getFirstBit(PyObject *SWIGUNUSEDPARM(self)
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_getFirstBit" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  result = (u32)(arg1)->getFirstBit();
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  result = (arg1)->getFirstBit();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -5948,7 +5949,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getLastBit(PyObject *SWIGUNUSEDPARM(self),
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  u32 result;
+  uint result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:BinaryBzet_getLastBit",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -5956,8 +5957,8 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_getLastBit(PyObject *SWIGUNUSEDPARM(self),
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "BinaryBzet_getLastBit" "', argument " "1"" of type '" "BinaryBzet *""'"); 
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
-  result = (u32)(arg1)->getLastBit();
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  result = (arg1)->getLastBit();
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -5970,7 +5971,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bitList(PyObject *SWIGUNUSEDPARM(self), Py
   void *argp1 = 0 ;
   int res1 = 0 ;
   PyObject * obj0 = 0 ;
-  SwigValueWrapper< std::vector< unsigned int > > result;
+  SwigValueWrapper< std::vector< size_t > > result;
   
   if (!PyArg_ParseTuple(args,(char *)"O:BinaryBzet_bitList",&obj0)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -5979,7 +5980,7 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bitList(PyObject *SWIGUNUSEDPARM(self), Py
   }
   arg1 = reinterpret_cast< BinaryBzet * >(argp1);
   result = (arg1)->bitList();
-  resultobj = SWIG_NewPointerObj((new std::vector< u32 >(static_cast< const std::vector< u32 >& >(result))), SWIGTYPE_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, SWIG_POINTER_OWN |  0 );
+  resultobj = SWIG_NewPointerObj((new std::vector< uint >(static_cast< const std::vector< uint >& >(result))), SWIGTYPE_p_std__vectorT_size_t_std__allocatorT_size_t_t_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -6153,9 +6154,9 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_align(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
   std::vector< bool > *arg2 = 0 ;
-  u32 *arg3 = 0 ;
+  uint *arg3 = 0 ;
   std::vector< bool > *arg4 = 0 ;
-  u32 *arg5 = 0 ;
+  uint *arg5 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
@@ -6186,14 +6187,14 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_align(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_align" "', argument " "2"" of type '" "std::vector< bool > &""'"); 
   }
   arg2 = reinterpret_cast< std::vector< bool > * >(argp2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_unsigned_int,  0 );
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_size_t,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "BinaryBzet_align" "', argument " "3"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "BinaryBzet_align" "', argument " "3"" of type '" "uint &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_align" "', argument " "3"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_align" "', argument " "3"" of type '" "uint &""'"); 
   }
-  arg3 = reinterpret_cast< u32 * >(argp3);
+  arg3 = reinterpret_cast< uint * >(argp3);
   res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t,  0 );
   if (!SWIG_IsOK(res4)) {
     SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "BinaryBzet_align" "', argument " "4"" of type '" "std::vector< bool > &""'"); 
@@ -6202,14 +6203,14 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_align(PyObject *SWIGUNUSEDPARM(self), PyOb
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_align" "', argument " "4"" of type '" "std::vector< bool > &""'"); 
   }
   arg4 = reinterpret_cast< std::vector< bool > * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_size_t,  0 );
   if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "BinaryBzet_align" "', argument " "5"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "BinaryBzet_align" "', argument " "5"" of type '" "uint &""'"); 
   }
   if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_align" "', argument " "5"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_align" "', argument " "5"" of type '" "uint &""'"); 
   }
-  arg5 = reinterpret_cast< u32 * >(argp5);
+  arg5 = reinterpret_cast< uint * >(argp5);
   (arg1)->align(*arg2,*arg3,*arg4,*arg5);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -6222,16 +6223,16 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bsCopy(PyObject *SWIGUNUSEDPARM(self), PyO
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
   SwigValueWrapper< std::vector< bool > > arg2 ;
-  u32 arg3 ;
-  u32 arg4 ;
-  u32 *arg5 = 0 ;
+  uint arg3 ;
+  uint arg4 ;
+  uint *arg5 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 ;
   int res2 = 0 ;
-  unsigned int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
-  unsigned int val4 ;
+  size_t val4 ;
   int ecode4 = 0 ;
   void *argp5 = 0 ;
   int res5 = 0 ;
@@ -6261,24 +6262,24 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bsCopy(PyObject *SWIGUNUSEDPARM(self), PyO
       if (SWIG_IsNewObj(res2)) delete temp;
     }
   }
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_bsCopy" "', argument " "3"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_bsCopy" "', argument " "3"" of type '" "uint""'");
   } 
-  arg3 = static_cast< u32 >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_int(obj3, &val4);
+  arg3 = static_cast< uint >(val3);
+  ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_bsCopy" "', argument " "4"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_bsCopy" "', argument " "4"" of type '" "uint""'");
   } 
-  arg4 = static_cast< u32 >(val4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
+  arg4 = static_cast< uint >(val4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_size_t,  0 );
   if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "BinaryBzet_bsCopy" "', argument " "5"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "BinaryBzet_bsCopy" "', argument " "5"" of type '" "uint &""'"); 
   }
   if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_bsCopy" "', argument " "5"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_bsCopy" "', argument " "5"" of type '" "uint &""'"); 
   }
-  arg5 = reinterpret_cast< u32 * >(argp5);
+  arg5 = reinterpret_cast< uint * >(argp5);
   result = (arg1)->bsCopy(arg2,arg3,arg4,*arg5);
   resultobj = SWIG_NewPointerObj((new std::vector< bool >(static_cast< const std::vector< bool >& >(result))), SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
@@ -6291,16 +6292,16 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bsNeg(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
   SwigValueWrapper< std::vector< bool > > arg2 ;
-  u32 arg3 ;
-  u32 arg4 ;
-  u32 *arg5 = 0 ;
+  uint arg3 ;
+  uint arg4 ;
+  uint *arg5 = 0 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 ;
   int res2 = 0 ;
-  unsigned int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
-  unsigned int val4 ;
+  size_t val4 ;
   int ecode4 = 0 ;
   void *argp5 = 0 ;
   int res5 = 0 ;
@@ -6330,24 +6331,24 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bsNeg(PyObject *SWIGUNUSEDPARM(self), PyOb
       if (SWIG_IsNewObj(res2)) delete temp;
     }
   }
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_bsNeg" "', argument " "3"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_bsNeg" "', argument " "3"" of type '" "uint""'");
   } 
-  arg3 = static_cast< u32 >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_int(obj3, &val4);
+  arg3 = static_cast< uint >(val3);
+  ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_bsNeg" "', argument " "4"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_bsNeg" "', argument " "4"" of type '" "uint""'");
   } 
-  arg4 = static_cast< u32 >(val4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_unsigned_int,  0 );
+  arg4 = static_cast< uint >(val4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_size_t,  0 );
   if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "BinaryBzet_bsNeg" "', argument " "5"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "BinaryBzet_bsNeg" "', argument " "5"" of type '" "uint &""'"); 
   }
   if (!argp5) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_bsNeg" "', argument " "5"" of type '" "u32 &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_bsNeg" "', argument " "5"" of type '" "uint &""'"); 
   }
-  arg5 = reinterpret_cast< u32 * >(argp5);
+  arg5 = reinterpret_cast< uint * >(argp5);
   result = (arg1)->bsNeg(arg2,arg3,arg4,*arg5);
   resultobj = SWIG_NewPointerObj((new std::vector< bool >(static_cast< const std::vector< bool >& >(result))), SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
@@ -6360,21 +6361,21 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bzetWalk(PyObject *SWIGUNUSEDPARM(self), P
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
   std::vector< bool > *arg2 = 0 ;
-  u32 arg3 ;
-  u32 arg4 ;
+  uint arg3 ;
+  uint arg4 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 = 0 ;
   int res2 = 0 ;
-  unsigned int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
-  unsigned int val4 ;
+  size_t val4 ;
   int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
-  u32 result;
+  uint result;
   
   if (!PyArg_ParseTuple(args,(char *)"OOOO:BinaryBzet_bzetWalk",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_BinaryBzet, 0 |  0 );
@@ -6390,18 +6391,18 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_bzetWalk(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "BinaryBzet_bzetWalk" "', argument " "2"" of type '" "std::vector< bool > &""'"); 
   }
   arg2 = reinterpret_cast< std::vector< bool > * >(argp2);
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_bzetWalk" "', argument " "3"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_bzetWalk" "', argument " "3"" of type '" "uint""'");
   } 
-  arg3 = static_cast< u32 >(val3);
-  ecode4 = SWIG_AsVal_unsigned_SS_int(obj3, &val4);
+  arg3 = static_cast< uint >(val3);
+  ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_bzetWalk" "', argument " "4"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_bzetWalk" "', argument " "4"" of type '" "uint""'");
   } 
-  arg4 = static_cast< u32 >(val4);
-  result = (u32)(arg1)->bzetWalk(*arg2,arg3,arg4);
-  resultobj = SWIG_From_unsigned_SS_int(static_cast< unsigned int >(result));
+  arg4 = static_cast< uint >(val4);
+  result = (arg1)->bzetWalk(*arg2,arg3,arg4);
+  resultobj = SWIG_From_size_t(static_cast< size_t >(result));
   return resultobj;
 fail:
   return NULL;
@@ -6412,12 +6413,12 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_traversalSkeleton(PyObject *SWIGUNUSEDPARM
   PyObject *resultobj = 0;
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
   SwigValueWrapper< std::vector< bool > > arg2 ;
-  u32 arg3 ;
+  uint arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   void *argp2 ;
   int res2 = 0 ;
-  unsigned int val3 ;
+  size_t val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -6442,11 +6443,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_traversalSkeleton(PyObject *SWIGUNUSEDPARM
       if (SWIG_IsNewObj(res2)) delete temp;
     }
   }
-  ecode3 = SWIG_AsVal_unsigned_SS_int(obj2, &val3);
+  ecode3 = SWIG_AsVal_size_t(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_traversalSkeleton" "', argument " "3"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "BinaryBzet_traversalSkeleton" "', argument " "3"" of type '" "uint""'");
   } 
-  arg3 = static_cast< u32 >(val3);
+  arg3 = static_cast< uint >(val3);
   (arg1)->traversalSkeleton(arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -6527,23 +6528,23 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_binaryOp(PyObject *SWIGUNUSEDPARM(self), P
   BinaryBzet *arg1 = (BinaryBzet *) 0 ;
   int arg2 ;
   SwigValueWrapper< std::vector< bool > > arg3 ;
-  u32 arg4 ;
+  uint arg4 ;
   SwigValueWrapper< std::vector< bool > > arg5 ;
-  u32 arg6 ;
-  u32 arg7 ;
+  uint arg6 ;
+  uint arg7 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
   void *argp3 ;
   int res3 = 0 ;
-  unsigned int val4 ;
+  size_t val4 ;
   int ecode4 = 0 ;
   void *argp5 ;
   int res5 = 0 ;
-  unsigned int val6 ;
+  size_t val6 ;
   int ecode6 = 0 ;
-  unsigned int val7 ;
+  size_t val7 ;
   int ecode7 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -6578,11 +6579,11 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_binaryOp(PyObject *SWIGUNUSEDPARM(self), P
       if (SWIG_IsNewObj(res3)) delete temp;
     }
   }
-  ecode4 = SWIG_AsVal_unsigned_SS_int(obj3, &val4);
+  ecode4 = SWIG_AsVal_size_t(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_binaryOp" "', argument " "4"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "BinaryBzet_binaryOp" "', argument " "4"" of type '" "uint""'");
   } 
-  arg4 = static_cast< u32 >(val4);
+  arg4 = static_cast< uint >(val4);
   {
     res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t,  0  | 0);
     if (!SWIG_IsOK(res5)) {
@@ -6596,16 +6597,16 @@ SWIGINTERN PyObject *_wrap_BinaryBzet_binaryOp(PyObject *SWIGUNUSEDPARM(self), P
       if (SWIG_IsNewObj(res5)) delete temp;
     }
   }
-  ecode6 = SWIG_AsVal_unsigned_SS_int(obj5, &val6);
+  ecode6 = SWIG_AsVal_size_t(obj5, &val6);
   if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "BinaryBzet_binaryOp" "', argument " "6"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "BinaryBzet_binaryOp" "', argument " "6"" of type '" "uint""'");
   } 
-  arg6 = static_cast< u32 >(val6);
-  ecode7 = SWIG_AsVal_unsigned_SS_int(obj6, &val7);
+  arg6 = static_cast< uint >(val6);
+  ecode7 = SWIG_AsVal_size_t(obj6, &val7);
   if (!SWIG_IsOK(ecode7)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "BinaryBzet_binaryOp" "', argument " "7"" of type '" "u32""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "BinaryBzet_binaryOp" "', argument " "7"" of type '" "uint""'");
   } 
-  arg7 = static_cast< u32 >(val7);
+  arg7 = static_cast< uint >(val7);
   result = (arg1)->binaryOp(arg2,arg3,arg4,arg5,arg6,arg7);
   resultobj = SWIG_NewPointerObj((new std::vector< bool >(static_cast< const std::vector< bool >& >(result))), SWIGTYPE_p_std__vectorT_bool_std__allocatorT_bool_t_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
@@ -6675,6 +6676,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"BinaryBzet_slice", _wrap_BinaryBzet_slice, METH_VARARGS, NULL},
 	 { (char *)"BinaryBzet_getDepth", _wrap_BinaryBzet_getDepth, METH_VARARGS, NULL},
 	 { (char *)"BinaryBzet_size", _wrap_BinaryBzet_size, METH_VARARGS, NULL},
+	 { (char *)"BinaryBzet_test", _wrap_BinaryBzet_test, METH_VARARGS, NULL},
 	 { (char *)"BinaryBzet_set", _wrap_BinaryBzet_set, METH_VARARGS, NULL},
 	 { (char *)"BinaryBzet_unset", _wrap_BinaryBzet_unset, METH_VARARGS, NULL},
 	 { (char *)"BinaryBzet_flip", _wrap_BinaryBzet_flip, METH_VARARGS, NULL},
@@ -6707,46 +6709,46 @@ static PyMethodDef SwigMethods[] = {
 
 static swig_type_info _swigt__p_BinaryBzet = {"_p_BinaryBzet", "BinaryBzet *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_size_t = {"_p_size_t", "size_t *|uint *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__vectorT_bool_std__allocatorT_bool_t_t = {"_p_std__vectorT_bool_std__allocatorT_bool_t_t", "std::vector< bool,std::allocator< bool > > *|std::vector< bool > *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t = {"_p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t", "std::vector< u32 > *|std::vector< unsigned int,std::allocator< unsigned int > > *|std::vector< unsigned int > *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_std__vectorT_size_t_std__allocatorT_size_t_t_t = {"_p_std__vectorT_size_t_std__allocatorT_size_t_t_t", "std::vector< size_t,std::allocator< size_t > > *|std::vector< size_t > *|std::vector< uint > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_uint8_t = {"_p_uint8_t", "u8 *|uint8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "bitpair *|unsigned char *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_unsigned_int = {"_p_unsigned_int", "unsigned int *|u32 *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_BinaryBzet,
   &_swigt__p_char,
+  &_swigt__p_size_t,
   &_swigt__p_std__invalid_argument,
   &_swigt__p_std__vectorT_bool_std__allocatorT_bool_t_t,
-  &_swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t,
+  &_swigt__p_std__vectorT_size_t_std__allocatorT_size_t_t_t,
   &_swigt__p_swig__SwigPyIterator,
   &_swigt__p_uint8_t,
   &_swigt__p_unsigned_char,
-  &_swigt__p_unsigned_int,
 };
 
 static swig_cast_info _swigc__p_BinaryBzet[] = {  {&_swigt__p_BinaryBzet, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_size_t[] = {  {&_swigt__p_size_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__vectorT_bool_std__allocatorT_bool_t_t[] = {  {&_swigt__p_std__vectorT_bool_std__allocatorT_bool_t_t, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t[] = {  {&_swigt__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_std__vectorT_size_t_std__allocatorT_size_t_t_t[] = {  {&_swigt__p_std__vectorT_size_t_std__allocatorT_size_t_t_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_uint8_t[] = {  {&_swigt__p_uint8_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_unsigned_int[] = {  {&_swigt__p_unsigned_int, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_BinaryBzet,
   _swigc__p_char,
+  _swigc__p_size_t,
   _swigc__p_std__invalid_argument,
   _swigc__p_std__vectorT_bool_std__allocatorT_bool_t_t,
-  _swigc__p_std__vectorT_unsigned_int_std__allocatorT_unsigned_int_t_t,
+  _swigc__p_std__vectorT_size_t_std__allocatorT_size_t_t_t,
   _swigc__p_swig__SwigPyIterator,
   _swigc__p_uint8_t,
   _swigc__p_unsigned_char,
-  _swigc__p_unsigned_int,
 };
 
 
@@ -7433,8 +7435,7 @@ SWIG_init(void) {
   SWIG_InstallConstants(d,swig_const_table);
   
   PyDict_SetItemString(md,(char*)"cvar", SWIG_globals());
-  SWIG_addvarlink(SWIG_globals(),(char*)"c_u32_max",Swig_var_c_u32_max_get, Swig_var_c_u32_max_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"c_i32_min",Swig_var_c_i32_min_get, Swig_var_c_i32_min_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"c_uint_max",Swig_var_c_uint_max_get, Swig_var_c_uint_max_set);
 #if PY_VERSION_HEX >= 0x03000000
   return m;
 #else
