@@ -86,20 +86,24 @@ int main()
 
 	//BinaryBzet O(line1+"#");
 	//BinaryBzet A(line2+"#");
-	/*
+	
 //	BinaryBzet O("01 01 01 11 01 01 01 00 00 10 10 10 11 01 01 00#");
 //	BinaryBzet A("01 01 01 00 01 11 00 00 00 00 00 00 00 00 00 00#");
-	BinaryBzet O("0101011101010100001010101101010#");
-	BinaryBzet A("0101010001110#");
-	cout << O.getBzetString() << endl;
-	cout << A.getBzetString() << endl;
-	BinaryBzet anded = O & A;
-
-	std::cout << anded.getBzetString() << std::endl;
-*/
-
-	std::cout << sizeof(vector<bool>::size_type) << std::endl;
+//	BinaryBzet O("0101011101010100001010101101010#");
+//	BinaryBzet A("0101010001110#");
+	BinaryBzet O(0);
+	O.rightShift((uint)1<<61);
 	
+	cout << "IN " << sizeof(size_t)*8 << " BIT MODE!" << endl << endl << endl;
+
+
+	cout << O.getBzetString() << endl;
+	//cout << A.getBzetString() << endl;
+	//BinaryBzet anded = O & A;
+
+	//std::cout << O.getBzetString() << std::endl;
+	
+	cout << endl;
 	system("pause");
     return 0;
 }

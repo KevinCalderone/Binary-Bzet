@@ -233,8 +233,8 @@ string BinaryBzet::getBzetPrettyRecursive(uint level, uint& indexB){
 	}else{
 		
 		char leftChar = getCharFromBzet(indexB);
-		int  rightInd = 0;
-		int  num_of_space = 3+5*(m_depth-level);
+		uint  rightInd = 0;
+		uint  num_of_space = 3+5*(m_depth-level);
 		ostringstream space;
 		space <<setw(num_of_space)<<"";
 		
@@ -366,7 +366,7 @@ void BinaryBzet::shift(uint distance, bool isRightShift) {
 	// DEPTH OF RESULT BZET
 	uint neededSize = getLastBit() + 1;
 	if (neededSize == c_uint_max) {
-		neededSize = 1 << m_depth;  
+		neededSize = (uint)1 << m_depth;  
 	}
 
 	if (isRightShift) {
@@ -385,7 +385,7 @@ void BinaryBzet::shift(uint distance, bool isRightShift) {
 	}
 
 	u8 resultDepth = 1;
-	while ((uint)(1 << resultDepth) < neededSize)
+	while ((uint)1 << resultDepth < neededSize)
 		resultDepth++;
 
 	// Memory hint for bzet size to reduce reallocations of result buffer
@@ -475,7 +475,7 @@ void BinaryBzet::shift(uint distance, bool isRightShift) {
 	// enough '0' bits to fill in the rest of the bzet if there is extra space
 	uint bitsEncoded = (resultIndex << 1);
 	uint bitsFound = bitsEncoded + bitsCounted;
-	uint bitsExpected = (1 << resultDepth);
+	uint bitsExpected = ((uint)1 << resultDepth);
 
 	if (bitsFound > bitsExpected) {
 		bitsCounted = bitsExpected - bitsEncoded;
@@ -531,7 +531,7 @@ void BinaryBzet::findBits (vector<bool>& bzet, uint& bzetPos, uint& bitstringPos
 
 	switch(bzetLetter) {
 		case 0:	// '0'
-			bitstringPos += 1 << level;
+			bitstringPos += (uint)1 << level;
 		break;
 	
 		case 1: // 't'
@@ -553,9 +553,9 @@ void BinaryBzet::findBits (vector<bool>& bzet, uint& bzetPos, uint& bitstringPos
 		break;
 	
 		case 3: // '1'
-			for (uint i = bitstringPos; i < bitstringPos + (1 << level); ++i)
+			for (uint i = bitstringPos; i < bitstringPos + ((uint)1 << level); ++i)
 				result.push_back(i);	
-			bitstringPos += 1 << level;
+			bitstringPos += (uint)1 << level;
 		break;
 	}
 }
@@ -618,14 +618,14 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 	}
 	//m_depth = (uint)(log((double)input.length())/log(2.0) + 1);
 	m_depth = 1;
-	while ((uint)(1 << m_depth) <= input.length())
+	while ((uint)((uint)1 << m_depth) <= input.length())
 		m_depth++;
 	i = 0;
-	int num_end_zero;
+	uint num_end_zero;
 	do{
 		num_end_zero = GetNumEndingZero(i,m_depth-1);
-		int num_to_encode = 1;
-		int number_of_times_to_expand = num_end_zero;
+		uint num_to_encode = 1;
+		uint number_of_times_to_expand = num_end_zero;
 		if (input.at(i) == '1' || input.at(i) == '0')
 			while (number_of_times_to_expand  > 0) {
 				bool same = true; //(j < i + (1 << num_to_encode) - 1) //(j < (1 << num_to_encode)
@@ -662,13 +662,13 @@ void BinaryBzet::bitstringToBzet(string bitstring)
 
 void BinaryBzet::generateBzet(bitR* bitr)
 {
-	uint i = 1;
-	for(i;i<31;i++)
+	uint i = 1;//31
+	for(i;i<sizeof(size_t)*8-1;i++)
 		if(bitr->size()<(uint)(1<<i))
 			break;
 	uint bitstringsize = 1<<i;
 	m_depth = 1;
-	while ((uint)(1 << m_depth) <= (bitstringsize>>1))
+	while ((uint)1 << m_depth <= (bitstringsize>>1))
 		m_depth++;
 	i = 0;
 	uint num_end_zero;
@@ -1132,7 +1132,7 @@ void BinaryBzet::setBitPairAtBzetIndex(uint index, bitpair value) {
 			return;
 	}
 
-	int indexA = index * 2; // doesn't skip first 8 bits since depth is its own member variable
+	uint indexA = index * 2; // doesn't skip first 8 bits since depth is its own member variable
 	m_bzet[indexA] = lBit;
 	m_bzet[indexA+1] = rBit;
 }

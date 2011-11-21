@@ -1,4 +1,4 @@
-﻿Build started 11/19/2011 8:57:05 PM.
+﻿Build started 11/20/2011 9:39:40 PM.
      1>Project "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet (64bit)\Binary Bzet (64bit).vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "x64\Debug\Binary Bzet (64bit).unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -21,4 +21,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.94
+Time Elapsed 00:00:00.92
