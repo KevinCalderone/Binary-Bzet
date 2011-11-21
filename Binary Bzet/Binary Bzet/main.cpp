@@ -9,7 +9,6 @@ int main()
 {
 	/*
 	BinaryBzet a(0);
-
 	BinaryBzet::getLastBitTest ();
 	a.flipTEST();           // temporary
 	a.setTEST();            // temporary

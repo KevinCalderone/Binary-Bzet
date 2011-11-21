@@ -1,0 +1,53 @@
+Instruction for how to setup the Python Module (Not using SWIG):
+
+If want to make change to wrapper
+  1. open the  "Binary Bzet" project >> "Python2DLL" >> Souce Files >> "BBzetWrapper.cpp"
+  2. Save Change, built Python2DLL
+  3. Move Python2DLL to folder that contains BBzetPy2.py (should be in the same folder as the wrapper)  
+
+To Run the Python Module in Python 2:
+1. Go to ~\Binary-Bzet\BinaryBzet\Binary Bzet
+2. Open python2.exe
+3. In the python shell:
+	import BBzetPy2
+	x = BBzetPy2.BZET()
+	x.LEV()
+	x.size()
+
+
+To Run the Python Module in Python 2:
+	Coming soon...
+-------------------------------------------------
+Instructions for how to setup the Python Module.  
+(We should make this into a script later.)
+
+1. Update the wrapper file by running SWIG in the command line:
+swig.exe -c++ -python -o mymodule_wrap.cpp mymodule.i
+
+2. Build the .DLL file by compiling one of the .DLL projects.  One of them will link against the Python 2 library, and the other against the Python 3 library.  Make sure you build it in release mode.
+
+3. Copy the .DLL into the folder that contains mymodule.py, and rename the .DLL to _mymodule.pyd.
+
+4. Run python and import the module.
+
+For example:
+	"import mymodule"
+	"x = mymodule.BinaryBzet(3)"
+	"x.getBzetString()"
+
+------------------------------------------------
+To Run the Python Module in Python 2:
+1. Go to ~\Binary-Bzet\BinaryBzet\Binary Bzet
+2. Open python.exe
+3. In the python shell:
+	import mymodule
+	x = mymoduel.BinaryBzet()
+	x.getBzetString()
+------------------------------------------------
+To Run the Python Module in Python 3:
+1. Go to ~\Binary-Bzet\BinaryBzet\Python3DLL\Python3DLL
+2. Open python3.exe
+3. In the Python shell:
+	import mymodule
+	x = mymodule.BinaryBzet()
+	x.getBzetstring()
