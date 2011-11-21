@@ -10,13 +10,13 @@
 DLLEXPORT bitR* bitR_new(){
 	return new bitR(); 
 }
-DLLEXPORT void bitR_add(bitR* bitRObj, u32 start, u32 end=0, u32 step=0 ){ 
+DLLEXPORT void bitR_add(bitR* bitRObj, uint start, uint end=0, uint step=0 ){ 
 	bitRObj->add(start, end, step); 
 }
-DLLEXPORT bool bitR_at(bitR* bitRObj, u32 index){
+DLLEXPORT bool bitR_at(bitR* bitRObj, uint index){
 	return bitRObj->at(index); 
 }
-DLLEXPORT u32 bitR_size(bitR* bitRObj){
+DLLEXPORT uint bitR_size(bitR* bitRObj){
 	return bitRObj->size(); 
 }
 
@@ -24,19 +24,19 @@ DLLEXPORT u32 bitR_size(bitR* bitRObj){
 DLLEXPORT BinaryBzet* BinaryBzet_new(){
 	return new BinaryBzet(); 
 }
-DLLEXPORT BinaryBzet* BinaryBzet_new_index(u32 indexi, u32 indexe=0, u32 step=0){
+DLLEXPORT BinaryBzet* BinaryBzet_new_index(uint indexi, uint indexe=0, uint step=0){
 	return new BinaryBzet(indexi, indexe=0, step=0);
 }
 DLLEXPORT BinaryBzet* BinaryBzet_new_string(string bitstring){
 	return new BinaryBzet(bitstring);
 }
-DLLEXPORT BinaryBzet* BinaryBzet_new_vector(vector<bool>* bzetvector, u32 depth){
+DLLEXPORT BinaryBzet* BinaryBzet_new_vector(vector<bool>* bzetvector, uint depth){
 	return new BinaryBzet(bzetvector, depth);
 }
 
 //Miscellaneous Bzet Property Functions
-DLLEXPORT u32 BinaryBzet_getDepth(BinaryBzet* BBObj){return BBObj->getDepth();}
-DLLEXPORT u32 BinaryBzet_size(BinaryBzet* BBObj){return BBObj->size();}
+DLLEXPORT uint BinaryBzet_getDepth(BinaryBzet* BBObj){return BBObj->getDepth();}
+DLLEXPORT uint BinaryBzet_size(BinaryBzet* BBObj){return BBObj->size();}
   
 //Print Bzet
 DLLEXPORT string BinaryBzet_getBzetString(BinaryBzet* BBObj){
@@ -45,7 +45,7 @@ DLLEXPORT string BinaryBzet_getBzetString(BinaryBzet* BBObj){
 DLLEXPORT string BinaryBzet_getBzetPretty(BinaryBzet* BBObj){
 	return BBObj->getBzetPretty();
 }
-DLLEXPORT char BinaryBzet_getCharFromBzet(BinaryBzet* BBObj, u32 indexB){
+DLLEXPORT char BinaryBzet_getCharFromBzet(BinaryBzet* BBObj, uint indexB){
 	return BBObj->getCharFromBzet(indexB);
 }
 

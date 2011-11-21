@@ -8,6 +8,9 @@ Michael Koyama
 
 News:
 
+Luis Aguiniga (11/15/2011)
++ fixed in bzetwalk
+
 Mary Chau (11/12/2011)
 +Updated Instruction
 +Add a proptype pythong 2 module (Non-SWIG)

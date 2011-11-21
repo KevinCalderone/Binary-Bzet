@@ -1,0 +1,49 @@
+=====================================================
+Instructions for how to install the Python Module.
+=====================================================
+
+For Python 2:
+
+1. Copy the following files:
+   Python Interface\Python 2\BinaryBzet.py
+   Python Interface\Python 2\_BinaryBzet.pyd
+into your python instal directory:
+   Python27\Lib\site-packages
+
+2. Import the module in a python environment:
+Python 2.7.2 (default, Jun 12 2011, 15:08:59) [MSC v.1500 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import BinaryBzet
+
+
+For Python 3:
+1. Copy the following files:
+   Python Interface\Python 3\BinaryBzet.py
+   Python Interface\Python 3\_BinaryBzet.pyd
+into your python instal directory:
+   Python32\Lib\site-packages
+
+2. Import the module in a python environment:
+
+Python 3.2.2 (default, Sep  4 2011, 09:51:08) [MSC v.1500 32 bit (Intel)] on win32
+Type "copyright", "credits" or "license()" for more information.
+>>> import BinaryBzet
+
+=====================================================
+Instructions for how to setup the Python Module.  
+=====================================================
+(We should make this into a script later.)
+
+1. Update the wrapper file by running SWIG in the command line:
+swig.exe -c++ -python -o BinaryBzet_wrap.cpp BinaryBzet.i
+
+2. Build the .DLL file by compiling one of the .DLL projects.  One of them will link against the Python 2 library, and the other against the Python 3 library.  Make sure you build it in release mode.
+
+3. Copy the .DLL into the folder that contains mymodule.py, and rename the .DLL to _mymodule.pyd.
+
+4. Run python and import the module.
+
+For example:
+	"import mymodule"
+	"x = mymodule.BinaryBzet(3)"
+	"x.getBzetString()"
