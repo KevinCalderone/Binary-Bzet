@@ -1,13 +1,1 @@
-﻿  BinaryBzet.cpp
-BinaryBzet.cpp(556): warning C4018: '<' : signed/unsigned mismatch
-BinaryBzet.cpp(782): warning C4244: 'initializing' : conversion from 'double' to 'u32', possible loss of data
-BinaryBzet.cpp(890): warning C4018: '<' : signed/unsigned mismatch
-BinaryBzet.cpp(1161): warning C4018: '<' : signed/unsigned mismatch
-BinaryBzet.cpp(1293): warning C4018: '<' : signed/unsigned mismatch
-BinaryBzet.cpp(2024): warning C4805: '|' : unsafe mix of type 'int' and type 'bool' in operation
-  main.cpp
-  mymodule_wrap.cpp
-     Creating library C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.lib and object C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.exp
-  Generating code
-  Finished generating code
-  Python3DLL.vcxproj -> C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.dll
+﻿  Python3DLL.vcxproj -> C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.dll

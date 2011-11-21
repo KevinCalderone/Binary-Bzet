@@ -4,8 +4,8 @@
 #include <sstream>
 #include <time.h>
 
-int main()
-{
+int main(){
+
 /*
 	cout << "NANA NANA NANA NANA BATMAAAAAAAN!" << endl;
 	cout << endl <<

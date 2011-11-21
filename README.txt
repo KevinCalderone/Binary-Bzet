@@ -10,6 +10,11 @@ News:
 
 Mary Chau (11/12/2011)
 +Updated Instruction
++Add a proptype pythong 2 module (Non-SWIG)
+
+
+Mary Chau (11/12/2011)
++Updated Instruction
 +Add python3 wrapper, module, and .exe
 
 Kevin Calderone (11/11/2011)

@@ -15,14 +15,20 @@
     <ClInclude Include="..\Binary Bzet\bitR.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Binary Bzet\BBzetWrapper.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeaderOutputFile>
+    </ClCompile>
     <ClCompile Include="..\Binary Bzet\BinaryBzet.cpp" />
     <ClCompile Include="..\Binary Bzet\main.cpp" />
-    <ClCompile Include="..\Binary Bzet\mymodule_wrap.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4FF1F0DB-6B65-4258-A70D-D8E158749436}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PythonDLL</RootNamespace>
+    <ProjectName>Python2DLL</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -51,6 +57,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Python27\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Gntea\Binary-Bzet\Binary Bzet\Python DLL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
