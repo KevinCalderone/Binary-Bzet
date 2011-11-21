@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Binary Bzet", "Binary Bzet\Binary Bzet.vcxproj", "{08ECF299-377F-4DCE-B3BE-42827B863860}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Python DLL", "Python DLL\Python DLL.vcxproj", "{4FF1F0DB-6B65-4258-A70D-D8E158749436}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Python2DLL", "Python DLL\Python DLL.vcxproj", "{4FF1F0DB-6B65-4258-A70D-D8E158749436}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Python3DLL", "Python3DLL\Python3DLL\Python3DLL.vcxproj", "{6D0FF395-6EA9-4FF3-9BC7-3BCDFBD18FB8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Binary Bzet (64bit)", "Binary Bzet (64bit)\Binary Bzet (64bit).vcxproj", "{5CD7C4B6-B5EC-4E92-B769-874C0294ED74}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageApplication", "ImageApplication\ImageApplication.vcxproj", "{C7CFE111-4DB5-4032-BB55-9E952B870B11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,12 @@ Global
 		{5CD7C4B6-B5EC-4E92-B769-874C0294ED74}.Release|Win32.Build.0 = Release|Win32
 		{5CD7C4B6-B5EC-4E92-B769-874C0294ED74}.Release|x64.ActiveCfg = Release|x64
 		{5CD7C4B6-B5EC-4E92-B769-874C0294ED74}.Release|x64.Build.0 = Release|x64
+		{C7CFE111-4DB5-4032-BB55-9E952B870B11}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C7CFE111-4DB5-4032-BB55-9E952B870B11}.Debug|Win32.Build.0 = Debug|Win32
+		{C7CFE111-4DB5-4032-BB55-9E952B870B11}.Debug|x64.ActiveCfg = Debug|Win32
+		{C7CFE111-4DB5-4032-BB55-9E952B870B11}.Release|Win32.ActiveCfg = Release|Win32
+		{C7CFE111-4DB5-4032-BB55-9E952B870B11}.Release|Win32.Build.0 = Release|Win32
+		{C7CFE111-4DB5-4032-BB55-9E952B870B11}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
