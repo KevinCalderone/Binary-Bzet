@@ -7,7 +7,7 @@
 using namespace std;
 
 char* ReadFile(const string& fileName);
-bool isItSet(std::vector<uint> vec, uint index);
+bool isItSet(const std::vector<uint>& vec, uint index);
 
 uint startingindex = 0;
 
@@ -92,7 +92,7 @@ char* ReadFile (const string& fileName) {
 	return data;
 }
 
-bool isItSet(std::vector<uint> vec, uint index)
+bool isItSet(const std::vector<uint>& vec, uint index)
 {
 	for(uint i=startingindex; i<vec.size(); i++)
 		if(vec.at(i) == index){
