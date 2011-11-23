@@ -1765,7 +1765,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 				}
 			}
 /*				vector<bool>::iterator it;
-//				cout << "Result Bzet";
+				cout << "Result Bzet";
 				for(it = resultBzet.begin(); it != resultBzet.end(); it++)
 				{
 					cout<<*it;
@@ -1798,10 +1798,10 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 				if (seenA[currentLevelA] == 2)	{
 
 					//make sure we are removing the correct value
+					if(currentLevelA == sA.top())	{
 //					cout << "Removing " << sA.top() << " from A's stack " << endl;
-//					if(currentLevelA == sA.top())	{
 						sA.pop();
-//					}
+					}
 				}
 				// if the stack is empty you have reached the end of the bzet so break?
 				//     (not sure what would work for you so im just leaving a comment)

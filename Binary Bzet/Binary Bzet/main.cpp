@@ -4,6 +4,7 @@
 #include <sstream>
 #include <time.h>
 #include <fstream>
+#include <assert.h>
 
 int main()
 {
@@ -90,10 +91,16 @@ int main()
 //	BinaryBzet A("01 01 01 00 01 11 00 00 00 00 00 00 00 00 00 00#");
 //	BinaryBzet O("0101011101010100001010101101010#");
 //	BinaryBzet A("0101010001110#");
+//	O & A;
+//	cout << "IN " << sizeof(size_t)*8 << " BIT MODE!" << endl << endl << endl;
 	
-	cout << "IN " << sizeof(size_t)*8 << " BIT MODE!" << endl << endl << endl;
-	
-	cout << endl;
+//	cout << endl;
+
+	for (int i = 0; i < 1000; ++i) {
+		BinaryBzet a(i);
+		assert(a == (a & a));
+		}
+
 	system("pause");
     return 0;
 }
