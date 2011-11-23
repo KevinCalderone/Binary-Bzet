@@ -8,13 +8,15 @@ Michael Koyama
 
 News:
 
+Mary Chau (11/21/2011)
++fixed the python string issue: python printing methods work now
+
 Luis Aguiniga (11/15/2011)
 + fixed in bzetwalk
 
-Mary Chau (11/12/2011)
+Mary Chau (11/20/2011)
 +Updated Instruction
-+Add a proptype pythong 2 module (Non-SWIG)
-
++Add a proptype python 2 module (Non-SWIG)
 
 Mary Chau (11/12/2011)
 +Updated Instruction
