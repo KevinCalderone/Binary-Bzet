@@ -210,7 +210,9 @@ string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	oss << m_depth<<":";
 	string output = oss.str();
 	uint indexB=1;
-	if(m_depth > 1){
+	if(m_depth < 1){
+		return output;
+	}else if(m_depth > 1){
 		output += getCharFromBzet(0);
 		if(m_bzet.size()/2 > 1){	// if there is more than 1 character in the Bzet string
 			output += getBzetPrettyRecursive(m_depth-1,indexB);
