@@ -30,13 +30,13 @@ int main()
 	myfile.open(filename+"bitstring.txt");		// just for reference
 
 	for(uint h=0;h<height;h++){
-		for(uint r=0;r<iwidth;r+=3)
+		for(uint r=0;r<iwidth;r+=3){
 			if(data[dataBegin+h*iwidth+r] == 0){
 				myfile << '0';
 				bitstring += "0";}
 			else{
 				myfile << '1';
-				bitstring += "1";}
+				bitstring += "1";}}
 		myfile << '\n';}
 
 	myfile.close();
