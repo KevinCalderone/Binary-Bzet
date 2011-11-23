@@ -1,4 +1,5 @@
 ﻿  BinaryBzet.cpp
+  BinaryBzet_wrap.cpp
   main.cpp
      Creating library C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.lib and object C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.exp
   Generating code

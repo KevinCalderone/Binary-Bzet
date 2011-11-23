@@ -1,4 +1,42 @@
-﻿  BinaryBzet.cpp
+﻿  BBzetWrapper.cpp
+..\Binary Bzet\BBzetWrapper.cpp(51): warning C4190: 'BinaryBzet_bitList' has C-linkage specified, but returns UDT 'std::vector<_Ty>' which is incompatible with C
+          with
+          [
+              _Ty=uint
+          ]
+..\Binary Bzet\BBzetWrapper.cpp(67): warning C4190: 'BinaryBzet_FALSE' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(68): warning C4190: 'BinaryBzet_AND' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(69): warning C4190: 'BinaryBzet_NonImplication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(70): warning C4190: 'BinaryBzet_A' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(71): warning C4190: 'BinaryBzet_ConverseNonImplication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(72): warning C4190: 'BinaryBzet_B' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(73): warning C4190: 'BinaryBzet_XOR' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(74): warning C4190: 'BinaryBzet_OR' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(75): warning C4190: 'BinaryBzet_NOR' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(76): warning C4190: 'BinaryBzet_EQ' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(77): warning C4190: 'BinaryBzet_NotB' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(78): warning C4190: 'BinaryBzet_ConverseImplication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(79): warning C4190: 'BinaryBzet_NotA' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(80): warning C4190: 'BinaryBzet_Implication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(81): warning C4190: 'BinaryBzet_NAND' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+..\Binary Bzet\BBzetWrapper.cpp(82): warning C4190: 'BinaryBzet_TRUE' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
+          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
+  BinaryBzet.cpp
   main.cpp
      Creating library C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python2DLL.lib and object C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python2DLL.exp
   Generating code

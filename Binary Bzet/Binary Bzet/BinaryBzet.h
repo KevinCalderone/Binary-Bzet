@@ -72,7 +72,7 @@ public:
 	//Miscellaneous Bzet Property Functions
 	uint getDepth();
 	uint size();
-	bool test(uint index);
+	bool test(uint index);	//MOVE TO PRIVATE?
 	void set(uint index);
 	void unset(uint index);
     void flip(uint index);

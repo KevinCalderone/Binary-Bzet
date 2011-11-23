@@ -41,6 +41,14 @@ DLLEXPORT BinaryBzet* BinaryBzet_new_vector(vector<bool>* bzetvector, uint depth
 //Miscellaneous Bzet Property Functions
 DLLEXPORT uint BinaryBzet_getDepth(BinaryBzet* BBObj){return BBObj->getDepth();}
 DLLEXPORT uint BinaryBzet_size(BinaryBzet* BBObj){return BBObj->size();}
+DLLEXPORT void BinaryBzet_set(BinaryBzet* BBObj,uint index){return BBObj->set(index);}
+DLLEXPORT void BinaryBzet_unset(BinaryBzet* BBObj, uint index){return BBObj->unset(index);}
+DLLEXPORT void BinaryBzet_flip(BinaryBzet* BBObj, uint index){return BBObj->flip(index);}
+DLLEXPORT void BinaryBzet_clean(BinaryBzet* BBObj){return BBObj->clean();}
+DLLEXPORT uint BinaryBzet_countBits (BinaryBzet* BBObj){return BBObj->countBits();}
+DLLEXPORT uint BinaryBzet_getFirstBit (BinaryBzet* BBObj){return BBObj->getFirstBit();}
+DLLEXPORT uint BinaryBzet_getLastBit (BinaryBzet* BBObj){return BBObj->getLastBit();}
+DLLEXPORT vector<uint> BinaryBzet_bitList (BinaryBzet* BBObj){return BBObj->bitList();}
   
 //Print Bzet
 DLLEXPORT uint BinaryBzet_getBzetString(BinaryBzet* BBObj, char* output){

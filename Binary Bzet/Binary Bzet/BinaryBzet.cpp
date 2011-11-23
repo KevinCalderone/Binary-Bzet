@@ -231,7 +231,6 @@ string BinaryBzet::getBzetPrettyRecursive(uint level, uint& indexB){
 	if(level == 1){	
 		output[1] = getCharFromBzet(indexB);
 		output[3] = getCharFromBzet(++indexB);
-		output += "\n";
 		return output;
 	}else{
 		
@@ -244,13 +243,12 @@ string BinaryBzet::getBzetPrettyRecursive(uint level, uint& indexB){
 		if(leftChar != 'T'){
 			output[1] = leftChar;
 			output[3] = getCharFromBzet(++indexB);
-			output += "\n";
-			if(output[3] == 'T') output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);		
+			if(output[3] == 'T') output += "\n"+space.str()+ getBzetPrettyRecursive(level-1, ++indexB);		
 		}else{
 			output[1] = leftChar;
 			output += getBzetPrettyRecursive(level-1, ++indexB);			
 			output[3] = getCharFromBzet(++indexB);
-			if(output[3] == 'T') output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);
+			if(output[3] == 'T') output += "\n"+space.str()+ getBzetPrettyRecursive(level-1, ++indexB);
 		}
 
 		return output;

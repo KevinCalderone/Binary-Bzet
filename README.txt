@@ -9,6 +9,7 @@ Michael Koyama
 News:
 
 Mary Chau (11/21/2011)
++Added all miscelaneous Bzet property functions to the Python Module
 +fixed the python string issue: python printing methods work now
 
 Luis Aguiniga (11/15/2011)
