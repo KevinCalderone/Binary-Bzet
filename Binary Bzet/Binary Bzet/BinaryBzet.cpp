@@ -207,15 +207,16 @@ string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
     m_depth = 5;*/
 
 	ostringstream oss;
-	oss << m_depth<<": ";
+	oss << m_depth<<":";
 	string output = oss.str();
 	uint indexB=1;
 	if(m_depth > 1){
-		output[2] = getCharFromBzet(0);
-		output += getBzetPrettyRecursive(m_depth-1,indexB);
-	}
-	else{
-		output[2] = getCharFromBzet(0);
+		output += getCharFromBzet(0);
+		if(m_bzet.size()/2 > 1){	// if there is more than 1 character in the Bzet string
+			output += getBzetPrettyRecursive(m_depth-1,indexB);
+		}
+	}else{
+		output += getCharFromBzet(0);
 	}
 
 	return output;
@@ -224,7 +225,7 @@ string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 
 string BinaryBzet::getBzetPrettyRecursive(uint level, uint& indexB){
 	string output = "[ - ]";
-
+	
 	if(level == 1){	
 		output[1] = getCharFromBzet(indexB);
 		output[3] = getCharFromBzet(++indexB);
@@ -242,13 +243,12 @@ string BinaryBzet::getBzetPrettyRecursive(uint level, uint& indexB){
 			output[1] = leftChar;
 			output[3] = getCharFromBzet(++indexB);
 			output += "\n";
-			output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);		
+			if(output[3] == 'T') output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);		
 		}else{
 			output[1] = leftChar;
 			output += getBzetPrettyRecursive(level-1, ++indexB);			
-			char rightChar = getCharFromBzet(++indexB);
-			output[3] = rightChar;
-			if(rightChar == 'T') output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);
+			output[3] = getCharFromBzet(++indexB);
+			if(output[3] == 'T') output += space.str()+ getBzetPrettyRecursive(level-1, ++indexB);
 		}
 
 		return output;

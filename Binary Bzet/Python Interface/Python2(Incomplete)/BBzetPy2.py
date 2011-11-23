@@ -53,5 +53,5 @@ class BZET(object):
 x = BZET("00001111")
 strA = x.getBzetString()
 strB = x.getBzetPretty()
-print strA, type(strA)
-print strB, type(strB)
+print strA
+print strB

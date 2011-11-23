@@ -4,7 +4,10 @@
 #include "Python.h"
 #include "BinaryBzet.h"
 #include "bitR.h"
+#include <stdio.h>
 #define DLLEXPORT extern "C" __declspec(dllexport)
+
+using namespace std;
 
 //bitR
 DLLEXPORT bitR* bitR_new(){
@@ -27,8 +30,9 @@ DLLEXPORT BinaryBzet* BinaryBzet_new(){
 DLLEXPORT BinaryBzet* BinaryBzet_new_index(uint indexi, uint indexe=0, uint step=0){
 	return new BinaryBzet(indexi, indexe=0, step=0);
 }
-DLLEXPORT BinaryBzet* BinaryBzet_new_string(string bitstring){
-	return new BinaryBzet(bitstring);
+DLLEXPORT BinaryBzet* BinaryBzet_new_string(char* bitstring){
+	string input = string(bitstring);
+	return new BinaryBzet(input);
 }
 DLLEXPORT BinaryBzet* BinaryBzet_new_vector(vector<bool>* bzetvector, uint depth){
 	return new BinaryBzet(bzetvector, depth);
@@ -39,15 +43,17 @@ DLLEXPORT uint BinaryBzet_getDepth(BinaryBzet* BBObj){return BBObj->getDepth();}
 DLLEXPORT uint BinaryBzet_size(BinaryBzet* BBObj){return BBObj->size();}
   
 //Print Bzet
-DLLEXPORT string BinaryBzet_getBzetString(BinaryBzet* BBObj){
-	return BBObj->getBzetString(); 
+DLLEXPORT uint BinaryBzet_getBzetString(BinaryBzet* BBObj, char* output){
+	string temp = BBObj->getBzetString();
+	strcpy(output, temp.c_str());
+	return strlen(output); 
 }
-DLLEXPORT string BinaryBzet_getBzetPretty(BinaryBzet* BBObj){
-	return BBObj->getBzetPretty();
+DLLEXPORT uint BinaryBzet_getBzetPretty(BinaryBzet* BBObj,char* output){
+	string temp = BBObj->getBzetPretty();
+	strcpy(output, temp.c_str());
+	return strlen(output);
 }
-DLLEXPORT char BinaryBzet_getCharFromBzet(BinaryBzet* BBObj, uint indexB){
-	return BBObj->getCharFromBzet(indexB);
-}
+
 
 //Binary Boolean Operations
 DLLEXPORT BinaryBzet BinaryBzet_FALSE (BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->FALSE(rhs);	}
