@@ -116,7 +116,7 @@ void addImages(string file1, string file2)
 	BinaryBzet result = bzet1&bzet2;
 
 	ofstream os;
-	os.open(file1+"ADDED"+file2+".bmp",std::ios_base::trunc);
+	os.open(file1+"ADDED"+file2+".bmp",std::ios_base::trunc|std::ios_base::binary);
 
 	uint i = 0;
 	for(i;i<dataBegin1;i++)
@@ -162,7 +162,7 @@ void invertImage(string file1)
 	BinaryBzet result = bzet1^bzet2;
 
 	ofstream os;
-	os.open(file1+"INVERTED.bmp",std::ios_base::trunc);
+	os.open(file1+"INVERTED.bmp",std::ios_base::trunc|std::ios_base::binary);
 
 	uint i = 0;
 	for(i;i<dataBegin1;i++)
@@ -223,7 +223,7 @@ void cutoutImage(string file1, string file2)
 	BinaryBzet result = bzet1|(bzet2^bzet3);
 
 	ofstream os;
-	os.open(file1+"CUTOUT"+file2+".bmp",std::ios_base::trunc);
+	os.open(file1+"CUTOUT"+file2+".bmp",std::ios_base::trunc|std::ios_base::binary);
 
 	uint i = 0;
 	for(i;i<dataBegin1;i++)
@@ -284,7 +284,7 @@ void overlapImages(string file1, string file2)
 	BinaryBzet result = bzet1|bzet2;
 
 	ofstream os;
-	os.open(file1+"OVERLAP"+file2+".bmp",std::ios_base::trunc);
+	os.open(file1+"OVERLAP"+file2+".bmp",std::ios_base::trunc|std::ios_base::binary);
 
 	uint i = 0;
 	for(i;i<dataBegin1;i++)
