@@ -1555,10 +1555,25 @@ BinaryBzet BinaryBzet::NOR(const BinaryBzet& rhs)
 	b.leftShift(0);
 	return b;
 }
-
-bool BinaryBzet::EQ(const BinaryBzet& rhs)
+BinaryBzet BinaryBzet::EQ(const BinaryBzet& rhs)
 {
-	return *this == rhs;
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	uint depthA = m_depth;
+	uint depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(9,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.leftShift(0);
+	return b;
+}
+
+bool BinaryBzet::equals(const BinaryBzet& rhs)
+{
+	return ((*this) == rhs);
 }
 
 BinaryBzet BinaryBzet::NotB(const BinaryBzet& rhs)
