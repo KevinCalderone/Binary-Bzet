@@ -67,21 +67,21 @@ DLLEXPORT void BinaryBzet_TEST_AND (BinaryBzet* a, BinaryBzet* b, BinaryBzet* re
 }
 
 //Binary Boolean Operations
-DLLEXPORT void BinaryBzet_FALSE (BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->FALSE(rhs);	}
-DLLEXPORT void BinaryBzet_AND (BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->AND(rhs);	}
-DLLEXPORT void BinaryBzet_NonImplication (BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NonImplication(rhs);	}
-DLLEXPORT void BinaryBzet_A(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->A(rhs);	}
-DLLEXPORT void BinaryBzet_ConverseNonImplication(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->ConverseNonImplication(rhs);	}
-DLLEXPORT void BinaryBzet_B(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->B(rhs);	}
-DLLEXPORT void BinaryBzet_XOR(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->XOR(rhs);	}
-DLLEXPORT void BinaryBzet_OR(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->OR(rhs);	}
-DLLEXPORT void BinaryBzet_NOR(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NOR(rhs);	}
-DLLEXPORT void BinaryBzet_EQ(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->EQ(rhs);	}
-DLLEXPORT void BinaryBzet_NotB(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NotB(rhs);	}	
-DLLEXPORT void BinaryBzet_ConverseImplication(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->ConverseImplication(rhs);	}
-DLLEXPORT void BinaryBzet_NotA(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NotA(rhs);	}
-DLLEXPORT void BinaryBzet_Implication(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->Implication(rhs);	}
-DLLEXPORT void BinaryBzet_NAND(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NAND(rhs);	}
-DLLEXPORT void BinaryBzet_TRUE(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->TRUE(rhs);	}
+DLLEXPORT void BinaryBzet_FALSE (BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->FALSE(*rhs);	}
+DLLEXPORT void BinaryBzet_AND (BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->AND(*rhs);	}
+DLLEXPORT void BinaryBzet_NonImplication (BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NonImplication(*rhs);	}
+DLLEXPORT void BinaryBzet_A(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->A(*rhs);	}
+DLLEXPORT void BinaryBzet_ConverseNonImplication(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->ConverseNonImplication(*rhs);	}
+DLLEXPORT void BinaryBzet_B(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->B(*rhs);	}
+DLLEXPORT void BinaryBzet_XOR(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->XOR(*rhs);	}
+DLLEXPORT void BinaryBzet_OR(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->OR(*rhs);	}
+DLLEXPORT void BinaryBzet_NOR(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NOR(*rhs);	}
+DLLEXPORT void BinaryBzet_EQ(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->EQ(*rhs);	}
+DLLEXPORT void BinaryBzet_NotB(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NotB(*rhs);	}	
+DLLEXPORT void BinaryBzet_ConverseImplication(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->ConverseImplication(*rhs);	}
+DLLEXPORT void BinaryBzet_NotA(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NotA(*rhs);	}
+DLLEXPORT void BinaryBzet_Implication(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->Implication(*rhs);	}
+DLLEXPORT void BinaryBzet_NAND(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->NAND(*rhs);	}
+DLLEXPORT void BinaryBzet_TRUE(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryBzet* result){	*result = BBObj->TRUE(*rhs);	}
 
 #endif

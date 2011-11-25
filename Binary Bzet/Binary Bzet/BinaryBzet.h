@@ -51,7 +51,7 @@ public:
 	BinaryBzet XOR(const BinaryBzet& rhs);
 	BinaryBzet OR(const BinaryBzet& rhs);
 	BinaryBzet NOR(const BinaryBzet& rhs);
-	BinaryBzet EQ(const BinaryBzet& rhs);
+	bool EQ(const BinaryBzet& rhs);
 	BinaryBzet NotB(const BinaryBzet& rhs);
 	BinaryBzet ConverseImplication(const BinaryBzet& rhs);
 	BinaryBzet NotA(const BinaryBzet& rhs);

@@ -53,13 +53,13 @@ class BZET(object):
 		lib.BinaryBzet_TEST_AND(self.obj, other.obj, output.obj)
 		return output
 
-    def __or__    (self,other): return self.OR(other)
-    def __and__   (self,other): return self.AND(other)
-    def __xor__   (self,other): return self.XOR(other)
-    def __invert__(self):       return self.NOT()
-    def __ior__   (self,other): return self.OR(other)
-    def __iand__  (self,other): return self.AND(other)
-    def __ixor__  (self,other): return self.XOR(other)
+	def __or__    (self,other): return self.OR(other)
+	def __and__   (self,other): return self.AND(other)
+	def __xor__   (self,other): return self.XOR(other)
+	def __invert__(self):       return self.NOT()
+	def __ior__   (self,other): return self.OR(other)
+	def __iand__  (self,other): return self.AND(other)
+	def __ixor__  (self,other): return self.XOR(other)
 	
 	def FALSE(self, other):
 		output = BZET()
@@ -162,5 +162,5 @@ y = x.ConverseImplication(x)
 y = x.NotA(x)
 y = x.Implication(x)
 y = x.NAND(x)
-y = x.True(x)
+y = x.TRUE(x)
 
