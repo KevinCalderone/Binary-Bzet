@@ -778,12 +778,12 @@ void BinaryBzet::bitSet(uint index, bool value) {
     
     // if index is out of range, extend bzet
     if ((index == 0 && m_depth == 0) || (index >= (uint)pow(2.0, (double)m_depth))) {
-        cout << getBzetString() << endl;
+        //cout << getBzetString() << endl;
         uint newLevel = (index == 0)  ? 1 : (uint)ceil(log((double)index+1.0)/log(2.0));
-        cout << "needs to be level: " << newLevel << endl;
+        //cout << "needs to be level: " << newLevel << endl;
         vector<bool> dummy;
         align(m_bzet, m_depth, dummy, newLevel);
-        cout << getBzetString() << endl;
+        //cout << getBzetString() << endl;
     }
 
 	uint bzetIndex = 0;

@@ -60,6 +60,15 @@ public:
         assert(c2_3.getDepth() == 7);
         std::cout << "Contructor 02 Test passed.\n";
         
+        for (size_t i = 0; i < LOOP_SIZE; i++) {
+            BinaryBzet a(i);
+            assert(a == (a & a));
+            assert(a == (a | a));
+            OPERAND_LOG(a, a);
+            std::cout << "AND Test " << i+1 << " passed.\n";
+            std::cout << "OR  Test " << i+1 << " passed.\n";
+        }
+        
         // POSSIBLE BUG?: assert failes when i = 2, j = 3, k = 2
         // ----------------------------------------------------------
 //        size_t testNum = 2;
@@ -166,13 +175,14 @@ public:
 //        assert( a3_nor == (a3a.NOR(a3b)));
 //        std::cout << "NOR Test passed.\n";
         
-        // shiftright test
+        // =========================================================================
+        // shift tests
         for (size_t i = 1; i < LOOP_SIZE; i++) {
             BinaryBzet a(i);
             BinaryBzet s(1);
             (s.rightShift(i-1));
             assert(a == s);
-            std::cout << "RIGHT SHIFT TEST " << i+1 << " passed\n";
+            std::cout << "RIGHTSHIFT Test " << i+1 << " passed.\n";
         }
         
         size_t shiftRightTestCount = 1;
@@ -181,8 +191,30 @@ public:
             BinaryBzet s(LOOP_SIZE);
             (s.leftShift(LOOP_SIZE-i));
             assert(a == s);
-            std::cout << "LEFT SHIFT TEST " << shiftRightTestCount++ << " passed\n";
+            std::cout << "LEFTSHIFT Test " << shiftRightTestCount++ << " passed.\n";
         }
+        
+        // =========================================================================
+        // get first & last bit tests
+        for (size_t i = 0; i < LOOP_SIZE; i++) {
+            BinaryBzet a(i);
+            uint first = a.getFirstBit();
+            uint last = a.getLastBit();
+            assert(i == first && i == last);
+            std::cout << "getFIRSTBit Test " << i+1 << " passed.\n";
+            std::cout << "getLASTBit  Test " << i+1 << " passed.\n";
+            assert(a.countBits() == 1);
+        }
+        
+        // =========================================================================
+        // set/unset/flip.. WIP
+//        for (size_t i = 0; i < LOOP_SIZE; i++) {
+//            BinaryBzet a(i);
+//            BinaryBzet s(0);
+//            s.set(i);
+//            OUTCOME_LOG(a, s);
+//            assert(a == s);
+//        }
         
         std::cout << std::endl;
     }
