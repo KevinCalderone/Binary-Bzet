@@ -1556,7 +1556,7 @@ BinaryBzet BinaryBzet::NOR(const BinaryBzet& rhs)
 	return b;
 }
 
-BinaryBzet BinaryBzet::EQ(const BinaryBzet& rhs)
+bool BinaryBzet::EQ(const BinaryBzet& rhs)
 {
 	return *this == rhs;
 }
