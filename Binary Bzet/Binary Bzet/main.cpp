@@ -4,9 +4,11 @@
 #include <sstream>
 #include <time.h>
 #include <fstream>
+#include "Test.h"
 
 int main()
 {
+    Test::TESTALL();
 	/*
 	BinaryBzet a(0);
 	BinaryBzet::getLastBitTest ();
