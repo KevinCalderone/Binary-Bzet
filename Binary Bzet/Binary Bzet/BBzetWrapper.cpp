@@ -62,6 +62,9 @@ DLLEXPORT uint BinaryBzet_getBzetPretty(BinaryBzet* BBObj,char* output){
 	return strlen(output);
 }
 
+DLLEXPORT void BinaryBzet_TEST_AND (BinaryBzet* a, BinaryBzet* b, BinaryBzet* result) {	
+	*result = a->AND(*b);
+}
 
 //Binary Boolean Operations
 DLLEXPORT BinaryBzet BinaryBzet_FALSE (BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->FALSE(rhs);	}

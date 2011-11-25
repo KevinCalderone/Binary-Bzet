@@ -47,6 +47,11 @@ class BZET(object):
 		lib.BinaryBzet_getBzetString(self.obj,output_ptr)
 		return output_ptr.value
 	getBzetString.restype = str
+    
+	def TESTAND(self, other):
+		output = BZET()
+		lib.BinaryBzet_TEST_AND(self.obj, other.obj, output.obj)
+		return output
 
 
 
