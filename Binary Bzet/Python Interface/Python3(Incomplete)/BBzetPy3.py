@@ -35,6 +35,31 @@ class BZET(object):
 		return lib.BinaryBzet_size(self.obj)
 	size.restype = int
 
+	def set(self, index):
+		lib.BinaryBzet_set(self.obj, c_uint(index))
+	
+	def unset(self, index):
+		lib.BinaryBzet_unset(self.obj, c_uint(index))
+
+	def flip(self, index):
+		lib.BinaryBzet_flip(self.obj, c_uint(index))
+
+	def clean(self):
+		lib.BinaryBzet_clean(self.obj)
+
+	def countBits(self):
+		return lib.BinaryBzet_countBits(self.obj)
+	countBits.restype = c_uint
+
+	def getFirstBit(self):
+		return lib.BinaryBzet_getFirstBit(self.obj)
+	getFirstBit.restype = c_uint
+
+	def getLastBit(self):
+		return lib.BinaryBzet_getLastBit(self.obj)
+	getLastBit.restype = c_uint
+
+
 	def getBzetPretty(self):
 		str = 'rawr'
 		output_ptr = c_char_p(str.encode())
