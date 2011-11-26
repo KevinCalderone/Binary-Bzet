@@ -111,15 +111,15 @@ DLLEXPORT void BinaryBzet_slice(BinaryBzet* BBObj, uint startIndex, uint endInde
 	*result = BBObj->slice(startIndex, endIndex);
 }
 
-/*DLLEXPORT PyObject* BinaryBzet_bitList(BinaryBzet* BBObj){
+DLLEXPORT PyObject* BinaryBzet_bitList(BinaryBzet* BBObj){
 	std::vector<uint> bits = BBObj->bitList();
 	uint size = bits.size();
-    PyObject* list  = PyTuple_New(size);
+    PyObject* list  = PyList_New(size);
     for (uint i = 0; i < size; i++) {
 		///convert resulting array [0/1] to PyObject 
-		PyTuple_SetItem(list, i, (PyObject*)bits[i]);
+		PyList_SetItem(list, i, Py_BuildValue("i", bits[i]));
 	}
 	return list;
-}*/
+}
 
 #endif

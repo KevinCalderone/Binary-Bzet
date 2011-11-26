@@ -62,10 +62,8 @@ BinaryBzet::BinaryBzet() {
    each 1 in the BINARY BITSTRING. If a step
    lands the index on indexe, that bit will
    be turned OFF */
-BinaryBzet::BinaryBzet(uint indexi, uint indexe, uint step)
-{
-	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step < 0)
-	{
+BinaryBzet::BinaryBzet(uint indexi, uint indexe, uint step){
+	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step < 0){
 		bitstringToBzet("0#");
 		return;
 	}

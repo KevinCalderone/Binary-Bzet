@@ -20,8 +20,6 @@ class BinaryBzet {
 public:
 	//Constructors
 	BinaryBzet();
-	//BinaryBzet(uint index);
-	//BinaryBzet(uint indexi, uint indexe);
 	BinaryBzet(uint indexi, uint indexe=0, uint step=0);
 	BinaryBzet(string bitstring);
 	BinaryBzet(vector<bool>* bzetvector, uint depth);
