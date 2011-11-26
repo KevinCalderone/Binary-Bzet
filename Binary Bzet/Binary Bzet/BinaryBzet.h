@@ -20,30 +20,26 @@ class BinaryBzet {
 public:
 	//Constructors
 	BinaryBzet();
-	//BinaryBzet(uint index);
-	//BinaryBzet(uint indexi, uint indexe);
 	BinaryBzet(uint indexi, uint indexe=0, uint step=0);
 	BinaryBzet(string bitstring);
 	BinaryBzet(vector<bool>* bzetvector, uint depth);
+
 	~BinaryBzet();
 	
 	//Print Bzet
-	string getBzetString();		//return "TTT11..." thingy
-	string getBzetBinaryString();	// return binary Bzet string
-	string getBzetPretty();	//get pretty formatted Bzet
-	char getCharFromBzet(uint indexB);	//return a char from Bzet
-
-	bool isTAWatching() { return true; } // lol
+	string getBzetString();				// return "TTT11..." thing
+	string getBzetBinaryString();		// return binary Bzet string
+	string getBzetPretty();				// get pretty formatted Bzet
 
 	BinaryBzet operator&  (const BinaryBzet& rhs);
 	BinaryBzet operator|  (const BinaryBzet& rhs);
-	BinaryBzet operator ^ (const BinaryBzet& rhs);
+	BinaryBzet operator^  (const BinaryBzet& rhs);
 	bool	   operator== (const BinaryBzet& rhs);
-	BinaryBzet operator ~();
+	BinaryBzet operator~  ();
 
 	//Binary Boolean Operations
-	BinaryBzet FALSE (const BinaryBzet& rhs);
-	BinaryBzet AND (const BinaryBzet& rhs);
+	BinaryBzet FALSE(const BinaryBzet& rhs);
+	BinaryBzet AND(const BinaryBzet& rhs);
 	BinaryBzet NonImplication (const BinaryBzet& rhs);
 	BinaryBzet A(const BinaryBzet& rhs);
 	BinaryBzet ConverseNonImplication(const BinaryBzet& rhs);
@@ -73,14 +69,14 @@ public:
 	//Miscellaneous Bzet Property Functions
 	uint getDepth();
 	uint size();
-	bool test(uint index);	//MOVE TO PRIVATE?
+	bool test(uint index);
 	void set(uint index);
 	void unset(uint index);
     void flip(uint index);
 	void clean();
-	uint countBits ();
-	uint getFirstBit (); // returns c_uint_max is none are found
-	uint getLastBit ();	// returns c_uint_max is none are found
+	uint countBits();
+	uint getFirstBit(); // returns c_uint_max is none are found
+	uint getLastBit();	// returns c_uint_max is none are found
 	vector<uint> bitList();
 	
 	bool AlignCompare (const BinaryBzet& other);
@@ -91,7 +87,7 @@ public:
 	void setTEST();            // temporary
     void expandTEST();         // temporary
     void bzetWalkTEST();       // temporary
-    void bitSetCollapseTEST(); // tempporary
+    void bitSetCollapseTEST(); // temporary
 	static void testShift();
 
 private:
@@ -126,6 +122,7 @@ private:
 	void bitstringToBzet(string bitstring);
 	void generateBzet(bitR* bitr);
 
+	char getCharFromBzet(uint indexB);	// return a char from Bzet
 
 	//helper function for printPretty
 	string getBzetPrettyRecursive(uint level, uint& indexB);

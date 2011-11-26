@@ -74,7 +74,7 @@ public:
 private:
     static void   ONE() {
         BinaryBzet c1;
-        assert(c1.getDepth() == 0);
+        assert(c1.getDepth() == 1);
         TESTPASSED_LOG("Contructor");
         
         // and, or
