@@ -23,7 +23,7 @@ class BZET(object):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
 		if type(input)== type(""):
-			self.obj = lib.BinaryBzet_new_string(c_wchar_p(input))
+			self.obj = lib.BinaryBzet_new_string(c_char_p(input.encode()))
 		else:
 			self.obj = lib.BinaryBzet_new()
 	
@@ -36,15 +36,18 @@ class BZET(object):
 	size.restype = int
 
 	def getBzetPretty(self):
-		output_ptr = c_wchar_p('rawr')
+		str = 'rawr'
+		output_ptr = c_char_p(str.encode())
 		lib.BinaryBzet_getBzetPretty(self.obj,output_ptr)
-		return output_ptr.value
+		return output_ptr.value.decode()
 	getBzetPretty.restype = str
 
+
 	def getBzetString(self):
-		output_ptr = c_wchar_p('rawr')
+		str = 'rawr'
+		output_ptr = c_char_p(str.encode())
 		lib.BinaryBzet_getBzetString(self.obj,output_ptr)
-		return output_ptr.value
+		return output_ptr.value.decode()
 	getBzetString.restype = str
 
 
