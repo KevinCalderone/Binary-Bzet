@@ -1,6 +1,6 @@
 from ctypes import *
 import ctypes
-lib = cdll.LoadLibrary('Python2DLL.dll')
+lib = cdll.LoadLibrary('Python3DLL.dll')
 
 class BITR(object):
 	def __init__(self):
@@ -170,8 +170,6 @@ class BZET(object):
 x = BZET("00001111")
 strA = x.getBzetString()
 strB = x.getBzetPretty()
-print strA
-print strB
 y = x.FALSE(x)
 y = x.AND(x)
 y = x.NonImplication(x)
@@ -192,6 +190,6 @@ a = BZET("00001110#");
 b = BZET("00001111#");
 c = BZET("00001111#");
 d = BZET("00111000#");
-print a.equals(b)
-print b.equals(c)
-print d.slice(2,6).getBzetString();
+a.equals(b)
+b.equals(c)
+d.slice(2,6).getBzetString();

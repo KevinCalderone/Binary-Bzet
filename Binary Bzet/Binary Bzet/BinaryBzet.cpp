@@ -195,9 +195,14 @@ string BinaryBzet::getBzetString(){
 	return output.str();
 }
 
-//vector<bool> BinaryBzet::getBzetBinaryString(){
-//	return m_bzet;
-//}
+string BinaryBzet::getBzetBinaryString(){
+	ostringstream output;
+	uint index;
+	for(index = 0 ; index < m_bzet.size(); index++){
+		output<<m_bzet[index];
+	}
+	return output.str();
+}
 
 string 	BinaryBzet::getBzetPretty(){	//get pretty formatted Bzet
 	//test:TTT1TTTTT0tT10 TTTt000

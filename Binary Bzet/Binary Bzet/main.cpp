@@ -92,17 +92,22 @@ int main()
 //	BinaryBzet A("01 01 01 00 01 11 00 00 00 00 00 00 00 00 00 00#");
 //	BinaryBzet O("0101011101010100001010101101010#");
 //	BinaryBzet A("0101010001110#");
-	/*
 	cout << "IN " << sizeof(size_t)*8 << " BIT MODE!" << endl << endl << endl;
-	BinaryBzet a = BinaryBzet("1111#");
-	cout << a.getBzetString() <<endl;
-	cout << a.getBzetPretty() <<endl;
-	a.set(1);
+	BinaryBzet a = BinaryBzet("00001110#");
+	BinaryBzet b = BinaryBzet("00001111#");
+	BinaryBzet c = BinaryBzet("00001111#");
+	BinaryBzet d = BinaryBzet("00111000#");
+	cout << a.equals(b) <<endl;//false
+	cout << b.equals(c) <<endl;//true
+	cout << d.slice(2,6).getBzetString()<<endl;
+	cout << a.compare(b)<<endl;
+	cout << b.compare(a)<<endl;
+	/*a.set(1);
 	cout << a.getBzetString() <<endl;
 	cout << a.getBzetPretty() <<endl;
 	a.unset(1);
 	cout << a.getBzetString() <<endl;
-	cout << a.getBzetPretty() <<endl;*/
+	cout << a.getBzetPretty() <<endl;
 
 	BinaryBzet       a3a("110001111000010101010100001001111111#");
 	BinaryBzet       a3b("111111001010101010101000100101100011#");
@@ -121,7 +126,7 @@ int main()
 
 	temp = a3a.NAND(a3b);
 	cout << temp.getBzetString() << endl;
-	cout << a3_nand.getBzetString() << endl;
+	cout << a3_nand.getBzetString() << endl;*/
 
 	system("pause");
     return 0;

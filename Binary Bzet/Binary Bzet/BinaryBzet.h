@@ -29,7 +29,7 @@ public:
 	
 	//Print Bzet
 	string getBzetString();		//return "TTT11..." thingy
-	vector<bool> getBzetBinaryString() { return m_bzet; }	// return binary Bzet string
+	string getBzetBinaryString();	// return binary Bzet string
 	string getBzetPretty();	//get pretty formatted Bzet
 	char getCharFromBzet(uint indexB);	//return a char from Bzet
 

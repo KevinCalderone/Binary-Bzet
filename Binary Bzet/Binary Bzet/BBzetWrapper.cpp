@@ -86,13 +86,28 @@ DLLEXPORT void BinaryBzet_TRUE(BinaryBzet* BBObj, const BinaryBzet* rhs, BinaryB
 
 
 //Comparison Operators
-DLLEXPORT int BinaryBzet_compare(BinaryBzet& bzet);
+DLLEXPORT int BinaryBzet_compare(BinaryBzet* BBObj, BinaryBzet* bzet){
+	return BBObj -> compare(*bzet);
+}
+DLLEXPORT bool BinaryBzet_equals(BinaryBzet* BBObj, const BinaryBzet* rhs){
+	return BBObj -> equals(*rhs);
+}
+DLLEXPORT bool BinaryBzet_AlignCompare (BinaryBzet* BBObj, const BinaryBzet* other){
+	return BBObj ->AlignCompare(*other);
+}
+
 
 //Shifing Operators
-DLLEXPORT void BinaryBzet_leftShift(uint distance);
-DLLEXPORT void BinaryBzet_rightShift(uint distance);
+DLLEXPORT void BinaryBzet_leftShift(BinaryBzet* BBObj, uint distance){
+	BBObj -> leftShift(distance);
+}
+DLLEXPORT void BinaryBzet_rightShift(BinaryBzet* BBObj, uint distance){
+	BBObj -> rightShift(distance);
+}
 
 //Slice/Substring
-DLLEXPORT BinaryBzet BinaryBzet_slice(uint startIndex, uint endIndex);
+DLLEXPORT void BinaryBzet_slice(BinaryBzet* BBObj, uint startIndex, uint endIndex, BinaryBzet* result){
+	*result = BBObj->slice(startIndex, endIndex);
+}
 
 #endif

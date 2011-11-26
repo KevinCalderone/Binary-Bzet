@@ -1,6 +1,9 @@
-﻿  BinaryBzet.cpp
-  BinaryBzet_wrap.cpp
-  main.cpp
+﻿  BBzetWrapper.cpp
+..\..\Binary Bzet\BBzetWrapper.cpp(51): warning C4190: 'BinaryBzet_bitList' has C-linkage specified, but returns UDT 'std::vector<_Ty>' which is incompatible with C
+          with
+          [
+              _Ty=uint
+          ]
      Creating library C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.lib and object C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python3DLL.exp
   Generating code
   Finished generating code

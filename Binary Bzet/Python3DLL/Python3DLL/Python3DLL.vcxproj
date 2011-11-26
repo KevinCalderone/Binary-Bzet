@@ -19,16 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Binary Bzet\BBzetWrapper.cpp" />
     <ClCompile Include="..\..\Binary Bzet\BinaryBzet.cpp" />
-    <ClCompile Include="..\..\Binary Bzet\BinaryBzet_wrap.cpp" />
     <ClCompile Include="..\..\Binary Bzet\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Binary Bzet\BinaryBzet.h" />
     <ClInclude Include="..\..\Binary Bzet\bitR.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Binary Bzet\BinaryBzet.i" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6D0FF395-6EA9-4FF3-9BC7-3BCDFBD18FB8}</ProjectGuid>
@@ -88,6 +85,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Python32\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Python32\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

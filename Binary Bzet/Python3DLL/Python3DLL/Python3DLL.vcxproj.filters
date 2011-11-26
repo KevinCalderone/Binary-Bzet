@@ -3,13 +3,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\Binary Bzet\BinaryBzet.cpp" />
     <ClCompile Include="..\..\Binary Bzet\main.cpp" />
-    <ClCompile Include="..\..\Binary Bzet\BinaryBzet_wrap.cpp" />
+    <ClCompile Include="..\..\Binary Bzet\BBzetWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Binary Bzet\BinaryBzet.h" />
     <ClInclude Include="..\..\Binary Bzet\bitR.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Binary Bzet\BinaryBzet.i" />
   </ItemGroup>
 </Project>
