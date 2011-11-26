@@ -2392,6 +2392,7 @@ int BinaryBzet::compare(BinaryBzet& bzet)
 			else if(bzetA[i] < bzetB[i])	{
 				return -1;
 			}
+			i++;
 		}
 		return (bzetA.size() > bzetB.size()) ? 1: -1;
 	}
