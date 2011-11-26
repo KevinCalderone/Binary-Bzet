@@ -48,7 +48,7 @@ DLLEXPORT void BinaryBzet_clean(BinaryBzet* BBObj){return BBObj->clean();}
 DLLEXPORT uint BinaryBzet_countBits (BinaryBzet* BBObj){return BBObj->countBits();}
 DLLEXPORT uint BinaryBzet_getFirstBit (BinaryBzet* BBObj){return BBObj->getFirstBit();}
 DLLEXPORT uint BinaryBzet_getLastBit (BinaryBzet* BBObj){return BBObj->getLastBit();}
-DLLEXPORT vector<uint> BinaryBzet_bitList (BinaryBzet* BBObj){return BBObj->bitList();}
+//DLLEXPORT vector<uint> BinaryBzet_bitList (BinaryBzet* BBObj){return BBObj->bitList();}
   
 //Print Bzet
 DLLEXPORT uint BinaryBzet_getBzetString(BinaryBzet* BBObj, char* output){
@@ -108,6 +108,16 @@ DLLEXPORT void BinaryBzet_rightShift(BinaryBzet* BBObj, uint distance){
 //Slice/Substring
 DLLEXPORT void BinaryBzet_slice(BinaryBzet* BBObj, uint startIndex, uint endIndex, BinaryBzet* result){
 	*result = BBObj->slice(startIndex, endIndex);
+}
+
+DLLEXPORT void BinaryBzet_bitList(BinaryBzet* BBObj, uint* outList, uint maxSize){
+	std::vector<uint> bits = BBObj->bitList();
+
+	uint size = bits.size();
+	if (size > maxSize)
+		size = maxSize;
+
+	memcpy(outList, &bits[0], size * sizeof(uint));
 }
 
 #endif

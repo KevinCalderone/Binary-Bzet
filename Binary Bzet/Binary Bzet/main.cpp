@@ -8,6 +8,11 @@
 
 int main()
 {
+
+	BinaryBzet x = BinaryBzet("00001111#");
+	BinaryBzet y = x.EQ(x);
+	system("PAUSE");
+
     //Test::TESTALL();
 	/*
 	BinaryBzet a(0);

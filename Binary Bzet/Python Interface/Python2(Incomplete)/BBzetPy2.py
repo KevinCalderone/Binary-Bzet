@@ -167,27 +167,48 @@ class BZET(object):
 		lib.BinaryBzet_slice(self.obj, c_uint(startIndex), c_uint(endIndex), output.obj)
 		return output
 	
+	def bitList(self, maxSize):
+		nums = (c_ulong * maxSize)()
+		lib.BinaryBzet_bitList(self.obj, byref(nums), maxSize)
+		return nums
+
 x = BZET("00001111")
 strA = x.getBzetString()
 strB = x.getBzetPretty()
 print strA
 print strB
 y = x.FALSE(x)
+print "41"
 y = x.AND(x)
+print "31"
 y = x.NonImplication(x)
+print "1"
 y = x.A(x)
+print "2"
 y = x.ConverseNonImplication(x)
+print "7"
 y = x.B(x)
+print "6"
 y = x.XOR(x)
+print "5"
 y = x.OR(x)
+print "4"
 y = x.NOR(x)
+print "81"
 y = x.EQ(x)
+print "8"
 y = x.NotB(x)
+print "19"
 y = x.ConverseImplication(x)
+print "7771"
 y = x.NotA(x)
+print "771"
 y = x.Implication(x)
+print "17"
 y = x.NAND(x)
+print "177577"
 y = x.TRUE(x)
+print "1773774"
 a = BZET("00001110#");
 b = BZET("00001111#");
 c = BZET("00001111#");
