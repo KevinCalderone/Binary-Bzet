@@ -201,8 +201,8 @@ class BZET(object):
 	
 
 x = BZET("00001111")
-y = x.LIST_T()
-print y
+#y = x.LIST_T()
+#print y
 strA = x.getBzetString()
 strB = x.getBzetPretty()
 print strA
