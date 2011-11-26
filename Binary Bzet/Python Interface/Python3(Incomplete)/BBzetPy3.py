@@ -24,7 +24,7 @@ class BZET(object):
 			self.obj = lib.BinaryBzet_new()
 		if type(input)== type(""):
 			input+=str('#')
-			self.obj = lib.BinaryBzet_new_string(c_char_p(input))
+			self.obj = lib.BinaryBzet_new_string(c_wchar_p(input))
 		else:
 			self.obj = lib.BinaryBzet_new()
 	
@@ -36,14 +36,38 @@ class BZET(object):
 		return lib.BinaryBzet_size(self.obj)
 	size.restype = int
 
+	def set(self, index):
+		lib.BinaryBzet_set(self.obj, c_uint(index))
+	
+	def unset(self, index):
+		lib.BinaryBzet_unset(self.obj, c_uint(index))
+
+	def flip(self, index):
+		lib.BinaryBzet_flip(self.obj, c_uint(index))
+
+	def clean(self):
+		lib.BinaryBzet_clean(self.obj)
+
+	def countBits(self):
+		return lib.BinaryBzet_countBits(self.obj)
+	countBits.restype = c_uint
+
+	def getFirstBit(self):
+		return lib.BinaryBzet_getFirstBit(self.obj)
+	getFirstBit.restype = c_uint
+
+	def getLastBit(self):
+		return lib.BinaryBzet_getLastBit(self.obj)
+	getLastBit.restype = c_uint
+
 	def getBzetPretty(self):
-		output_ptr = c_char_p('rawr')
+		output_ptr = c_wchar_p('rawr')
 		lib.BinaryBzet_getBzetPretty(self.obj,output_ptr)
 		return output_ptr.value
 	getBzetPretty.restype = str
 
 	def getBzetString(self):
-		output_ptr = c_char_p('rawr')
+		output_ptr = c_wchar_p('rawr')
 		lib.BinaryBzet_getBzetString(self.obj,output_ptr)
 		return output_ptr.value
 	getBzetString.restype = str
@@ -166,30 +190,48 @@ class BZET(object):
 		output = BZET()
 		lib.BinaryBzet_slice(self.obj, c_uint(startIndex), c_uint(endIndex), output.obj)
 		return output
-	
+
 x = BZET("00001111")
 strA = x.getBzetString()
 strB = x.getBzetPretty()
-y = x.FALSE(x)
+print(strA)
+print( strB, end=" ")
+y=x.FALSE(x)
+print( "41", end=" ")
 y = x.AND(x)
+print( "31", end=" ")
 y = x.NonImplication(x)
+print( "1", end=" ")
 y = x.A(x)
+print( "2", end=" ")
 y = x.ConverseNonImplication(x)
+print( "7", end=" ")
 y = x.B(x)
+print( "6", end=" ")
 y = x.XOR(x)
+print( "5", end=" ")
 y = x.OR(x)
+print( "4", end=" ")
 y = x.NOR(x)
+print( "81", end=" ")
 y = x.EQ(x)
+print("8")
 y = x.NotB(x)
+print( "19", end=" ")
 y = x.ConverseImplication(x)
+print( "7771", end=" ")
 y = x.NotA(x)
+print( "771", end=" ")
 y = x.Implication(x)
+print("17", end=" ")
 y = x.NAND(x)
+print( "177577", end=" ")
 y = x.TRUE(x)
-a = BZET("00001110#");
-b = BZET("00001111#");
-c = BZET("00001111#");
-d = BZET("00111000#");
-a.equals(b)
-b.equals(c)
-d.slice(2,6).getBzetString();
+print( "1773774", end=" ")
+a = BZET("00001110#")
+b = BZET("00001111#")
+c = BZET("00001111#")
+d = BZET("00111000#")
+print( a.equals(b), end=" ")
+print( b.equals(c), end=" ")
+print( d.slice(2,6).getBzetString(), end=" ")

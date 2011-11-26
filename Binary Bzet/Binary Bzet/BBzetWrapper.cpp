@@ -2,9 +2,11 @@
 #define __BBZETWRAPPER_H__
 
 #include "Python.h"
+#include <ctype.h>
 #include "BinaryBzet.h"
 #include "bitR.h"
 #include <stdio.h>
+#include <stdlib.h>
 #define DLLEXPORT extern "C" __declspec(dllexport)
 
 using namespace std;
@@ -48,7 +50,6 @@ DLLEXPORT void BinaryBzet_clean(BinaryBzet* BBObj){return BBObj->clean();}
 DLLEXPORT uint BinaryBzet_countBits (BinaryBzet* BBObj){return BBObj->countBits();}
 DLLEXPORT uint BinaryBzet_getFirstBit (BinaryBzet* BBObj){return BBObj->getFirstBit();}
 DLLEXPORT uint BinaryBzet_getLastBit (BinaryBzet* BBObj){return BBObj->getLastBit();}
-//DLLEXPORT vector<uint> BinaryBzet_bitList (BinaryBzet* BBObj){return BBObj->bitList();}
   
 //Print Bzet
 DLLEXPORT uint BinaryBzet_getBzetString(BinaryBzet* BBObj, char* output){
@@ -110,14 +111,15 @@ DLLEXPORT void BinaryBzet_slice(BinaryBzet* BBObj, uint startIndex, uint endInde
 	*result = BBObj->slice(startIndex, endIndex);
 }
 
-DLLEXPORT void BinaryBzet_bitList(BinaryBzet* BBObj, uint* outList, uint maxSize){
+/*DLLEXPORT PyObject* BinaryBzet_bitList(BinaryBzet* BBObj){
 	std::vector<uint> bits = BBObj->bitList();
-
 	uint size = bits.size();
-	if (size > maxSize)
-		size = maxSize;
-
-	memcpy(outList, &bits[0], size * sizeof(uint));
-}
+    PyObject* list  = PyTuple_New(size);
+    for (uint i = 0; i < size; i++) {
+		/* convert resulting array [0/1] to PyObject */
+		PyTuple_SetItem(list, i, (PyObject*)bits[i]);
+	}
+	return list;
+}*/
 
 #endif

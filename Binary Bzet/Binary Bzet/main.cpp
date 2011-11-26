@@ -8,7 +8,7 @@
 
 int main()
 {
-    Test::RUN_32Bit();
+    //Test::RUN_32Bit();
 //    Test::RUN_64Bit(); // inplementing next
 	/*
 	BinaryBzet a(0);
@@ -98,6 +98,9 @@ int main()
 	BinaryBzet b = BinaryBzet("00001111#");
 	BinaryBzet c = BinaryBzet("00001111#");
 	BinaryBzet d = BinaryBzet("00111000#");
+	cout << a.bitList().at(0)<<endl;
+	cout << a.bitList().at(1)<<endl;
+	cout << a.bitList().at(2)<<endl;
 	cout << a.equals(b) <<endl;//false
 	cout << b.equals(c) <<endl;//true
 	cout << d.slice(2,6).getBzetString()<<endl;

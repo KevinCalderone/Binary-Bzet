@@ -22,7 +22,6 @@
       </PrecompiledHeaderOutputFile>
     </ClCompile>
     <ClCompile Include="..\Binary Bzet\BinaryBzet.cpp" />
-    <ClCompile Include="..\Binary Bzet\main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4FF1F0DB-6B65-4258-A70D-D8E158749436}</ProjectGuid>
@@ -58,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Python27\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Gntea\Binary-Bzet\Binary Bzet\Python DLL;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Python27\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

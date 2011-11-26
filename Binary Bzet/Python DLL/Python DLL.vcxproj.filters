@@ -5,7 +5,6 @@
     <ClInclude Include="..\Binary Bzet\BinaryBzet.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Binary Bzet\main.cpp" />
     <ClCompile Include="..\Binary Bzet\BinaryBzet.cpp" />
     <ClCompile Include="..\Binary Bzet\BBzetWrapper.cpp" />
   </ItemGroup>
