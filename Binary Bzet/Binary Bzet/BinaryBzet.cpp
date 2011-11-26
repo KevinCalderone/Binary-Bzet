@@ -1303,46 +1303,6 @@ void BinaryBzet::flipTEST() {
     cout << "Test 2 Passed\n";
 }
 
-
-/* 
-    # Definitions of all 16 binary Boolean operations.
-    # This table drives the computation both of data and tree nodes.
-    # Each operation is a 6 tuple with the name of the operation,
-    # a machine operation code to do on byte to byte operations,
-    # and the action to take for each possible case. Case 0 is
-    # the binop row index reindexed by the right and left hand data
-    # bits as a number 0-3.
-
-    binop  = (
-    # 0        1     2      3      4      5        Tuple Index
-    #                                               a= 0011
-    #                                        operation ....
-    #                                               b= 0101  Case                                 
-    #                       index = a<<1 | b  ===>     0123    0               
-    ( 'FALSE', '0',  'DB0', 'DA0', 'DB0', 'DA0' ), #00 0000 Result
-    ( 'AND',   '&',  'DB0', 'DA0', 'CB',  'CA'  ), #01 0001    |
-    ( 'A<-B',  '<-', 'CB',  'CA',  'NB',  'DA0' ), #02 0010    |
-    ( 'A',     'a',  'DB0', 'CA',  'DB0', 'CA'  ), #03 0011    V
-    ( '????',  'x',  'DB0', 'DA0', 'DB0', 'CA'  ), #04 0100
-    ( 'B',     'b',  'CB',  'DA0', 'CB',  'DA0' ), #05 0101
-    ( 'XOR',   '^',  'CB',  'CA',  'NB',  'NA'  ), #06 0110
-    ( 'OR',    '|',  'CB',  'CA',  'DB1', 'DA1' ), #07 0111
-    ( 'NOR',   '~|', 'NB',  'NA',  'DB0', 'DA0' ), #08 1000
-    ( 'EQ',    '~^', 'NB',  'NA',  'CB',  'CA'  ), #09 1001
-    ( '~B',    '~b', 'NB',  'DA0', 'NB',  'DA0' ), #10 1010
-    ( '????',  'x',  'CB',  'CA',  'CB',  'CA'  ), #11 1011
-    ( '~A',    '~a', 'DB0', 'NA',  'DB0', 'NA'  ), #12 1100
-    ( 'A->B',  '->', 'DB0', 'NA',  'CB',  'CA'  ), #13 1101
-    ( 'NAND',  '~&', 'CB',  'DA1', 'NB',  'NA'  ), #14 1110
-    ( 'TRUE',  '1',  'DB1', 'DA1', 'DB1', 'DA1' )) #15 1111
-    #       Shortcut  <-- C1 to C4 Actions -->  Recur  Result
-    # Name     raw   Case1  Case2  Case3  Case4 Case5  Case 0   
-    # Inputs         0T     T0     1T     T1    TT
-    # 0        1     2      3      4      5      
-
-*/
-
-//
 BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 {
 	vector<bool> bzetA = m_bzet;
@@ -1382,7 +1342,6 @@ BinaryBzet BinaryBzet::operator &(const BinaryBzet& rhs)
 	cout << endl;*/
 
 	//Full set vs anything
-	//TODO move to above align after testing
 	vector<bool> fullBzet;
 	fullBzet.push_back(1);
 	fullBzet.push_back(1);
@@ -1644,8 +1603,6 @@ BinaryBzet BinaryBzet::TRUE(const BinaryBzet& rhs)
 	return BinaryBzet(&fullBzet,1);
 }
 
-//branchData == cdr python
-//treeData == ddr python
 vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA, vector<bool> bzetB, uint posB, uint level)
 {
 	string* operation = g_binOp[operationNo];
@@ -1672,7 +1629,6 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 //		cout << "Current Level A: " << currentLevelA << "\n";
 		currentLevelB = sB.top();
 //		cout << "Current Level B: " << currentLevelB << "\n";
-		//TODO verify this works
 		if(currentLevelA <= currentLevelB || (level == currentLevelA && seenA[currentLevelA] == 1))
 		seenA[currentLevelA]++;
 //		cout << "SeenA: " << seenA[currentLevelA] << endl;
@@ -1710,7 +1666,6 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 			}
 			else	{
 				//Determine case of data
-				//TODO - create function to look up value
 				bool lBit3 = bzet1[bzetIndexA];
 				bool rBit3 = bzet1[bzetIndexA+1];
 				bitpair bp1 = lBit3 ? ( rBit3 ? '1' : 'T') : ( rBit3 ?  't': '0');
@@ -1718,7 +1673,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 				bool lBit4 = bzet2[bzetIndexB];
 				bool rBit4 = bzet2[bzetIndexB+1];
 				bitpair bp2 = lBit4 ? ( rBit4 ? '1' : 'T') : ( rBit4 ?  't': '0');
-				//TODO - replace with use of case_type array
+
 				int caseType = 6;
 				if((bp1 == '1'|| bp1 == '0') && (bp2 == '1' || bp2 == '0'))	{
 					caseType = 0;
@@ -1762,7 +1717,6 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 				else if (caseType >= 1 && caseType <= 4)	{
 					string oper = operation[caseType + 1];
 //					cout << "Oper" << oper << "\n";
-					//python call cp1, cp2 ,tr = do_tree_op(opr, lev-1,bset1,cp1,bset2,cp2)
 					vector<bool> res = doTreeOp(oper,currentLevelA,bzet1, bzetIndexA, bzet2, bzetIndexB);
 					//apped res to resultBzet + handle compression possibly
 					for(uint i = 0; i<res.size(); i++)
@@ -1773,7 +1727,6 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 				//TT
 				else if(caseType ==5)	{
 					//Push a T to the resultBzet
-					//TODO fix collapsing problem
 					resultBzet.push_back(1);
 					resultBzet.push_back(0);
 				}
@@ -1817,10 +1770,7 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 						sA.pop();
 					}
 				}
-				// if the stack is empty you have reached the end of the bzet so break?
-				//     (not sure what would work for you so im just leaving a comment)
-				// if its not empty let while loop continue to next iteration
-				//     if you call "continue;" make sure to call "bzetIndex += 2;" before hand to increment index
+				// if the stack is empty you have reached the end of the bzet
 			} else if(currentLevelA <= currentLevelB)	{
 					// set up next iteration
 					nextA = currentLevelA - 1;
@@ -1848,9 +1798,6 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 					}
 				}
 				// if the stack is empty you have reached the end of the bzet so break?
-				//     (not sure what would work for you so im just leaving a comment)
-				// if its not empty let while loop continue to next iteration
-				//     if you call "continue;" make sure to call "bzetIndex += 2;" before hand to increment index
 			} else if(currentLevelB <= currentLevelA)	{
 					// set up next iteration
 					nextB = currentLevelB - 1;
@@ -1874,7 +1821,6 @@ vector<bool> BinaryBzet::binaryOp(int operationNo, vector<bool> bzetA, uint posA
 }
 
 //implements CA and CB
-//TODO remove endPos
 vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, uint currentPos, uint level, uint& endPos)
 {
 	vector<bool> returnBzet;
@@ -1897,14 +1843,12 @@ vector<bool> BinaryBzet::bsCopy(vector<bool> bzet, uint currentPos, uint level, 
 }
 
 //implements NA and NB
-//TODO remove endPos
 vector<bool> BinaryBzet::bsNeg(vector<bool> bzet, uint currentPos, uint level, uint& endPos)
 {
 	vector<bool> returnBzet;
 	if(currentPos >= bzet.size())
 	{
 		endPos = bzet.size();
-		//TODO - return empty vector<bool> bytes([]) - check correctness
 		return returnBzet;
 	}
 	else
@@ -1933,24 +1877,17 @@ uint BinaryBzet::bsDrop(vector<bool> bzet, uint currentPos, uint level)
 	return endPos;
 }
 
-//TODO finish typing problems with this function
 vector<bool> BinaryBzet::doTreeOp(string operation, uint level, vector<bool> bzetA, uint posA, vector<bool> bzetB, uint posB)
 {
-//	bool dr;
 	uint end = 0;
 	vector<bool> bzetRet;
-	//TODO find out difference if any between DA0, DA1, DB0, DB1 are
 	if(operation.compare("DA0") == 0)
 	{
-//		posA = bsDrop(bzetA,posA,level);
-//		dr = false;
 		bzetRet.push_back(0);
 		bzetRet.push_back(0);
 	}
 	else if(operation.compare("DA1") == 0)
 	{
-//		posA = bsDrop(bzetA,posA,level);
-//		dr = true;
 //		cout << "OP DA1\n";
 		bzetRet.push_back(1);
 		bzetRet.push_back(1);
@@ -1959,15 +1896,11 @@ vector<bool> BinaryBzet::doTreeOp(string operation, uint level, vector<bool> bze
 	{
 		bzetRet.push_back(0);
 		bzetRet.push_back(0);
-//		posB = bsDrop(bzetB,posB,level);
-//		dr = false;
 	}
 	else if(operation.compare("DB1") == 0)
 	{
 		bzetRet.push_back(1);
 		bzetRet.push_back(1);
-//		posB = bsDrop(bzetB,posB,level);
-//		dr = true;
 	}
 	else if(operation.compare("CA") == 0)
 	{
@@ -2240,13 +2173,6 @@ void BinaryBzet::bzetWalkTEST() {
     assert(bzetWalk(bzetForTest5, 2, 6) == 24);
     
     cout << "\nAll tests Passed\n";
-}
-
-//remove unneccessary upper levels that have zeros at the end of the bitset
-vector<bool> BinaryBzet::normalize(vector<bool> bzet, uint level)
-{
-	//TODO Finish
-	return bzet;
 }
 
 //Aligns two bzets of different sizes

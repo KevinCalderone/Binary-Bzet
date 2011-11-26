@@ -100,7 +100,6 @@ private:
 	uint m_depth;
 
 	//Helper functions for binary operations
-	vector<bool> normalize(vector<bool> bzet, uint level);
 	uint bsDrop(vector<bool> bzet, uint currentPos, uint level); //implements DA and DB
 	uint subtreeNot(vector<bool>& bzet, uint currentPos, uint level); // implements _not_
 	vector<bool> doTreeOp(string operation, uint level, vector<bool> bzetA, uint posA, vector<bool> bzetB, uint posB);

@@ -157,7 +157,7 @@ class BZET(object):
 		lib.BinaryBzet_leftShift(self.obj, c_uint(distance))
 
 	def rightShift(self, distance):
-		lib.BinaryBzet_rigtShift(self.obj, c_uint(distance))
+		lib.BinaryBzet_rightShift(self.obj, c_uint(distance))
 
 	#Slice/Substring
 	def slice(self, startIndex, endIndex):
