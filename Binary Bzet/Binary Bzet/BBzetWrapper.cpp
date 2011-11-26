@@ -62,7 +62,6 @@ DLLEXPORT uint BinaryBzet_getBzetPretty(BinaryBzet* BBObj,char* output){
 	return strlen(output);
 }
 
-
 //Binary Boolean Operations
 DLLEXPORT BinaryBzet BinaryBzet_FALSE (BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->FALSE(rhs);	}
 DLLEXPORT BinaryBzet BinaryBzet_AND (BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->AND(rhs);	}
@@ -80,5 +79,16 @@ DLLEXPORT BinaryBzet BinaryBzet_NotA(BinaryBzet* BBObj, const BinaryBzet& rhs){	
 DLLEXPORT BinaryBzet BinaryBzet_Implication(BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->Implication(rhs);	}
 DLLEXPORT BinaryBzet BinaryBzet_NAND(BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->NAND(rhs);	}
 DLLEXPORT BinaryBzet BinaryBzet_TRUE(BinaryBzet* BBObj, const BinaryBzet& rhs){	return BBObj->TRUE(rhs);	}
+
+//Comparison Operators
+DLLEXPORT int BinaryBzet_compare(BinaryBzet& bzet);
+
+//Shifing Operators
+DLLEXPORT void BinaryBzet_leftShift(uint distance);
+DLLEXPORT void BinaryBzet_rightShift(uint distance);
+
+//Slice/Substring
+DLLEXPORT BinaryBzet BinaryBzet_slice(uint startIndex, uint endIndex);
+
 
 #endif
