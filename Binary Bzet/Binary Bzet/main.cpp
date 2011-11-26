@@ -92,13 +92,23 @@ int main()
 //	BinaryBzet A("0101010001110#");
 	
 	cout << "IN " << sizeof(size_t)*8 << " BIT MODE!" << endl << endl << endl;
-	BinaryBzet a = BinaryBzet("0000#");
+	BinaryBzet a = BinaryBzet("1111#");
 	cout << a.getBzetString() <<endl;
 	cout << a.getBzetPretty() <<endl;
 	a.set(1);
 	cout << a.getBzetString() <<endl;
 	cout << a.getBzetPretty() <<endl;
 	a.unset(1);
+	cout << a.getBzetString() <<endl;
+	cout << a.getBzetPretty() <<endl;
+
+	a = BinaryBzet("1111#");
+	cout << a.getBzetString() <<endl;
+	cout << a.getBzetPretty() <<endl;
+	a.flip(1);
+	cout << a.getBzetString() <<endl;
+	cout << a.getBzetPretty() <<endl;
+	a.flip(1);
 	cout << a.getBzetString() <<endl;
 	cout << a.getBzetPretty() <<endl;
 	system("pause");
