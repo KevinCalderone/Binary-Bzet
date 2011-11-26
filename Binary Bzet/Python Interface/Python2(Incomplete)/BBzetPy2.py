@@ -56,7 +56,7 @@ class BZET(object):
 	def __or__    (self,other): return self.OR(other)
 	def __and__   (self,other): return self.AND(other)
 	def __xor__   (self,other): return self.XOR(other)
-	def __invert__(self):       return self.NOT()
+	def __invert__(self):       return self.NotA(self)
 	def __ior__   (self,other): return self.OR(other)
 	def __iand__  (self,other): return self.AND(other)
 	def __ixor__  (self,other): return self.XOR(other)
