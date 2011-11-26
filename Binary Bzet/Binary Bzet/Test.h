@@ -106,39 +106,39 @@ private:
         
         // POSSIBLE BUG?: assert failes when i = 2, j = 3, k = 2
         // ----------------------------------------------------------
-//        size_t testNum = 2;
-//        for (size_t i = 0; i < 20; i++) {
-//            for (size_t j = i; j < 20; j++) {
-//                for (size_t k = 0; k < 10; k++) {
-//                    BinaryBzet a(i, j, k);
-//                    std::cout << "(" << i << ", " << j << ", " << k << ")\n"; 
-//                    assert(a == (a & a));
-//                    std::cout << "AND Test " << testNum++ << " passed.\n";
-//                }
-//            }
-//        }
+        size_t testNum = 2;
+        for (size_t i = 0; i < 20; i++) {
+            for (size_t j = i; j < 20; j++) {
+                for (size_t k = 0; k < 10; k++) {
+                    BinaryBzet a(i, j, k);
+                    std::cout << "(" << i << ", " << j << ", " << k << ")\n"; 
+                    assert(a == (a & a));
+                    std::cout << "AND Test " << testNum++ << " passed.\n";
+                }
+            }
+        }
         // ----------------------------------------------------------
 
         // ----------------------------------------------------------
         // POSSIBLE BUG?: assert failes when i = 2, j = 3, k = 2
-//        size_t OR_TEST_NUM = 1;
-//        for (size_t i = 0; i < 20; i++) {
-//            for (size_t j = i; j < 20; j++) {
-//                for (size_t k = 0; k < 10; k++) {
-//                    BinaryBzet a(i, j, k);
-//                    std::cout << "(" << i << ", " << j << ", " << k << ")\n"; 
-//                    assert(a == (a | a));
-//                    std::cout << "OR Test " << OR_TEST_NUM++ << " passed.\n";
-//                }
-//            }
-//        }
+        size_t OR_TEST_NUM = 1;
+        for (size_t i = 0; i < 20; i++) {
+            for (size_t j = i; j < 20; j++) {
+                for (size_t k = 0; k < 10; k++) {
+                    BinaryBzet a(i, j, k);
+                    std::cout << "(" << i << ", " << j << ", " << k << ")\n"; 
+                    assert(a == (a | a));
+                    std::cout << "OR Test " << OR_TEST_NUM++ << " passed.\n";
+                }
+            }
+        }
         // ----------------------------------------------------------
 
         
         std::cout << "---------------------------------------------\n";
         
         BinaryBzet c3_0("00000#");
-        assert(c3_0.getDepth() == 3);
+        assert(c3_0.getDepth() == 1);
         TESTPASSED_LOG("Contructor");
         
         BinaryBzet c3_1("11111111#");
@@ -299,7 +299,7 @@ private:
         assert(notA == a1.NotA(b1));
         TESTPASSED_LOG("NotA Test");
         
-        BinaryBzet notB("1111#");
+        BinaryBzet notB("11#");
         assert(notB == a1.NotB(b1));
         TESTPASSED_LOG("NotB Test");
         

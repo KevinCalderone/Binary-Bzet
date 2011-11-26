@@ -23,7 +23,6 @@ class BZET(object):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
 		if type(input)== type(""):
-			input+=str('#')
 			self.obj = lib.BinaryBzet_new_string(c_char_p(input))
 		else:
 			self.obj = lib.BinaryBzet_new()
@@ -47,11 +46,6 @@ class BZET(object):
 		lib.BinaryBzet_getBzetString(self.obj,output_ptr)
 		return output_ptr.value
 	getBzetString.restype = str
-    
-	def TESTAND(self, other):
-		output = BZET()
-		lib.BinaryBzet_TEST_AND(self.obj, other.obj, output.obj)
-		return output
 
 	def __or__    (self,other): return self.OR(other)
 	def __and__   (self,other): return self.AND(other)
@@ -172,7 +166,9 @@ class BZET(object):
 		lib.BinaryBzet_bitList(self.obj, byref(nums), maxSize)
 		return nums
 
-x = BZET("00001111")
+x = BZET("00001111#")
+x = BZET("1, 2, 3")
+
 strA = x.getBzetString()
 strB = x.getBzetPretty()
 print strA
