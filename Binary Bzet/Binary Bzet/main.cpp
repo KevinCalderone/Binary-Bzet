@@ -9,7 +9,7 @@
 int main()
 {
     Test::RUN_32Bit();
-//    Test::RUN_64Bit(); // inplementing next
+//    Test::RUN_64Bit(); // WARNING: This will take a long time to run!
 	/*
 	BinaryBzet a(0);
 	BinaryBzet::getLastBitTest ();

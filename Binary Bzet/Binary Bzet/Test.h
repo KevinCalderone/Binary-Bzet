@@ -55,14 +55,18 @@ public:
         << "----------------\n";
     }
     static void RUN_64Bit() {
-        std::cout << "\n"
-        << "----------------\n"
-        << "Testing...\n";
-        
-        THREE();
-        
-        std::cout << "ALL 64Bit TESTS PASSED\n"
-        << "----------------\n";
+        if (sizeof(uint) != 8) {
+            std::cout << "uint is not 64bit. Skipping test...\n";
+        } else {
+            std::cout << "\n"
+            << "----------------\n"
+            << "Testing...\n";
+            
+            THREE();
+            
+            std::cout << "ALL 64Bit TESTS PASSED\n"
+            << "----------------\n";            
+        }
     }
     
     
@@ -245,7 +249,15 @@ private:
         five();
     }
     static void THREE() {
-        
+        size_t index = 1;
+        index = index << 33;
+        std::cout << "index: " << index << std::endl;
+        std::cout << "\nCreating BinaryBzet(1 << 33)...\n";
+        BinaryBzet a(index);
+        std::cout << "Done." << std::endl;
+        std::cout << "the depth is " << a.getDepth() << std::endl;
+        std::cout << "Printing..." << std::endl;
+        std::cout << a.getBzetString() << std::endl;
     }
     
     static void   one() {
@@ -597,6 +609,17 @@ private:
         
         assert(b5 == a5.B(b5));
         TESTPASSED_LOG("B(...)");
+        
+        // bitList()
+        // 0000010010010000111010100001110100000110000000001000001000000011 // a5
+        vector<uint> bits = a5.bitList();
+        uint bits_a5[] = { 5, 8, 11, 16, 17, 18, 20, 22, 27, 28, 29, 31, 37, 38, 48, 54, 62, 63 };
+        for (size_t i = 0; i < bits.size(); i++) {
+            if (bits[i] != bits_a5[i]) {
+                std::cout << "\nbitlist() returned wrong output!\n";
+                exit(EXIT_FAILURE);
+            }
+        }
         
         std::cout << std::endl;
     }
