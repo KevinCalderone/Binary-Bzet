@@ -9,11 +9,8 @@
 int main()
 {
 
-	BinaryBzet x = BinaryBzet("00001111#");
-	BinaryBzet y = x.EQ(x);
-	system("PAUSE");
-
-    //Test::TESTALL();
+    Test::RUN_32Bit();
+//    Test::RUN_64Bit(); // inplementing next
 	/*
 	BinaryBzet a(0);
 	BinaryBzet::getLastBitTest ();
