@@ -61,6 +61,7 @@ public:
 
 	//Comparison Operators
 	int compare(BinaryBzet& bzet);
+	bool equals(const BinaryBzet& rhs);
 
 	//Shifing Operators
 	void leftShift(uint distance);
@@ -93,15 +94,6 @@ public:
     void bitSetCollapseTEST(); // tempporary
 	static void testShift();
 
-	//TODO - move method to private - temporary for testing
-	void align(vector<bool>& bzetA, uint& depthA, vector<bool>& bzetB, uint& depthB);
-	vector<bool> bsCopy(vector<bool> bzet, uint currentPos, uint level, uint& endPos); //implements CA and CB
-	vector<bool> bsNeg(vector<bool> bzet, uint currentPos, uint level, uint& endPos); //implements NA and NB
-	uint bzetWalk(vector<bool> &bzet, uint currentPos, uint currentLev);
-	void traversalSkeleton(vector<bool> bzet, uint level);
-	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
-	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, uint posA, vector<bool> bzetB, uint posB, uint level);
-
 private:
 	vector<bool> m_bzet;
 	string m_bzet_string; // just for now, later we'll call getBzetString() to calculate this from m_bzet
@@ -112,7 +104,14 @@ private:
 	uint bsDrop(vector<bool> bzet, uint currentPos, uint level); //implements DA and DB
 	uint subtreeNot(vector<bool>& bzet, uint currentPos, uint level); // implements _not_
 	vector<bool> doTreeOp(string operation, uint level, vector<bool> bzetA, uint posA, vector<bool> bzetB, uint posB);
-	
+	void align(vector<bool>& bzetA, uint& depthA, vector<bool>& bzetB, uint& depthB);
+	vector<bool> bsCopy(vector<bool> bzet, uint currentPos, uint level, uint& endPos); //implements CA and CB
+	vector<bool> bsNeg(vector<bool> bzet, uint currentPos, uint level, uint& endPos); //implements NA and NB
+	uint bzetWalk(vector<bool> &bzet, uint currentPos, uint currentLev);
+	void traversalSkeleton(vector<bool> bzet, uint level);
+	vector<bool> doDataOp(string operation, vector<bool> data1, vector<bool> data2);
+	vector<bool> binaryOp(int operationNo, vector<bool> bzetA, uint posA, vector<bool> bzetB, uint posB, uint level);
+
 	// Helper functions for shift
 	void shift(uint distance, bool isRightShift); // 0 is left, 1 is right
 	u8 getBzetIndex(uint index);

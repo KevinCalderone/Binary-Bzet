@@ -1,44 +1,34 @@
-﻿  BBzetWrapper.cpp
-..\Binary Bzet\BBzetWrapper.cpp(51): warning C4190: 'BinaryBzet_bitList' has C-linkage specified, but returns UDT 'std::vector<_Ty>' which is incompatible with C
-          with
-          [
-              _Ty=uint
-          ]
-..\Binary Bzet\BBzetWrapper.cpp(67): warning C4190: 'BinaryBzet_FALSE' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(68): warning C4190: 'BinaryBzet_AND' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(69): warning C4190: 'BinaryBzet_NonImplication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(70): warning C4190: 'BinaryBzet_A' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(71): warning C4190: 'BinaryBzet_ConverseNonImplication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(72): warning C4190: 'BinaryBzet_B' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(73): warning C4190: 'BinaryBzet_XOR' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(74): warning C4190: 'BinaryBzet_OR' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(75): warning C4190: 'BinaryBzet_NOR' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(76): warning C4190: 'BinaryBzet_EQ' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(77): warning C4190: 'BinaryBzet_NotB' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(78): warning C4190: 'BinaryBzet_ConverseImplication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(79): warning C4190: 'BinaryBzet_NotA' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(80): warning C4190: 'BinaryBzet_Implication' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(81): warning C4190: 'BinaryBzet_NAND' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-..\Binary Bzet\BBzetWrapper.cpp(82): warning C4190: 'BinaryBzet_TRUE' has C-linkage specified, but returns UDT 'BinaryBzet' which is incompatible with C
-          c:\users\gntea\binary-bzet\binary bzet\binary bzet\BinaryBzet.h(19) : see declaration of 'BinaryBzet'
-  BinaryBzet.cpp
-  main.cpp
-     Creating library C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python2DLL.lib and object C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python2DLL.exp
-  Generating code
-  Finished generating code
-  Python DLL.vcxproj -> C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Python2DLL.dll
+﻿Build started 11/24/2011 11:04:01 PM.
+     1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\Python2DLL.lastbuildstate".
+       InitializeBuildStatus:
+         Touching "Release\Python2DLL.unsuccessfulbuild".
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Python27\include /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D PYTHONDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt "..\Binary Bzet\BBzetWrapper.cpp" "..\Binary Bzet\BinaryBzet.cpp" "..\Binary Bzet\main.cpp"
+         BBzetWrapper.cpp
+     1>..\Binary Bzet\BBzetWrapper.cpp(51): warning C4190: 'BinaryBzet_bitList' has C-linkage specified, but returns UDT 'std::vector<_Ty>' which is incompatible with C
+                 with
+                 [
+                     _Ty=uint
+                 ]
+         BinaryBzet.cpp
+         main.cpp
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.dll" /INCREMENTAL:NO /NOLOGO python27.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\Python2DLL.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.lib" /MACHINE:X86 /DLL Release\BBzetWrapper.obj
+         Release\BinaryBzet.obj
+         Release\main.obj
+            Creating library C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.lib and object C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.exp
+         Generating code
+         Finished generating code
+         Python DLL.vcxproj -> C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.dll
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\Python2DLL.dll;#2" /manifest Release\Python2DLL.dll.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\Python2DLL.unsuccessfulbuild".
+         Touching "Release\Python2DLL.lastbuildstate".
+     1>Done Building Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.88

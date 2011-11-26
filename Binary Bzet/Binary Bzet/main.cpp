@@ -4,9 +4,11 @@
 #include <sstream>
 #include <time.h>
 #include <fstream>
+#include "Test.h"
 
 int main()
 {
+    //Test::TESTALL();
 	/*
 	BinaryBzet a(0);
 	BinaryBzet::getLastBitTest ();
@@ -90,7 +92,7 @@ int main()
 //	BinaryBzet A("01 01 01 00 01 11 00 00 00 00 00 00 00 00 00 00#");
 //	BinaryBzet O("0101011101010100001010101101010#");
 //	BinaryBzet A("0101010001110#");
-	
+	/*
 	cout << "IN " << sizeof(size_t)*8 << " BIT MODE!" << endl << endl << endl;
 	BinaryBzet a = BinaryBzet("1111#");
 	cout << a.getBzetString() <<endl;
@@ -100,17 +102,27 @@ int main()
 	cout << a.getBzetPretty() <<endl;
 	a.unset(1);
 	cout << a.getBzetString() <<endl;
-	cout << a.getBzetPretty() <<endl;
+	cout << a.getBzetPretty() <<endl;*/
 
-	a = BinaryBzet("1111#");
-	cout << a.getBzetString() <<endl;
-	cout << a.getBzetPretty() <<endl;
-	a.flip(1);
-	cout << a.getBzetString() <<endl;
-	cout << a.getBzetPretty() <<endl;
-	a.flip(1);
-	cout << a.getBzetString() <<endl;
-	cout << a.getBzetPretty() <<endl;
+	BinaryBzet       a3a("110001111000010101010100001001111111#");
+	BinaryBzet       a3b("111111001010101010101000100101100011#");
+	BinaryBzet    a3_and("110001001000000000000000000001100011#");
+	BinaryBzet   a3_nand("001110110111111111111111111110011100#");
+	BinaryBzet     a3_or("111111111010111111111100101101111111#");
+	BinaryBzet    a3_nor("000000000101000000000011010010000000#");
+
+	BinaryBzet temp = a3a.NOR(a3b);
+	cout << temp.getBzetString() << endl;
+	cout << a3_nor.getBzetString() << endl;
+	
+	temp = a3a.AND(a3b);
+	cout << temp.getBzetString() << endl;
+	cout << a3_and.getBzetString() << endl;
+
+	temp = a3a.NAND(a3b);
+	cout << temp.getBzetString() << endl;
+	cout << a3_nand.getBzetString() << endl;
+
 	system("pause");
     return 0;
 }

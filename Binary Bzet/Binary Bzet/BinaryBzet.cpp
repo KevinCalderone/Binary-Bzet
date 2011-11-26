@@ -778,12 +778,12 @@ void BinaryBzet::bitSet(uint index, bool value) {
     
     // if index is out of range, extend bzet
     if ((index == 0 && m_depth == 0) || (index >= (uint)pow(2.0, (double)m_depth))) {
-        cout << getBzetString() << endl;
+        //cout << getBzetString() << endl;
         uint newLevel = (index == 0)  ? 1 : (uint)ceil(log((double)index+1.0)/log(2.0));
-        cout << "needs to be level: " << newLevel << endl;
+        //cout << "needs to be level: " << newLevel << endl;
         vector<bool> dummy;
         align(m_bzet, m_depth, dummy, newLevel);
-        cout << getBzetString() << endl;
+        //cout << getBzetString() << endl;
     }
 
 	uint bzetIndex = 0;
@@ -1555,10 +1555,25 @@ BinaryBzet BinaryBzet::NOR(const BinaryBzet& rhs)
 	b.leftShift(0);
 	return b;
 }
-
 BinaryBzet BinaryBzet::EQ(const BinaryBzet& rhs)
 {
-	return *this == rhs;
+	vector<bool> bzetA = m_bzet;
+	vector<bool> bzetB = rhs.m_bzet;
+	uint depthA = m_depth;
+	uint depthB = rhs.m_depth;
+
+	align(bzetA,depthA,bzetB,depthB);
+	vector<bool> bzetRet = binaryOp(9,bzetA,0,bzetB,0,depthA);
+
+	BinaryBzet b = BinaryBzet(&bzetRet,depthA);
+	//Used to collapse Bzet
+	b.leftShift(0);
+	return b;
+}
+
+bool BinaryBzet::equals(const BinaryBzet& rhs)
+{
+	return ((*this) == rhs);
 }
 
 BinaryBzet BinaryBzet::NotB(const BinaryBzet& rhs)
