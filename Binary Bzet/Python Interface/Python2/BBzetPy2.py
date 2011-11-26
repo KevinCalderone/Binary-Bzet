@@ -29,7 +29,6 @@ class BZET(object):
 			self.obj = lib.BinaryBzet_new()
 			self.unset(0);
 			for item in input:
-				print item
 				if type(item)==type(1):
 					self.set(item);
 				elif type(item)== type((1,2)):
@@ -58,17 +57,17 @@ class BZET(object):
 	def clean(self):
 		lib.BinaryBzet_clean(self.obj)
 
-	def countBits(self):
+	def COUNT(self):
 		return lib.BinaryBzet_countBits(self.obj)
-	countBits.restype = c_uint
+	COUNT.restype = c_uint
 
-	def getFirstBit(self):
+	def FIRST(self):
 		return lib.BinaryBzet_getFirstBit(self.obj)
-	getFirstBit.restype = c_uint
+	FIRST.restype = c_uint
 
-	def getLastBit(self):
+	def LAST(self):
 		return lib.BinaryBzet_getLastBit(self.obj)
-	getLastBit.restype = c_uint
+	LAST.restype = c_uint
 
 
 	#Print Functions
@@ -204,16 +203,18 @@ class BZET(object):
 		return output
 	
 	def LIST_T(self):
-		output = lib.BinaryBzet_bitList(self.obj)
-		print type(output)
+		size = self.COUNT()
+		list = (c_uint * int(size))()
+		lib.BinaryBzet_bitList(self.obj, byref(list))
+		output = []
+		for i in range(0, size):
+			output.append(list[i])
 		return output
-	
 
 x = BZET("00001111")
 y = BZET([(2,6),7])
 print y.getBzetString()
-#y = x.LIST_T()
-#print y
+print x.LIST_T()
 strA = x.getBzetString()
 strB = x.getBzetPretty()
 print strA

@@ -8,6 +8,9 @@ Michael Koyama
 
 News:
 
+Mary Chau (11/26/2011)
++finished python modules
+
 Mary Chau (11/21/2011)
 +Added all miscelaneous Bzet property functions to the Python Module
 +fixed the python string issue: python printing methods work now

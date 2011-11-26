@@ -190,11 +190,15 @@ class BZET(object):
 		lib.BinaryBzet_slice(self.obj, c_uint(startIndex), c_uint(endIndex), output.obj)
 		return output
 		
-	def bitList(self, maxSize):
-		nums = (c_ulong * maxSize)()
-		lib.BinaryBzet_bitList(self.obj, byref(nums), maxSize)
-		return nums
-        
+	def LIST_T(self):
+		size = self.COUNT()
+		list = (c_uint * int(size))()
+		lib.BinaryBzet_bitList(self.obj, byref(list))
+		output = []
+		for i in range(0, size):
+			output.append(list[i])
+		return output
+
 x = BZET("00001111#")
 strA = x.getBzetString()
 strB = x.getBzetPretty()

@@ -6,17 +6,22 @@ If want to make change to wrapper
   3. Move Python2DLL to folder that contains BBzetPy2.py (should be in the same folder as the wrapper)  
 
 To Run the Python Module in Python 2:
-1. Go to ~\Binary-Bzet\BinaryBzet\Binary Bzet
+1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python2
 2. Open python2.exe
 3. In the python shell:
-	import BBzetPy2
-	x = BBzetPy2.BZET()
-	x.LEV()
-	x.size()
+	from BBzetPy2 import BZET
+	x = BZET([2,(5,7)])
+	x.getBzetString()
 
 
-To Run the Python Module in Python 2:
-	Coming soon...
+To Run the Python Module in Python 3:
+1. Go To ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
+2. Open python3.exe
+3. In Python shell:
+	from BBzetPy3 import BZET
+	x = Bzet([2,(5,7)])
+	x.getBzetString()
+
 -------------------------------------------------
 Instructions for how to setup the Python Module.  
 (We should make this into a script later.)
