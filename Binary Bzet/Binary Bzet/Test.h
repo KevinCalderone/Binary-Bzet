@@ -15,6 +15,7 @@
 #define LEVEL_1 1 // basic. few test cases
 #define LEVEL_2 2 // extended. more test cases
 #define LEVEL_3 3 // only 64bit test.. 64 bit tests deal with bzets bigger than 2^32 so they can take a very long time to complete
+                  // not very many test only because they deal with huge bitstrings which take a long time to run the tests
 #define TEST_LEVEL LEVEL_1
 
 #define LOOP_SIZE 200
@@ -27,12 +28,14 @@
 class Test {    
 public:
     static void TESTALL() {
-        std::cout << "\n----------\nTesting...\n";
-        BATCH_01();
+        std::cout << "\n----------------\nTesting...\n";
+        ONE();
+        std::cout << "\nTWO():\n";
+        TWO();
         std::cout << "ALL TESTS PASSED\n----------------\n";
     }
     
-    static void BATCH_01() {
+    static void ONE() {
         BinaryBzet c1;
         assert(c1.getDepth() == 0);
         std::cout << "Contructor 01 Test passed.\n";
@@ -64,7 +67,6 @@ public:
             BinaryBzet a(i);
             assert(a == (a & a));
             assert(a == (a | a));
-            OPERAND_LOG(a, a);
             std::cout << "AND Test " << i+1 << " passed.\n";
             std::cout << "OR  Test " << i+1 << " passed.\n";
         }
@@ -145,36 +147,21 @@ public:
         assert(a2r == (a2a & a2b));
         
         // operands:
-        BinaryBzet       a3a("110001111000010101010100001001111111#");
-        BinaryBzet       a3b("111111001010101010101000100101100011#");
-        BinaryBzet    a3_and("110001001000000000000000000001100011#");
-        BinaryBzet   a3_nand("001110110111111111111111111110011100#");
-        BinaryBzet     a3_or("111111111010111111111100101101111111#");
-        BinaryBzet    a3_nor("000000000101000000000011010010000000#");
-        BinaryBzet    a3_xor("001110110010111111111100101100011100#");
-        BinaryBzet a3_a3bNOT("000000110101010101010111011010011100#");
+        BinaryBzet    a3a("110001111000010101010100001001111111#");
+        BinaryBzet    a3b("111111001010101010101000100101100011#");
+        BinaryBzet a3_and("110001001000000000000000000001100011#");
+        BinaryBzet  a3_or("111111111010111111111100101101111111#");
+        BinaryBzet a3_xor("001110110010111111111100101100011100#");
         
         assert(a3_and == (a3a & a3b));
         std::cout << "AND Test passed.\n";
-        
-        // POSSIBLE BUG?:
-//        OPERAND_LOG(a3a, a3b);
-//        OUTCOME_LOG(a3_nand, a3a.NAND(a3b));
-//        assert(a3_nand == a3a.NAND(a3b));
-//        std::cout << "NAND Test passed.\n";
         
         assert( a3_or == (a3a | a3b));
         std::cout << "OR  Test passed.\n";
         
         assert( a3_xor == (a3a.XOR(a3b)));
         std::cout << "XOR Test passed.\n";
-        
-        // POSSIBLE BUG?:
-//        OPERAND_LOG(a3a, a3b);
-//        OUTCOME_LOG(a3_nor.getBzetString(), (a3a.NOR(a3b)).getBzetString());
-//        assert( a3_nor == (a3a.NOR(a3b)));
-//        std::cout << "NOR Test passed.\n";
-        
+                
         // =========================================================================
         // shift tests
         for (size_t i = 1; i < LOOP_SIZE; i++) {
@@ -207,6 +194,7 @@ public:
         }
         
         // =========================================================================
+        
         // set/unset/flip.. WIP
 //        for (size_t i = 0; i < LOOP_SIZE; i++) {
 //            BinaryBzet a(i);
@@ -218,7 +206,117 @@ public:
         
         std::cout << std::endl;
     }
+    static void TWO() {
+        BoolOps_02();
+    }
+
+private:
+    static void BoolOps_01() {
+        BinaryBzet a1("1111#");
+        BinaryBzet b1("0000#");
         
+        BinaryBzet and1("0#");
+        assert(and1 == (a1 & b1));
+        std::cout << "AND Test Passed\n";
+        
+        BinaryBzet nand1("1111#");
+        assert(nand1 == (a1.NAND(b1)));
+        std::cout << "AND Test Passed\n";
+        
+        BinaryBzet or1("1111#");
+        assert(or1 == (a1 | b1));
+        std::cout << "OR  Test Passed\n";
+        
+        BinaryBzet xor1("1111#");
+        assert(xor1 == (a1 ^ b1));
+        std::cout << "XOR Test Passed\n";
+        
+        BinaryBzet nor1("0#");
+        assert(nor1 == (a1.NOR(b1)));
+        std::cout << "NOR Test Passed\n";
+        
+//        BinaryBzet imp1("1111#");
+//        OUTCOME_LOG(imp1, a1.Implication(b1));
+//        assert(imp1 == (a1.Implication(b1)));
+//        std::cout << "Implication Test Passed\n";
+//        
+//        BinaryBzet nonImp1("1111#");
+//        assert(nonImp1 == (a1.NonImplication(b1)));
+//        std::cout << "NonImplication Test Passed\n";
+        
+        BinaryBzet conImp1("1111#");
+        assert(conImp1 == a1.ConverseImplication(b1));
+        std::cout << "ConverseImplication Test Passed\n";
+        
+        BinaryBzet notA("0#");
+        assert(notA == a1.NotA(b1));
+        std::cout << "NotA Test Passed\n";
+        
+        BinaryBzet notB("1111#");
+        assert(notB == a1.NotB(b1));
+        std::cout << "NotB Test Passed\n";
+        
+        assert(a1 == a1.A(b1));
+        std::cout << "A(...) Test Passed\n";
+        
+        assert(b1 == a1.B(b1));
+        std::cout << "B(...) Test Passed\n";
+        
+        std::cout << std::endl;
+    }
+    static void BoolOps_02() {
+        BinaryBzet a2("10010111#");
+        BinaryBzet b2("01010101#");
+        
+        BinaryBzet and2("00010101#");
+        assert(and2 == (a2 & b2));
+        std::cout << "AND Test Passed\n";
+        
+        BinaryBzet nand2("11101010#");
+        assert(nand2 == (a2.NAND(b2)));
+        std::cout << "NAND Test Passed\n";
+        
+        BinaryBzet or2("11010111#");
+        assert(or2 == (a2 | b2));
+        std::cout << "OR  Test Passed\n";
+        
+        BinaryBzet xor2("11000010#");
+        assert(xor2 == (a2 ^ b2));
+        std::cout << "XOR Test Passed\n";
+        
+        BinaryBzet nor2("00101000#");
+        assert(nor2 == (a2.NOR(b2)));
+        std::cout << "NOR Test Passed\n";
+//        
+//        BinaryBzet imp1("1111#");
+//        OUTCOME_LOG(imp1, a1.Implication(b1));
+//        assert(imp1 == (a1.Implication(b1)));
+//        std::cout << "Implication Test Passed\n";
+//        
+//        BinaryBzet nonImp1("1111#");
+//        assert(nonImp1 == (a1.NonImplication(b1)));
+//        std::cout << "NonImplication Test Passed\n";
+//        
+//        BinaryBzet conImp1("1111#");
+//        assert(conImp1 == a1.ConverseImplication(b1));
+//        std::cout << "ConverseImplication Test Passed\n";
+        
+        BinaryBzet notA("01101000#");
+        assert(notA == a2.NotA(b2));
+        std::cout << "NotA Test Passed\n";
+        
+        BinaryBzet notB("10101010#");
+        assert(notB == a2.NotB(b2));
+        std::cout << "NotB Test Passed\n";
+        
+        assert(a2 == a2.A(b2));
+        std::cout << "A(...) Test Passed\n";
+        
+        assert(b2 == a2.B(b2));
+        std::cout << "B(...) Test Passed\n";
+        
+        std::cout << std::endl;
+    }
 };
 
 
