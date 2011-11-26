@@ -81,7 +81,7 @@ public:
 	uint countBits ();
 	uint getFirstBit (); // returns c_uint_max is none are found
 	uint getLastBit ();	// returns c_uint_max is none are found
-	vector<uint> bitList ();
+	vector<uint> bitList();
 	
 	bool AlignCompare (const BinaryBzet& other);
 

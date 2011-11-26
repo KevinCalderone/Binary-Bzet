@@ -1,5 +1,6 @@
 ﻿  BinaryBzet.cpp
   main.cpp
+c:\users\gntea\binary-bzet\binary bzet\binary bzet\Test.h(253): warning C4293: '<<' : shift count negative or too big, undefined behavior
   Generating code
   Finished generating code
   Binary Bzet (64bit).vcxproj -> C:\Users\Gntea\Binary-Bzet\Binary Bzet\Release\Binary Bzet (64bit).exe

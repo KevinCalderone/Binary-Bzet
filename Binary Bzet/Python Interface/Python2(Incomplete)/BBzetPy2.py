@@ -23,6 +23,7 @@ class BZET(object):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
 		if type(input)== type(""):
+			input+=str('#')
 			self.obj = lib.BinaryBzet_new_string(c_char_p(input))
 		else:
 			self.obj = lib.BinaryBzet_new()
@@ -35,6 +36,32 @@ class BZET(object):
 		return lib.BinaryBzet_size(self.obj)
 	size.restype = int
 
+	def set(self, index):
+		lib.BinaryBzet_set(self.obj, c_uint(index))
+	
+	def unset(self, index):
+		lib.BinaryBzet_unset(self.obj, c_uint(index))
+
+	def flip(self, index):
+		lib.BinaryBzet_flip(self.obj, c_uint(index))
+
+	def clean(self):
+		lib.BinaryBzet_clean(self.obj)
+
+	def countBits(self):
+		return lib.BinaryBzet_countBits(self.obj)
+	countBits.restype = c_uint
+
+	def getFirstBit(self):
+		return lib.BinaryBzet_getFirstBit(self.obj)
+	getFirstBit.restype = c_uint
+
+	def getLastBit(self):
+		return lib.BinaryBzet_getLastBit(self.obj)
+	getLastBit.restype = c_uint
+
+
+	#Print Functions
 	def getBzetPretty(self):
 		output_ptr = c_char_p('rawr')
 		lib.BinaryBzet_getBzetPretty(self.obj,output_ptr)
@@ -46,6 +73,11 @@ class BZET(object):
 		lib.BinaryBzet_getBzetString(self.obj,output_ptr)
 		return output_ptr.value
 	getBzetString.restype = str
+    
+	def TESTAND(self, other):
+		output = BZET()
+		lib.BinaryBzet_TEST_AND(self.obj, other.obj, output.obj)
+		return output
 
 	def __or__    (self,other): return self.OR(other)
 	def __and__   (self,other): return self.AND(other)
@@ -161,14 +193,16 @@ class BZET(object):
 		lib.BinaryBzet_slice(self.obj, c_uint(startIndex), c_uint(endIndex), output.obj)
 		return output
 	
-	def bitList(self, maxSize):
-		nums = (c_ulong * maxSize)()
-		lib.BinaryBzet_bitList(self.obj, byref(nums), maxSize)
-		return nums
+	#def LIST_T(self):
+	#	output = lib.BinaryBzet_bitList(self.obj)
+	#	print type(output)
+	#	return output
+	#LIST_T.restype = py_object
+	
 
-x = BZET("00001111#")
-x = BZET("1, 2, 3")
-
+x = BZET("00001111")
+y = x.LIST_T()
+print y
 strA = x.getBzetString()
 strB = x.getBzetPretty()
 print strA
