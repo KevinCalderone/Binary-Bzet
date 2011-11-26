@@ -2047,6 +2047,13 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 			itB++;
 		}
 	}
+	else if(operation.compare("~^") == 0)	{
+				for(itA; itA != data1.end(); itA++)	{
+			bool axorb = (*itA) ^ (*itB);
+			bzetRet.push_back(axorb ? 0:1);
+			itB++;
+		}
+	}
 	else if(operation.compare("<-") == 0)	{
 		for(itA; itA != data1.end(); itA++)	{
 			bzetRet.push_back((*itA) | (~(*itB)));

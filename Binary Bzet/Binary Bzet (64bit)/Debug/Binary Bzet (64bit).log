@@ -1,4 +1,4 @@
-﻿Build started 11/25/2011 3:20:27 PM.
+﻿Build started 11/25/2011 11:26:15 PM.
      1>Project "C:\Users\Koyama\Desktop\gitcs130\Binary-Bzet\Binary Bzet\Binary Bzet (64bit)\Binary Bzet (64bit).vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Binary Bzet (64bit).unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -19,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.14
+Time Elapsed 00:00:04.57

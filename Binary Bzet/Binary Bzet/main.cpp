@@ -103,6 +103,20 @@ int main()
 	cout << d.slice(2,6).getBzetString()<<endl;
 	cout << a.compare(b)<<endl;
 	cout << b.compare(a)<<endl;
+
+	
+	BinaryBzet a1("1111#");
+	BinaryBzet b1("0000#");
+	cout << a1.getBzetString() << endl;
+	cout << b1.getBzetString() << endl;
+
+	BinaryBzet result = a1.Implication(b1);
+	cout << result.getBzetString() << endl;
+
+
+	BinaryBzet x = BinaryBzet("00001111#");
+	BinaryBzet y = x.EQ(x);
+	cout << y.getBzetString() << endl;
 	/*a.set(1);
 	cout << a.getBzetString() <<endl;
 	cout << a.getBzetPretty() <<endl;
