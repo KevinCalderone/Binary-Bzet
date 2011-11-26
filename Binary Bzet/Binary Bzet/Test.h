@@ -283,10 +283,9 @@ private:
         
         // for some reason a1.Implication(b1).getBzetString() returns "2:1" instead of "1:0" (returns the latter for kevin)"
         // i have commented this out
-//        BinaryBzet imp1("0#");
-//        OUTCOME_LOG(imp1, a1.Implication(b1));
-//        assert(imp1 == (a1.Implication(b1)));
-//        TESTPASSED_LOG("Implication");
+        BinaryBzet imp1("0#");
+        assert(imp1 == (a1.Implication(b1)));
+        TESTPASSED_LOG("Implication");
         
         BinaryBzet nonImp1("1111#");
         assert(nonImp1 == (a1.NonImplication(b1)));
@@ -315,9 +314,7 @@ private:
     static void   two() {
         BinaryBzet a2("10010111#");
         BinaryBzet b2("01010101#");
-        
-        
-        
+                
         assert(a2.getFirstBit() == 0);
         assert(a2.getLastBit() == 7);
         assert(a2.countBits() == 5);
@@ -356,19 +353,18 @@ private:
         BinaryBzet nor2("00101000#");
         assert(nor2 == (a2.NOR(b2)));
         TESTPASSED_LOG("NOR");
-//        
-//        BinaryBzet imp1("1111#");
-//        OUTCOME_LOG(imp1, a1.Implication(b1));
-//        assert(imp1 == (a1.Implication(b1)));
-//        std::cout << "Implication Test Passed\n";
-//        
-//        BinaryBzet nonImp1("1111#");
-//        assert(nonImp1 == (a1.NonImplication(b1)));
-//        std::cout << "NonImplication Test Passed\n";
-//        
-//        BinaryBzet conImp1("1111#");
-//        assert(conImp1 == a1.ConverseImplication(b1));
-//        std::cout << "ConverseImplication Test Passed\n";
+        
+        BinaryBzet imp1("01111101#");
+        assert(imp1 == (a2.Implication(b2)));
+        std::cout << "Implication Test Passed\n";
+        
+        BinaryBzet nonImp1("10000010#");
+        assert(nonImp1 == (a2.NonImplication(b2)));
+        std::cout << "NonImplication Test Passed\n";
+        
+        BinaryBzet conImp1("10111111#");
+        assert(conImp1 == a2.ConverseImplication(b2));
+        std::cout << "ConverseImplication Test Passed\n";
         
         BinaryBzet notA("01101000#");
         assert(notA == a2.NotA(b2));
@@ -389,9 +385,7 @@ private:
     static void three() {
         BinaryBzet a3("0110100000010101#");
         BinaryBzet b3("1100001011000010#");
-        
-        
-        
+      
         assert(a3.getFirstBit() == 1);
         assert(a3.getLastBit() == 15);
         assert(a3.countBits() == 6);
@@ -433,18 +427,17 @@ private:
         assert(nor3 == (a3.NOR(b3)));
         TESTPASSED_LOG("NOR");
         
-//        BinaryBzet imp1("1111#");
-//        OUTCOME_LOG(imp1, a1.Implication(b1));
-//        assert(imp1 == (a1.Implication(b1)));
-//        std::cout << "Implication Test Passed\n";
-//        
-//        BinaryBzet nonImp1("1111#");
-//        assert(nonImp1 == (a1.NonImplication(b1)));
-//        std::cout << "NonImplication Test Passed\n";
-//        
-//        BinaryBzet conImp1("1111#");
-//        assert(conImp1 == a1.ConverseImplication(b1));
-//        std::cout << "ConverseImplication Test Passed\n";
+        BinaryBzet imp1("1101011111101010#");
+        assert(imp1 == (a3.Implication(b3)));
+        std::cout << "Implication Test Passed\n";
+        
+        BinaryBzet nonImp1("0010100000010101#");
+        assert(nonImp1 == (a3.NonImplication(b3)));
+        std::cout << "NonImplication Test Passed\n";
+        
+        BinaryBzet conImp1("0111110100111101#");
+        assert(conImp1 == a3.ConverseImplication(b3));
+        std::cout << "ConverseImplication Test Passed\n";
         
         BinaryBzet notA("1001011111101010#");
         assert(notA == a3.NotA(b3));
@@ -464,9 +457,7 @@ private:
     }
     static void  four() {
         BinaryBzet a4("10010111111010101100001011000010#");
-        BinaryBzet b4("00000000000000001001001000011101#");
-        
-        
+        BinaryBzet b4("00000000000000001001001000011101#");      
         
         assert(a4.getFirstBit() == 0);
         assert(a4.getLastBit() == 30);
@@ -507,18 +498,17 @@ private:
         assert(nor4 == (a4.NOR(b4)));
         TESTPASSED_LOG("NOR");
         
-//        BinaryBzet imp1("1111#");
-//        OUTCOME_LOG(imp1, a1.Implication(b1));
-//        assert(imp1 == (a1.Implication(b1)));
-//        std::cout << "Implication Test Passed\n";
-//        
-//        BinaryBzet nonImp1("1111#");
-//        assert(nonImp1 == (a1.NonImplication(b1)));
-//        std::cout << "NonImplication Test Passed\n";
-//        
-//        BinaryBzet conImp1("1111#");
-//        assert(conImp1 == a1.ConverseImplication(b1));
-//        std::cout << "ConverseImplication Test Passed\n";
+        BinaryBzet imp1("01101000000101011011111100111101#");
+        assert(imp1 == (a4.Implication(b4)));
+        std::cout << "Implication Test Passed\n";
+        
+        BinaryBzet nonImp1("10010111111010100100000011000010#");
+        assert(nonImp1 == (a4.NonImplication(b4)));
+        std::cout << "NonImplication Test Passed\n";
+        
+        BinaryBzet conImp1("11111111111111111110111111100010#");
+        assert(conImp1 == a4.ConverseImplication(b4));
+        std::cout << "ConverseImplication Test Passed\n";
         
         BinaryBzet notA("01101000000101010011110100111101#");
         assert(notA == a4.NotA(b4));
@@ -539,8 +529,8 @@ private:
     static void  five() {
         BinaryBzet a5("0000010010010000111010100001110100000110000000001000001000000011#");
         BinaryBzet b5("0100000000100000000011101000011101000001100000000000000010010010#");
-        
-        
+					   
+					   
         
         assert(a5.getFirstBit() == 5);
         assert(a5.getLastBit() == 63);
@@ -582,18 +572,17 @@ private:
         assert(nor4 == (a5.NOR(b5)));
         TESTPASSED_LOG("NOR");
         
-//        BinaryBzet imp1("1111#");
-//        OUTCOME_LOG(imp1, a1.Implication(b1));
-//        assert(imp1 == (a1.Implication(b1)));
-//        std::cout << "Implication Test Passed\n";
-//        
-//        BinaryBzet nonImp1("1111#");
-//        assert(nonImp1 == (a1.NonImplication(b1)));
-//        std::cout << "NonImplication Test Passed\n";
-//        
-//        BinaryBzet conImp1("1111#");
-//        assert(conImp1 == a1.ConverseImplication(b1));
-//        std::cout << "ConverseImplication Test Passed\n";
+        BinaryBzet imp1("1111101101101111000111111110011111111001111111110111110111111110#");
+        assert(imp1 == (a5.Implication(b5)));
+        std::cout << "Implication Test Passed\n";
+        
+        BinaryBzet nonImp1("0000010010010000111000000001100000000110000000001000001000000001#");
+        assert(nonImp1 == (a5.NonImplication(b5)));
+        std::cout << "NonImplication Test Passed\n";        
+        
+		BinaryBzet conImp1("1011111111011111111110110111110110111110011111111111111101101111#");
+        assert(conImp1 == a5.ConverseImplication(b5));
+        std::cout << "ConverseImplication Test Passed\n";
         
         BinaryBzet notA("1111101101101111000101011110001011111001111111110111110111111100#");
         assert(notA == a5.NotA(b5));
