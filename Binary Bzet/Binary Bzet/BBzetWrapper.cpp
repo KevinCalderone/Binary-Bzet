@@ -116,7 +116,7 @@ DLLEXPORT void BinaryBzet_slice(BinaryBzet* BBObj, uint startIndex, uint endInde
 	uint size = bits.size();
     PyObject* list  = PyTuple_New(size);
     for (uint i = 0; i < size; i++) {
-		/* convert resulting array [0/1] to PyObject */
+		///convert resulting array [0/1] to PyObject 
 		PyTuple_SetItem(list, i, (PyObject*)bits[i]);
 	}
 	return list;

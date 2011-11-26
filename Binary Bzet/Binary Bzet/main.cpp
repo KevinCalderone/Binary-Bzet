@@ -8,8 +8,8 @@
 
 int main()
 {
-    //Test::RUN_32Bit();
-//    Test::RUN_64Bit(); // inplementing next
+    Test::RUN_32Bit();
+//    Test::RUN_64Bit(); // WARNING: This will take a long time to run!
 	/*
 	BinaryBzet a(0);
 	BinaryBzet::getLastBitTest ();
@@ -98,14 +98,25 @@ int main()
 	BinaryBzet b = BinaryBzet("00001111#");
 	BinaryBzet c = BinaryBzet("00001111#");
 	BinaryBzet d = BinaryBzet("00111000#");
-	cout << a.bitList().at(0)<<endl;
-	cout << a.bitList().at(1)<<endl;
-	cout << a.bitList().at(2)<<endl;
 	cout << a.equals(b) <<endl;//false
 	cout << b.equals(c) <<endl;//true
 	cout << d.slice(2,6).getBzetString()<<endl;
 	cout << a.compare(b)<<endl;
 	cout << b.compare(a)<<endl;
+
+	
+	BinaryBzet a1("1111#");
+	BinaryBzet b1("0000#");
+	cout << a1.getBzetString() << endl;
+	cout << b1.getBzetString() << endl;
+
+	BinaryBzet result = a1.Implication(b1);
+	cout << result.getBzetString() << endl;
+
+
+	BinaryBzet x = BinaryBzet("00001111#");
+	BinaryBzet y = x.EQ(x);
+	cout << y.getBzetString() << endl;
 	/*a.set(1);
 	cout << a.getBzetString() <<endl;
 	cout << a.getBzetPretty() <<endl;

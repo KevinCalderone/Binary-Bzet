@@ -62,24 +62,16 @@ BinaryBzet::BinaryBzet() {
    each 1 in the BINARY BITSTRING. If a step
    lands the index on indexe, that bit will
    be turned OFF */
-BinaryBzet::BinaryBzet(uint indexi, uint indexe, uint step){
+BinaryBzet::BinaryBzet(uint indexi, uint indexe, uint step)
+{
 	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step < 0)
+	{
+		bitstringToBzet("0#");
 		return;
+	}
 	bitR* bitr = new bitR();
 	bitr->add(indexi,indexe,step);
 	generateBzet(bitr);
-	/*string temp;
-	temp.append(indexi, '0');
-	int a = step;
-	for(indexi;indexi<indexe;indexi++){
-		if(a==step){
-			temp+="1"; a=0;}
-		else{
-			temp+="0"; a++;}
-	}
-	while(temp.length()<=indexe)
-		temp+="0";
-	bitstringToBzet(temp);*/
 }
 
 BinaryBzet::BinaryBzet(string bitstring){
@@ -601,6 +593,8 @@ void BinaryBzet::getLastBitTest () {
 
 void BinaryBzet::bitstringToBzet(string bitstring)
 {
+	uint templength = bitstring.find_last_of('1')+1;
+	bitstring = bitstring.substr(0, templength);
 	string input = "";
 	uint i = 1;
 	for(i;i<31;i++)
@@ -669,7 +663,7 @@ void BinaryBzet::generateBzet(bitR* bitr)
 {
 	uint i = 1;//31
 	for(i;i<sizeof(size_t)*8-1;i++)
-		if(bitr->size()<(uint)(1<<i))
+		if(bitr->size()<=(uint)(1<<i))
 			break;
 	uint bitstringsize = 1<<i;
 	m_depth = 1;
@@ -2044,6 +2038,13 @@ vector<bool> BinaryBzet::doDataOp(string operation, vector<bool> data1, vector<b
 		for(itA; itA != data1.end(); itA++)	{
 			bool aorb = (*itA) | (*itB);
 			bzetRet.push_back(aorb ? 0:1);
+			itB++;
+		}
+	}
+	else if(operation.compare("~^") == 0)	{
+				for(itA; itA != data1.end(); itA++)	{
+			bool axorb = (*itA) ^ (*itB);
+			bzetRet.push_back(axorb ? 0:1);
 			itB++;
 		}
 	}
