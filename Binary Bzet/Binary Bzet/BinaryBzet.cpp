@@ -30,7 +30,9 @@ static string g_binOp[][6]  = {
 
 
 BinaryBzet::BinaryBzet() {
-	m_depth = 0;
+	m_depth = 1;
+	m_bzet.push_back(0);
+	m_bzet.push_back(0);
 }
 
 /* index is the index of the bit in the
