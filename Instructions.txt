@@ -1,11 +1,37 @@
-Instruction for how to setup the Python Module (Not using SWIG):
+==================================================================
+Instruction for how to build and run the Python Modules
+==================================================================
+
+------------------------------------------------------------------
+Notes
+------------------------------------------------------------------
+
+	The project files for the DLLs are configured for Visual Studio
+Express 2010.  To be able to run these modules on a system that does not
+have visual studio installed, you must first install the Visual Studio
+Redistributable Package which can be found at the follow link:
+
+32-bit Version:
+	http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=5555
+
+	The current DLL projects are configured for 32-bit.  If you build 
+them in 64-bit, you will need to instal the 64-bit version of the Visual 
+Studio Redistributable Package which can be found here:
+
+64-bit Version:
+	http://www.microsoft.com/download/en/details.aspx?id=14632
+
+
+------------------------------------------------------------------
+Python 2 Version
+------------------------------------------------------------------
 
 If want to make change to wrapper
-  1. open the  "Binary Bzet" project >> "Python2DLL" >> Souce Files >> "BBzetWrapper.cpp"
-  2. Save Change, built Python2DLL
-  3. Move Python2DLL to folder that contains BBzetPy2.py (should be in the same folder as the wrapper)  
+  1. Open the "Binary Bzet" project >> "Python2DLL" >> Source Files >> "BBzetWrapper.cpp"
+  2. Save you changes and built Python2DLL
+  3. Move BBzetPy2.dll to folder that contains BBzetPy2.py (should be in the same folder as the wrapper)  
 
-To Run the Python Module in Python 2:
+To Run the Python Module in the included Python 2 executable:
 1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python2
 2. Open python2.exe
 3. In the python shell:
@@ -13,46 +39,39 @@ To Run the Python Module in Python 2:
 	x = BZET([2,(5,7)])
 	x.getBzetString()
 
-
-To Run the Python Module in Python 3:
-1. Go To ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
-2. Open python3.exe
-3. In Python shell:
-	from BBzetPy3 import BZET
-	x = Bzet([2,(5,7)])
+To Run the Python 2 Module through IDLE:
+1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python2
+2. Copy BBzetPy2.py into Python27\Lib\site-packages
+3. Copy BBzetPy2.dll into Python27\
+4. Run IDLE which can be found in Python27\Lib\idlelib
+5. In the python shell:
+	from BBzetPy2 import BZET
+	x = BZET([2,(5,7)])
 	x.getBzetString()
 
--------------------------------------------------
-Instructions for how to setup the Python Module.  
-(We should make this into a script later.)
+------------------------------------------------------------------
+Python 3 Version
+------------------------------------------------------------------
 
-1. Update the wrapper file by running SWIG in the command line:
-swig.exe -c++ -python -o mymodule_wrap.cpp mymodule.i
+If want to make change to wrapper
+  1. open the  "Binary Bzet" project >> "Python3DLL" >> Source Files >> "BBzetWrapper.cpp"
+  2. Save your changes and built Python3DLL
+  3. Move Python3DLL.dll to folder that contains BBzetPy3.py (should be in the same folder as the wrapper)  
 
-2. Build the .DLL file by compiling one of the .DLL projects.  One of them will link against the Python 2 library, and the other against the Python 3 library.  Make sure you build it in release mode.
-
-3. Copy the .DLL into the folder that contains mymodule.py, and rename the .DLL to _mymodule.pyd.
-
-4. Run python and import the module.
-
-For example:
-	"import mymodule"
-	"x = mymodule.BinaryBzet(3)"
-	"x.getBzetString()"
-
-------------------------------------------------
-To Run the Python Module in Python 2:
-1. Go to ~\Binary-Bzet\BinaryBzet\Binary Bzet
-2. Open python.exe
+To Run the Python Module in the included Python 3 executable:
+1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
+2. Open python3.exe
 3. In the python shell:
-	import mymodule
-	x = mymoduel.BinaryBzet()
+	from BBzetPy2 import BZET
+	x = BZET([2,(5,7)])
 	x.getBzetString()
-------------------------------------------------
-To Run the Python Module in Python 3:
-1. Go to ~\Binary-Bzet\BinaryBzet\Python3DLL\Python3DLL
-2. Open python3.exe
-3. In the Python shell:
-	import mymodule
-	x = mymodule.BinaryBzet()
-	x.getBzetstring()
+
+To Run the Python 3 Module through IDLE:
+1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
+2. Copy BBzetPy3.py into Python32\Lib\site-packages
+3. Copy BBzetPy3.dll into Python32\
+4. Run IDLE which can be found in Python32\Lib\idlelib
+5. In the python shell:
+	from BBzetPy2 import BZET
+	x = BZET([2,(5,7)])
+	x.getBzetString()

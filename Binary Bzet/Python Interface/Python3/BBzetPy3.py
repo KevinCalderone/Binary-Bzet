@@ -1,6 +1,6 @@
 from ctypes import *
 import ctypes
-lib = cdll.LoadLibrary('Python3DLL.dll')
+lib = cdll.LoadLibrary('BBzetPy3.dll')
 
 class BITR(object):
 	def __init__(self):
@@ -22,7 +22,7 @@ class BZET(object):
 	def __init__(self,input=None):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
-		if type(input)== type(""):
+		elif type(input)== type(""):
 			self.obj = lib.BinaryBzet_new_string(c_char_p(input.encode()))
 		else:
 			self.obj = lib.BinaryBzet_new()
@@ -198,30 +198,15 @@ class BZET(object):
 		for i in range(0, size):
 			output.append(list[i])
 		return output
-
-x = BZET("00001111#")
-strA = x.getBzetString()
-strB = x.getBzetPretty()
-y = x.FALSE(x)
-y = x.AND(x)
-y = x.NonImplication(x)
-y = x.A(x)
-y = x.ConverseNonImplication(x)
-y = x.B(x)
-y = x.XOR(x)
-y = x.OR(x)
-y = x.NOR(x)
-y = x.EQ(x)
-y = x.NotB(x)
-y = x.ConverseImplication(x)
-y = x.NotA(x)
-y = x.Implication(x)
-y = x.NAND(x)
-y = x.TRUE(x)
-a = BZET("00001110#");
-b = BZET("00001111#");
-c = BZET("00001111#");
-d = BZET("00111000#");
-a.equals(b)
-b.equals(c)
-d.slice(2,6).getBzetString();
+        
+	def test(self, index):
+		return lib.BinaryBzet_test(self.obj, c_uint(index))
+    
+	def __getitem__(self, key):
+		return self.test(key)
+        
+	def __setitem__(self, key, value):
+		if (key == 0):
+			self.set(key)
+		else:
+			self.unset(key);

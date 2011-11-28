@@ -1,6 +1,6 @@
 from ctypes import *
 import ctypes
-lib = cdll.LoadLibrary('Python2DLL.dll')
+lib = cdll.LoadLibrary('BBzetPy2.dll')
 
 class BITR(object):
 	def __init__(self):
@@ -23,17 +23,7 @@ class BZET(object):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
 		elif type(input)== type(""):
-			input+=str('#')
 			self.obj = lib.BinaryBzet_new_string(c_char_p(input))
-		elif type(input) == type([]):
-			self.obj = lib.BinaryBzet_new()
-			self.unset(0);
-			for item in input:
-				if type(item)==type(1):
-					self.set(item);
-				elif type(item)== type((1,2)):
-					for index in range(item[0], item[1]+1):
-						self.set(index)
 		else:
 			self.obj = lib.BinaryBzet_new()
 	
@@ -211,50 +201,14 @@ class BZET(object):
 			output.append(list[i])
 		return output
 
-x = BZET("00001111")
-y = BZET([(2,6),7])
-print y.getBzetString()
-print x.LIST_T()
-strA = x.getBzetString()
-strB = x.getBzetPretty()
-print strA
-print strB
-y = x.FALSE(x)
-print "41"
-y = x.AND(x)
-print "31"
-y = x.NonImplication(x)
-print "1"
-y = x.A(x)
-print "2"
-y = x.ConverseNonImplication(x)
-print "7"
-y = x.B(x)
-print "6"
-y = x.XOR(x)
-print "5"
-y = x.OR(x)
-print "4"
-y = x.NOR(x)
-print "81"
-y = x.EQ(x)
-print "8"
-y = x.NotB(x)
-print "19"
-y = x.ConverseImplication(x)
-print "7771"
-y = x.NotA(x)
-print "771"
-y = x.Implication(x)
-print "17"
-y = x.NAND(x)
-print "177577"
-y = x.TRUE(x)
-print "1773774"
-a = BZET("00001110#");
-b = BZET("00001111#");
-c = BZET("00001111#");
-d = BZET("00111000#");
-print a.equals(b)
-print b.equals(c)
-print d.slice(2,6).getBzetString();
+	def test(self, index):
+		return lib.BinaryBzet_test(self.obj, c_uint(index))
+        
+	def __getitem__(self, key):
+		return self.test(key)
+        
+	def __setitem__(self, key, value):
+		if (key == 0):
+			self.set(key)
+		else:
+			self.unset(key);

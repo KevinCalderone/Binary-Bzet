@@ -2288,7 +2288,7 @@ void BinaryBzet::clean()
 
 uint BinaryBzet::size()
 {
-	return m_bzet.capacity();
+	return (m_bzet.size() / 8) + 1;
 }
 
 bool BinaryBzet::test(uint index) 

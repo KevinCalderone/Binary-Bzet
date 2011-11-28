@@ -116,4 +116,9 @@ DLLEXPORT void BinaryBzet_bitList(BinaryBzet* BBObj, uint* list){
 	memcpy(list, &bits[0], bits.size()* sizeof(uint));
 }
 
+//Test a bit
+DLLEXPORT bool BinaryBzet_test(BinaryBzet* BBObj, uint index){
+	return BBObj->test(index);
+}
+
 #endif

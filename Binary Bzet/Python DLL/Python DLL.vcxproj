@@ -58,6 +58,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Python27\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Python27\libs;$(LibraryPath)</LibraryPath>
+    <TargetName>BBzetPy2</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

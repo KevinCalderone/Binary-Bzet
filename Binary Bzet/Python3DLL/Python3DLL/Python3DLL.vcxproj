@@ -87,6 +87,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Python32\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Python32\libs;$(LibraryPath)</LibraryPath>
+    <TargetName>BBzetPy3</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
