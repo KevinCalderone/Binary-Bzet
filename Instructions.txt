@@ -36,7 +36,7 @@ To Run the Python Module in the included Python 2 executable:
 2. Open python2.exe
 3. In the python shell:
 	from BBzetPy2 import BZET
-	x = BZET([2,(5,7)])
+	x = BZET("2, (5, 7)")
 	x.getBzetString()
 
 To Run the Python 2 Module through IDLE:
@@ -46,7 +46,7 @@ To Run the Python 2 Module through IDLE:
 4. Run IDLE which can be found in Python27\Lib\idlelib
 5. In the python shell:
 	from BBzetPy2 import BZET
-	x = BZET([2,(5,7)])
+	x = BZET("2, (5, 7)")
 	x.getBzetString()
 
 ------------------------------------------------------------------
@@ -63,7 +63,7 @@ To Run the Python Module in the included Python 3 executable:
 2. Open python3.exe
 3. In the python shell:
 	from BBzetPy2 import BZET
-	x = BZET([2,(5,7)])
+	x = BZET("2, (5, 7)")
 	x.getBzetString()
 
 To Run the Python 3 Module through IDLE:
@@ -73,5 +73,5 @@ To Run the Python 3 Module through IDLE:
 4. Run IDLE which can be found in Python32\Lib\idlelib
 5. In the python shell:
 	from BBzetPy2 import BZET
-	x = BZET([2,(5,7)])
+	x = BZET("2, (5,7)")
 	x.getBzetString()
