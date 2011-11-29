@@ -49,7 +49,7 @@ class BZET(object):
 
 	def COUNT(self):
 		return lib.BinaryBzet_countBits(self.obj)
-	countBits.restype = c_uint
+	COUNT.restype = c_uint
 
 	def getFirstBit(self):
 		return lib.BinaryBzet_getFirstBit(self.obj)
