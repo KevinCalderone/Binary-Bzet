@@ -83,7 +83,10 @@ class BZET(object):
 	def __ior__   (self,other): return self.OR(other)
 	def __iand__  (self,other): return self.AND(other)
 	def __ixor__  (self,other): return self.XOR(other)
-	
+
+	def NOT(self):
+		return ~self
+
 	def FALSE(self, other):
 		output = BZET()
 		lib.BinaryBzet_FALSE(self.obj, other.obj, output.obj)
