@@ -41,8 +41,7 @@ To Run the Python Module in the included Python 2 executable:
 
 To Run the Python 2 Module through IDLE:
 1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python2
-2. Copy BBzetPy2.py into Python27\Lib\site-packages
-3. Copy BBzetPy2.dll into Python27\
+2. Copy BBzetPy2.py and BBzetPy2.dll into Python27\Lib\site-packages
 4. Run IDLE which can be found in Python27\Lib\idlelib
 5. In the python shell:
 	from BBzetPy2 import BZET
@@ -68,8 +67,7 @@ To Run the Python Module in the included Python 3 executable:
 
 To Run the Python 3 Module through IDLE:
 1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
-2. Copy BBzetPy3.py into Python32\Lib\site-packages
-3. Copy BBzetPy3.dll into Python32\
+2. Copy BBzetPy3.py and BBzetPy3.dll into Python32\Lib\site-packages
 4. Run IDLE which can be found in Python32\Lib\idlelib
 5. In the python shell:
 	from BBzetPy2 import BZET

@@ -1,6 +1,11 @@
 from ctypes import *
 import ctypes
-lib = cdll.LoadLibrary('BBzetPy3.dll')
+import sys
+from os.path import dirname
+                                                # __file__ gets the full path of this pgm
+dlldir = dirname(__file__)                      # this strips it to the directory only
+dlldir.replace( '\\', '\\\\' )                  # Replaces \ with \\ in dlldir
+lib = cdll.LoadLibrary(dlldir+'\\BBzetPy3.dll') # Loads from the full path to your module.
 
 class BITR(object):
 	def __init__(self):
@@ -51,13 +56,13 @@ class BZET(object):
 		return lib.BinaryBzet_countBits(self.obj)
 	COUNT.restype = c_uint
 
-	def getFirstBit(self):
+	def FIRST(self):
 		return lib.BinaryBzet_getFirstBit(self.obj)
-	getFirstBit.restype = c_uint
+	FIRST.restype = c_uint
 
-	def getLastBit(self):
+	def LAST(self):
 		return lib.BinaryBzet_getLastBit(self.obj)
-	getLastBit.restype = c_uint
+	LAST.restype = c_uint
 
 
 	def getBzetPretty(self):
@@ -209,7 +214,7 @@ class BZET(object):
 		return self.test(key)
         
 	def __setitem__(self, key, value):
-		if (key == 0):
+		if (value == 1):
 			self.set(key)
 		else:
 			self.unset(key);
