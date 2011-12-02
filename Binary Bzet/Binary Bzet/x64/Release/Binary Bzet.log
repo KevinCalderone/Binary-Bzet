@@ -1,0 +1,21 @@
+﻿Build started 12/2/2011 11:20:54 AM.
+     1>Project "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet\Binary Bzet.vcxproj" on node 2 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Release\".
+       InitializeBuildStatus:
+         Creating "x64\Release\Binary Bzet.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt BinaryBzet.cpp main.cpp
+         BinaryBzet.cpp
+     1>BinaryBzet.cpp(160): warning C4267: 'return' : conversion from 'size_t' to 'u8', possible loss of data
+     1>BinaryBzet.cpp(603): warning C4334: '<<' : result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?)
+         main.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Release\Binary Bzet.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"x64\Release\Binary Bzet.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Release\Binary Bzet.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Release\Binary Bzet.lib" /MACHINE:X64 x64\Release\BinaryBzet.obj
+         x64\Release\main.obj
+     1>LINK : fatal error LNK1181: cannot open input file 'kernel32.lib'
+     1>Done Building Project "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet\Binary Bzet.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.66
