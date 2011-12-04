@@ -59,9 +59,10 @@ while nextp < limit:
         print( "No more primes." )
         break
     # print( "Doing", "%06d"%count, "%06d"%nextp )
-    for ix in range( nextp*nextp, maxsize, nextp ):
-        notprime.set(ix)
-
+    #for ix in range( nextp*nextp, maxsize, nextp ):
+    #    notprime.set(ix)
+    notprime |= BZET( [ (nextp*nextp, maxsize, nextp-1)]  )
+    
 print( "\nAt prime", count, nextp, "there are no more primes less than", \
        maxsize, "\n" )
 primes = notprime.NOT()  # Get the primes

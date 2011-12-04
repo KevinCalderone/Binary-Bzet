@@ -13,7 +13,7 @@ public:
 	void bitR::add(uint start,uint end=0, uint step=0)
 	{
 		if(end==0)	end = start+1;
-		if(end<=start || start<0)	exit(1);
+		if(end<=start || start<0)	return;
 		m_start.push_back(start);
 		m_end.push_back(end);
 		m_step.push_back(step+1);
