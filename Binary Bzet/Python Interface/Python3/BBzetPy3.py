@@ -6,28 +6,40 @@ from os.path import dirname
 dlldir = dirname(__file__)                      # this strips it to the directory only
 dlldir.replace( '\\', '\\\\' )                  # Replaces \ with \\ in dlldir
 lib = cdll.LoadLibrary(dlldir+'\\BBzetPy3.dll') # Loads from the full path to your module.
-
-#To use RANGE(a,b): from BBzetPy3 impot *
-def RANGE(a,b):
-	return BZET([(a,b)])
-
+    
 class BZET(object):
 	def __init__(self,input=None):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
-		elif  type(input)== type(""):
+		elif type(input)== type(""):
 			input += "#"
 			self.obj = lib.BinaryBzet_new_string(c_char_p(input.encode()))
+		elif type(input) == type(1):
+			self.obj = lib.BinaryBzet_new_string(c_char_p(str(input).encode()))
 		elif type(input) == type([]):
 			tempStr = ""
 			for item in input:
 				if type(item)==type(1):
 					tempStr += str(item)+","
 				elif type(item)== type((1,2)):
-					tempStr += "("+str(item[0])+","+str(item[1]+1)+"),"
+					if len(item) == 2:
+						tempStr += "("+str(item[0])+","+str(item[1])+"),"
+					elif len(item) == 3:
+						tempStr += "("+str(item[0])+","+str(item[1])+","+str(item[2])+"),"
 			inputStr = tempStr[:-1]
 			self.obj = lib.BinaryBzet_new_string(c_char_p(inputStr.encode()))
+		else:
+			self.obj = lib.BinaryBzet_new()
 
+    # Explicit Constructors
+	@staticmethod
+	def RANGE(a,b):
+		return BZET([(a,b)])
+        
+	@staticmethod
+	def INT(a):
+		return BZET(a)
+            
 	def LEV(self):
 		return lib.BinaryBzet_getDepth(self.obj)
 	LEV.restype = int
@@ -35,6 +47,9 @@ class BZET(object):
 	def size(self):
 		return lib.BinaryBzet_size(self.obj)
 	size.restype = int
+
+	def str(self):
+		return self.getBzetString();
 
 	def set(self, index):
 		lib.BinaryBzet_set(self.obj, c_uint(index))

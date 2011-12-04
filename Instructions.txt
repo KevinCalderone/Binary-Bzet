@@ -31,26 +31,14 @@ If want to make change to wrapper
   2. Save you changes and built Python2DLL
   3. Move BBzetPy2.dll to folder that contains BBzetPy2.py (should be in the same folder as the wrapper)  
 
-To Run the Python Module in the included Python 2 executable:
-1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python2
-2. Open python2.exe
-3. In the python shell:
-	from BBzetPy2 import BZET
-	x = BZET("2, (5, 7)")
-	x.getBzetString()
-
 To Run the Python 2 Module through IDLE:
 1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python2
 2. Copy BBzetPy2.py and BBzetPy2.dll into Python27\Lib\site-packages
 4. Run IDLE which can be found in Python27\Lib\idlelib
 5. In the python shell:
 	from BBzetPy2 import BZET
-	x = BZET("2, (5, 7)")
+	x = BZET([2, (5, 7)])
 	x.getBzetString()
-
-
-To Use RANGE(a,b):
-Add "from BBzetPy2 import *" on the top the .py file.
 
 ------------------------------------------------------------------
 Python 3 Version
@@ -61,13 +49,6 @@ If want to make change to wrapper
   2. Save your changes and built Python3DLL
   3. Move Python3DLL.dll to folder that contains BBzetPy3.py (should be in the same folder as the wrapper)  
 
-To Run the Python Module in the included Python 3 executable:
-1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
-2. Open python3.exe
-3. In the python shell:
-	from BBzetPy2 import BZET
-	x = BZET("2, (5, 7)")
-	x.getBzetString()
 
 To Run the Python 3 Module through IDLE:
 1. Go to ~\Binary-Bzet\Binary Bzet\Python Interface\Python3
@@ -75,8 +56,5 @@ To Run the Python 3 Module through IDLE:
 4. Run IDLE which can be found in Python32\Lib\idlelib
 5. In the python shell:
 	from BBzetPy2 import BZET
-	x = BZET("2, (5,7)")
+	x = BZET([2, (5, 7)])
 	x.getBzetString()
-
-To Use Range(a,b):
-Add "from BBzetPy3 import *" on the top of the .py file
