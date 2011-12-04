@@ -7,21 +7,9 @@ dlldir = dirname(__file__)                      # this strips it to the director
 dlldir.replace( '\\', '\\\\' )                  # Replaces \ with \\ in dlldir
 lib = cdll.LoadLibrary(dlldir+'\\BBzetPy2.dll') # Loads from the full path to your module.
 
-class BITR(object):
-	def __init__(self):
-		self.obj = lib.bitR_new()
-
-	def bitR_add(self, start, end=0, step=0):
-		return lib.bitR_add(self.obj, c_int(start), c_int(end), c_int(step))
-	
-	def bitR_at(self, index):
-		return lib.bitR_at(self.obj,c_int(index))
-	
-	def bitR_size(self):
-		return lib.bitR_size(self.obj)
-
-	bitR_at.restype = bool
-	bitR_size.restype = int
+#To use RANGE(a,b): from BBzetPy2 impot *
+def RANGE(a, b):
+	return BZET([(a,b)])
 
 class BZET(object):
 	def __init__(self,input=None):
@@ -72,11 +60,6 @@ class BZET(object):
 	def LAST(self):
 		return lib.BinaryBzet_getLastBit(self.obj)
 	LAST.restype = c_uint
-
-	def RANGE(self, a, b):
-		inputStr = "("+str(a)+","+str(b+1)+")"
-		self.obj = lib.BinaryBzet_new_string(c_char_p(inputStr))
-
 
 	#Print Functions
 	def getBzetPretty(self):
@@ -227,4 +210,4 @@ class BZET(object):
 		if (value == 1):
 			self.set(key)
 		else:
-			self.unset(key);
+			self.unset(key)

@@ -48,6 +48,10 @@ To Run the Python 2 Module through IDLE:
 	x = BZET("2, (5, 7)")
 	x.getBzetString()
 
+
+To Use RANGE(a,b):
+Add "from BBzetPy2 import *" on the top the .py file.
+
 ------------------------------------------------------------------
 Python 3 Version
 ------------------------------------------------------------------
@@ -73,3 +77,6 @@ To Run the Python 3 Module through IDLE:
 	from BBzetPy2 import BZET
 	x = BZET("2, (5,7)")
 	x.getBzetString()
+
+To Use Range(a,b):
+Add "from BBzetPy3 import *" on the top of the .py file
