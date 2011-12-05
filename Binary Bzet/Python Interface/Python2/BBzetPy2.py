@@ -32,7 +32,7 @@ class BZET(object):
 	
     # Explicit Constructors
 	@staticmethod
-	def RANGE(start, end, stride = 0):
+	def RANGE(start, end, stride = 1):
 		return BZET([(start, end, stride)])
         
 	@staticmethod

@@ -67,7 +67,6 @@ BinaryBzet::BinaryBzet() {
 BinaryBzet::BinaryBzet(uint indexi, uint indexe, uint step){
 	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step <= 0){
 		cerr << "INCORRECT INDEX OR STRIDE VALUE!" << endl;
-		system("pause");
 		bitstringToBzet("0#");
 		return;
 	}
@@ -84,7 +83,6 @@ BinaryBzet::BinaryBzet(string bitstring){
 	else{
 		if(bitstring.find("-")!=string::npos){
 			cerr << "NO NEGATIVE INDEXES!" << endl;
-			system("pause");
 			bitstringToBzet("0#");
 			return;}
 		bitR* bitr = new bitR();
@@ -143,7 +141,6 @@ BinaryBzet::BinaryBzet(string bitstring){
 			}
 			if(t<1){
 				cerr << "INCORRECT STRIDE!" << endl;
-				system("pause");
 				bitstringToBzet("0#");
 				return;}
 			bitr->add(s,e,t);

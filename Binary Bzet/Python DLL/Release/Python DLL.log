@@ -1,4 +1,4 @@
-﻿Build started 12/4/2011 2:33:22 PM.
+﻿Build started 12/5/2011 1:32:44 AM.
      1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python DLL\Python DLL.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Release\Python2DLL.lastbuildstate".
@@ -24,4 +24,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:14.47
+Time Elapsed 00:00:04.01
