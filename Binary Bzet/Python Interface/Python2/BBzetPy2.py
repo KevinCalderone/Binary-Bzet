@@ -1,32 +1,44 @@
 from ctypes import *
 import ctypes
-lib = cdll.LoadLibrary('BBzetPy2.dll')
-
-class BITR(object):
-	def __init__(self):
-		self.obj = lib.bitR_new()
-
-	def bitR_add(self, start, end=0, step=0):
-		return lib.bitR_add(self.obj, c_int(start), c_int(end), c_int(step))
-	
-	def bitR_at(self, index):
-		return lib.bitR_at(self.obj,c_int(index))
-	
-	def bitR_size(self):
-		return lib.bitR_size(self.obj)
-
-	bitR_at.restype = bool
-	bitR_size.restype = int
+import sys
+from os.path import dirname
+                                                # __file__ gets the full path of this pgm
+dlldir = dirname(__file__)                      # this strips it to the directory only
+dlldir.replace( '\\', '\\\\' )                  # Replaces \ with \\ in dlldir
+lib = cdll.LoadLibrary(dlldir+'\\BBzetPy2.dll') # Loads from the full path to your module.
 
 class BZET(object):
 	def __init__(self,input=None):
 		if input == None:
 			self.obj = lib.BinaryBzet_new()
 		elif type(input)== type(""):
+			input += "#"
 			self.obj = lib.BinaryBzet_new_string(c_char_p(input))
+		elif type(input) == type(1):
+			self.obj = lib.BinaryBzet_new_string(c_char_p(str(input).encode()))
+		elif type(input) == type([]):
+			inputStr = ""
+			for item in input:
+				if type(item)==type(1):
+					inputStr += str(item)+","
+				elif type(item)== type((1,2)):
+					if len(item) == 2:
+						inputStr += "("+str(item[0])+","+str(item[1])+"),"
+					elif len(item) == 3:
+						inputStr += "("+str(item[0])+","+str(item[1])+","+str(item[2])+"),"
+			self.obj = lib.BinaryBzet_new_string(c_char_p(inputStr[:-1]))
 		else:
 			self.obj = lib.BinaryBzet_new()
 	
+    # Explicit Constructors
+	@staticmethod
+	def RANGE(start, end, stride = 0):
+		return BZET([(start, end, stride)])
+        
+	@staticmethod
+	def INT(a):
+		return BZET(a)
+    
 	def LEV(self):
 		return lib.BinaryBzet_getDepth(self.obj)
 	LEV.restype = int
@@ -35,6 +47,9 @@ class BZET(object):
 		return lib.BinaryBzet_size(self.obj)
 	size.restype = int
 
+	def str(self):
+		return self.getBzetString();
+    
 	def set(self, index):
 		lib.BinaryBzet_set(self.obj, c_uint(index))
 	
@@ -59,7 +74,6 @@ class BZET(object):
 		return lib.BinaryBzet_getLastBit(self.obj)
 	LAST.restype = c_uint
 
-
 	#Print Functions
 	def getBzetPretty(self):
 		output_ptr = c_char_p('rawr')
@@ -72,11 +86,6 @@ class BZET(object):
 		lib.BinaryBzet_getBzetString(self.obj,output_ptr)
 		return output_ptr.value
 	getBzetString.restype = str
-    
-	def TESTAND(self, other):
-		output = BZET()
-		lib.BinaryBzet_TEST_AND(self.obj, other.obj, output.obj)
-		return output
 
 	def __or__    (self,other): return self.OR(other)
 	def __and__   (self,other): return self.AND(other)
@@ -211,7 +220,7 @@ class BZET(object):
 		return self.test(key)
         
 	def __setitem__(self, key, value):
-		if (key == 0):
+		if (value == 1):
 			self.set(key)
 		else:
-			self.unset(key);
+			self.unset(key)

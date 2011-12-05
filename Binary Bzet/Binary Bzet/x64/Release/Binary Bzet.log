@@ -1,9 +1,9 @@
-﻿Build started 12/2/2011 11:20:54 AM.
+﻿Build started 12/4/2011 10:37:13 PM.
      1>Project "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\Binary Bzet\Binary Bzet.vcxproj" on node 2 (build target(s)).
      1>PrepareForBuild:
          Creating directory "C:\Users\PersiArash\.ssh\Binary-Bzet\Binary Bzet\x64\Release\".
        InitializeBuildStatus:
-         Creating "x64\Release\Binary Bzet.unsuccessfulbuild" because "AlwaysCreate" was specified.
+         Touching "x64\Release\Binary Bzet.unsuccessfulbuild".
        ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Release\\" /Fd"x64\Release\vc100.pdb" /Gd /TP /errorReport:prompt BinaryBzet.cpp main.cpp
          BinaryBzet.cpp
@@ -18,4 +18,4 @@
 
 Build FAILED.
 
-Time Elapsed 00:00:01.66
+Time Elapsed 00:00:02.51

@@ -17,13 +17,17 @@
 
 from BBzetPy3 import BZET
 from time import *
+from math import sqrt
 
 def cpssn( bs ):
     return (bs/bmsize)*100.0
 
 maxsize = 100000
 report = 1000
-notprime = BZET()  # Zero is not a prime
+notprime = BZET(0)  # Zero is not a prime
+#Pmask = BZET([(3, maxsize-4)])
+Pmask = BZET.RANGE(3, maxsize-4)
+print( "Pmask is", Pmask )
 print( "Starting at", ctime(time()))
 print( "setting max size to", maxsize )
 print( "setting report freq", report )
@@ -38,7 +42,8 @@ print( "Starting bitset size uncompressed", bmsize, "bytes; compressed", \
 nextp = 1
 count = 0
 clock()
-while nextp < maxsize:    
+limit = sqrt(maxsize) + 1
+while nextp < limit:    
     if count%report == 1 or count < 25:
         bsize = notprime.size()
         tm = clock()
@@ -46,7 +51,7 @@ while nextp < maxsize:
                "%6d;"%nextp, "size", "%6d"%bsize, "%6.2f"%cpssn(bsize) + \
                "%; primes/sec", "%5.2f"%( float(count)/tm) )
     count += 1
-    for np in range(nextp+1,min(maxsize,nextp+nextp+1)):
+    for np in range(nextp+1,maxsize):
         if not notprime[np]: # Find the next prime
             nextp = np
             break
@@ -54,13 +59,29 @@ while nextp < maxsize:
         print( "No more primes." )
         break
     # print( "Doing", "%06d"%count, "%06d"%nextp )
-    for ix in range( nextp+nextp, maxsize, nextp ):
-        notprime.set(ix)
-
+    #for ix in range( nextp*nextp, maxsize, nextp ):
+    #    notprime.set(ix)
+    notprime |= BZET( [ (nextp*nextp, maxsize, nextp-1)]  )
+    
+print( "\nAt prime", count, nextp, "there are no more primes less than", \
+       maxsize, "\n" )
+primes = notprime.NOT()  # Get the primes
+print( Pmask )
+primes = Pmask.AND(primes) # Dont let 1 or maxsize be prime
+                         # This also cuts out any surious
+                         # bits from the NOT
+count = primes.COUNT()   # Count the one bits
+bsize = notprime.size()  # Final size
 tm = clock()  # Final time.
 print( "Ending at", ctime(time()), "%7.1f"%tm, "seconds" )
+h = tm // 3600           # hours of computing
+xtm = tm - (h * 3600 )
+m = xtm // 60            # minutes of computing
+s = xtm % 60             # seconds of computing
+lastp = primes.LAST()
+print( "that is: ", "%2d"%h, "h", "%2d"%m, "m", "%2d"%(int(s+0.5)), "s" )
 print( "%5d"%count, "%7.1f"%tm, "sec; last prime:", \
-               "%6d"%nextp, "; final size:", bsize, ("%6.2f"%cpssn(bsize)) + \
+               "%6d"%lastp, "; final size:", bsize, ("%6.2f"%cpssn(bsize)) + \
                "%; primes/sec", "%5.2f"%(float(count)/tm) )
 
 # Print Table of Primes

@@ -65,7 +65,9 @@ BinaryBzet::BinaryBzet() {
    lands the index on indexe, that bit will
    be turned OFF */
 BinaryBzet::BinaryBzet(uint indexi, uint indexe, uint step){
-	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step < 0){
+	if((indexe!=0 && indexe <= indexi) || indexi < 0 || step <= 0){
+		cerr << "INCORRECT INDEX OR STRIDE VALUE!" << endl;
+		system("pause");
 		bitstringToBzet("0#");
 		return;
 	}
@@ -83,7 +85,8 @@ BinaryBzet::BinaryBzet(string bitstring){
 		if(bitstring.find("-")!=string::npos){
 			cerr << "NO NEGATIVE INDEXES!" << endl;
 			system("pause");
-			exit(1);}
+			bitstringToBzet("0#");
+			return;}
 		bitR* bitr = new bitR();
 		string temp = bitstring;
 		size_t found = temp.find(" ");
@@ -92,7 +95,8 @@ BinaryBzet::BinaryBzet(string bitstring){
 			temp.erase(found,1);
 			found = temp.find(" ");
 		}
-		uint s,e,t;
+		uint s,e;
+		uint t = 1;
 		for(uint i=0; i<temp.size(); i++)
 		{
 			if(temp.at(i)=='('){
@@ -120,10 +124,10 @@ BinaryBzet::BinaryBzet(string bitstring){
 						i++;}
 					stringstream convert3(temp2);
 					if ( !(convert3 >> t) )
-						t = 0;
+						t = 1;//0
 				}
 				else
-					t = 0;
+					t = 1;//0
 				i++;
 			}
 			else{
@@ -135,8 +139,13 @@ BinaryBzet::BinaryBzet(string bitstring){
 				if ( !(convert >> s) )
 					s = 0;
 				e = s+1;
-				t = 0;
+				t = 1;//0
 			}
+			if(t<1){
+				cerr << "INCORRECT STRIDE!" << endl;
+				system("pause");
+				bitstringToBzet("0#");
+				return;}
 			bitr->add(s,e,t);
 		}
 		generateBzet(bitr);

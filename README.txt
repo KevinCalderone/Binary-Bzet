@@ -8,6 +8,10 @@ Michael Koyama
 
 News:
 
+Mary Chau (12/2/2011)
++updated the list constructor
++added RANGE(a,b)
+
 Mary Chau (11/26/2011)
 +finished python modules
 

@@ -10,15 +10,15 @@ public:
 	bitR(){ m_size = 0; }
 	~bitR(){}
 
-	void bitR::add(uint start,uint end=0, uint step=0)
+	void bitR::add(uint start,uint end=0, uint step=1)//=0
 	{
 		if(end==0)	end = start+1;
-		if(end<=start || start<0)	exit(1);
+		if(end<=start || start<0)	return;
 		m_start.push_back(start);
 		m_end.push_back(end);
-		m_step.push_back(step+1);
+		m_step.push_back(step);//+1
 
-		uint temp = end-(((end-start)-1)%(step+1));
+		uint temp = end-(((end-start)-1)%(step));//+1
 		if (temp > m_size)	m_size = temp;
 	}
 
