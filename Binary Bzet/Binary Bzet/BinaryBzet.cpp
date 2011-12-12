@@ -2299,7 +2299,7 @@ uint BinaryBzet::size()
 
 bool BinaryBzet::test(uint index) 
 {
-	BinaryBzet mask(0);
+	BinaryBzet mask("0");
 	mask.rightShift(index);
 
 	BinaryBzet result = AND(mask);

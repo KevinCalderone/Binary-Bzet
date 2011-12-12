@@ -25,8 +25,8 @@ def cpssn( bs ):
 maxsize = 100000
 report = 1000
 notprime = BZET(0)  # Zero is not a prime
-#Pmask = BZET([(3, maxsize-4)])
-Pmask = BZET.RANGE(3, maxsize-4)
+#Pmask = BZET([(3, maxsize)])
+Pmask = BZET.RANGE(3, maxsize)
 print( "Pmask is", Pmask )
 print( "Starting at", ctime(time()))
 print( "setting max size to", maxsize )
@@ -66,7 +66,6 @@ while nextp < limit:
 print( "\nAt prime", count, nextp, "there are no more primes less than", \
        maxsize, "\n" )
 primes = notprime.NOT()  # Get the primes
-print( Pmask )
 primes = Pmask.AND(primes) # Dont let 1 or maxsize be prime
                          # This also cuts out any surious
                          # bits from the NOT
@@ -85,7 +84,6 @@ print( "%5d"%count, "%7.1f"%tm, "sec; last prime:", \
                "%; primes/sec", "%5.2f"%(float(count)/tm) )
 
 # Print Table of Primes
-primes = notprime.NOT()
 ix = 0
 for p in primes.LIST_T():
     if p > maxsize: break

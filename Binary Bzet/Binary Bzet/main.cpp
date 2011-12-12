@@ -10,6 +10,7 @@ int main()
 {
 	BinaryBzet a("(0,10,1)");
 	cout << a.getBzetString() << endl;
+	cout << a.test(4) << endl;
 	system("pause");
     return 0;
 }

@@ -1,5 +1,5 @@
-﻿Build started 12/5/2011 1:54:28 AM.
-     1>Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" on node 2 (rebuild target(s)).
+﻿Build started 12/11/2011 8:41:17 PM.
+     1>Project "C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Release\Python3DLL.lastbuildstate".
        InitializeBuildStatus:
@@ -9,22 +9,22 @@
          BBzetWrapper.cpp
          BinaryBzet.cpp
          main.cpp
-     1>c:\users\kevin\dropbox\ucla\cs130\project\git\binary bzet\binary bzet\Test.h(253): warning C4293: '<<' : shift count negative or too big, undefined behavior
+     1>c:\users\kevin\desktop\github\binarybzet\binary bzet\binary bzet\Test.h(253): warning C4293: '<<' : shift count negative or too big, undefined behavior
        Link:
-         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.dll" /INCREMENTAL:NO /NOLOGO python32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\BBzetPy3.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.lib" /MACHINE:X86 /DLL Release\BBzetWrapper.obj
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.dll" /INCREMENTAL:NO /NOLOGO python32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\BBzetPy3.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.lib" /MACHINE:X86 /DLL Release\BBzetWrapper.obj
          Release\BinaryBzet.obj
          Release\main.obj
-            Creating library C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.lib and object C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.exp
+            Creating library C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.lib and object C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.exp
          Generating code
          Finished generating code
-         Python3DLL.vcxproj -> C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.dll
+         Python3DLL.vcxproj -> C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.dll
        Manifest:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Release\BBzetPy3.dll;#2" /manifest Release\BBzetPy3.dll.intermediate.manifest
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Release\BBzetPy3.dll;#2" /manifest Release\BBzetPy3.dll.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Release\Python3DLL.unsuccessfulbuild".
          Touching "Release\Python3DLL.lastbuildstate".
-     1>Done Building Project "C:\Users\Kevin\Dropbox\UCLA\CS130\Project\Git\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" (rebuild target(s)).
+     1>Done Building Project "C:\Users\Kevin\Desktop\Github\BinaryBzet\Binary Bzet\Python3DLL\Python3DLL\Python3DLL.vcxproj" (rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.86
+Time Elapsed 00:00:04.57
